@@ -14,31 +14,30 @@ function updateStats() {
     document.getElementById("totalScoreValue").textContent = totalScore.toString();
 }
 
-// Funktion zum Laden der Stats aus dem Local Storage
 function loadStatsFromLocalStorage() {
     if (!localStorage.getItem('statsReset')) {
         const savedTotalClicks = localStorage.getItem('totalClicks');
-        if (savedTotalClicks) {
+        if (savedTotalClicks !== null) {
             totalClicks = parseInt(savedTotalClicks, 10);
         }
 
         const savedTotalScore = localStorage.getItem('totalScore');
-        if (savedTotalScore) {
+        if (savedTotalScore !== null) {
             totalScore = parseInt(savedTotalScore, 10);
         }
 
         const savedDoubleClicksUpgradeLevel = localStorage.getItem('doubleClicksUpgradeLevel');
-        if (savedDoubleClicksUpgradeLevel) {
+        if (savedDoubleClicksUpgradeLevel !== null) {
             doubleClicksUpgradeLevel = parseInt(savedDoubleClicksUpgradeLevel, 10);
         }
 
         const savedLuckyClicksUpgradeLevel = localStorage.getItem('luckyClicksUpgradeLevel');
-        if (savedLuckyClicksUpgradeLevel) {
+        if (savedLuckyClicksUpgradeLevel !== null) {
             luckyClicksUpgradeLevel = parseInt(savedLuckyClicksUpgradeLevel, 10);
         }
 
         const savedAutoClickerUpgradeLevel = localStorage.getItem('autoClickerUpgradeLevel');
-        if (savedAutoClickerUpgradeLevel) {
+        if (savedAutoClickerUpgradeLevel !== null) {
             autoClickerUpgradeLevel = parseInt(savedAutoClickerUpgradeLevel, 10);
         }
     }
@@ -46,17 +45,16 @@ function loadStatsFromLocalStorage() {
 
 // Funktion zum Speichern der Stats im Local Storage
 function saveStatsToLocalStorage() {
-    localStorage.setItem('doubleClicksUpgradeLevel', doubleClicksUpgradeLevel);
-    localStorage.setItem('luckyClicksUpgradeLevel', luckyClicksUpgradeLevel);
-    localStorage.setItem('autoClickerUpgradeLevel', autoClickerUpgradeLevel);
-    localStorage.setItem('totalClicks', totalClicks);
-    localStorage.setItem('totalScore', totalScore);
+    localStorage.setItem('doubleClicksUpgradeLevel', doubleClicksUpgradeLevel.toString());
+    localStorage.setItem('luckyClicksUpgradeLevel', luckyClicksUpgradeLevel.toString());
+    localStorage.setItem('autoClickerUpgradeLevel', autoClickerUpgradeLevel.toString());
+    localStorage.setItem('totalClicks', totalClicks.toString());
+    localStorage.setItem('totalScore', totalScore.toString());
 }
 
 // Funktion zum Zurücksetzen der Stats
 function resetStats() {
     try {
-
         // Zeige eine Bestätigungswarnung
         const isConfirmed = window.confirm('Möchten Sie wirklich alle Statistiken zurücksetzen?');
 
@@ -66,11 +64,9 @@ function resetStats() {
             doubleClicksUpgradeLevel = 0;
             luckyClicksUpgradeLevel = 0;
             autoClickerUpgradeLevel = 0;
-            score = 0;
 
             saveStatsToLocalStorage();
             updateStats();
-            updateScore();
 
             // Setze die Variable, um zu markieren, dass die Stats zurückgesetzt wurden
             localStorage.setItem('statsReset', 'true'); // Umwandlung in String
@@ -90,5 +86,4 @@ loadStatsFromLocalStorage();
 const resetButton = document.getElementById('resetButton');
 if (resetButton) {
     resetButton.addEventListener('click', resetStats);
-    localStorage.removeItem('statsReset');
 }
