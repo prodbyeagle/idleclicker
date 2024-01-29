@@ -46,8 +46,9 @@ h1 {
     transition: background-color 0.2s ease;
 }
 
-#clickBtn:hover {
-    background-color: #45a049;
+#clickBtn.clicked {
+    transform: scale(0.8);
+    background-color: #83699d;
 }
 
 #resetButton {

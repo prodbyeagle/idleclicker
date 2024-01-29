@@ -4,9 +4,9 @@ const upgradesKey = 'savedUpgrades';
 
 // Beispiel-Upgrades
 const upgrades = {
-    1: { name: "Double Clicks", cost: 15, level: 0, multiplier: 3, maxLevel: 25, owned: 0 },
-    3: { name: "Lucky Clicks", cost: 10000, level: 0, luckyClickChance: 0.1, owned: 0, maxLevel: 10 },
-    6: { name: "Auto Clicker", cost: 1000000, level: 0, maxLevel: 1, owned: 0 },
+    1: { name: "More Clicks", basecost: 15, cost: 15, level: 0, multiplier: 5, maxLevel: 25, owned: 0 },
+    3: { name: "Lucky Clicks", basecost: 10000, cost: 10000, level: 0, luckyClickChance: 0.01, owned: 0, maxLevel: 10 },
+    6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 1, owned: 0 },
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -18,6 +18,8 @@ function loadUpgradesFromLocalStorage() {
         for (const upgradeId in upgrades) {
             if (upgrades.hasOwnProperty(upgradeId) && savedUpgrades.hasOwnProperty(upgradeId)) {
                 upgrades[upgradeId].level = savedUpgrades[upgradeId].level;
+                upgrades[upgradeId].cost = savedUpgrades[upgradeId].cost;
+                upgrades[upgradeId].owned = savedUpgrades[upgradeId].owned;
             }
         }
     }
@@ -27,10 +29,14 @@ function loadUpgradesFromLocalStorage() {
 function saveUpgradesToLocalStorage() {
     const savedUpgrades = {};
 
-    // Erstellen Sie ein Objekt mit den Upgrade-Levels und Kosten
+    // Erstellen Sie ein Objekt mit den Upgrade-Levels, Kosten und weiteren Informationen
     for (const upgradeId in upgrades) {
         if (upgrades.hasOwnProperty(upgradeId)) {
-            savedUpgrades[upgradeId] = { level: upgrades[upgradeId].level, cost: upgrades[upgradeId].cost };
+            savedUpgrades[upgradeId] = {
+                level: upgrades[upgradeId].level,
+                cost: upgrades[upgradeId].cost,
+                owned: upgrades[upgradeId].owned,
+            };
         }
     }
 
@@ -91,17 +97,17 @@ function applyLuckyClick(chance) {
 
 function handleLuckyClick() {
     const luckyClickUpgrade = upgrades[3]; // Ändern Sie die Upgrade-ID entsprechend Ihrer Struktur
-    const baseLuckyClickValue = 30; // Basiswert, den Sie hinzufügen möchten
+    const baseLuckyClickValue = 2500; // Basiswert, den Sie hinzufügen möchten
 
     // Wachstumsfaktor - passen Sie nach Bedarf an
-    const growthFactor = 1.2;
+    const growthFactor = 2;
 
     // Berechnen Sie den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
 
     score += Math.round(scaledLuckyClickValue);
     updateScore();
-    showUpgradeNotification(`🍀 Lucky Click! +${scaledLuckyClickValue.toFixed(2)} points`);
+    showUpgradeNotification(`🍀 Lucky Click! +${scaledLuckyClickValue.toFixed(0)} points`);
 }
 
 function applyUpgradeEffects(upgrade) {
@@ -186,6 +192,17 @@ function updateUpgradeButtons() {
                 const levelText = upgrade.maxLevel ? `${upgrade.level}/${upgrade.maxLevel}` : upgrade.level;
 
                 button.textContent = `${upgrade.name} (Cost: ${simplifiedCost}, Level: ${levelText})`;
+
+                // Überprüfe, ob das maximale Level erreicht wurde, und deaktiviere den Button entsprechend
+                if (upgrade.level >= upgrade.maxLevel) {
+                    button.disabled = true;
+                    button.style.backgroundColor = "#666"; // Setze die Hintergrundfarbe auf dunkelgrau
+                    button.style.cursor = "not-allowed"; // Setze den Cursor-Stil auf "not-allowed"
+                } else {
+                    button.disabled = false;
+                    button.style.backgroundColor = ""; // Setze die Hintergrundfarbe auf den Standardwert
+                    button.style.cursor = ""; // Setze den Cursor-Stil auf den Standardwert
+                }
 
                 // Überprüfe, ob es sich um das Auto Clicker-Upgrade handelt und es aufgewertet wurde
                 if (upgrade.name === "Auto Clicker" && upgrade.level > 0) {
