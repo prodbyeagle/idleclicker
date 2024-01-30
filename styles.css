@@ -1,8 +1,9 @@
 :root {
     --primary-color: #a985d3;
-    --counter-primary-color: #8348c0;
+    --counter-primary-color: #ffffff;
     --background-color: #36393f;
     --counter-background-color: #2f3136;
+    --button-click-color: #ffa41e;
 }
 
 body {
@@ -48,22 +49,22 @@ h1 {
     font-size: 18px;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.2s ease;
+    transition: all 0.1s ease;
 }
 
 #clickBtn:hover {
-    background-color: #7f00ff;
+    background-color: #46c446;
+    transform: scale(1.1);
 }
 
-
-#clickBtn.clicked {
-    transform: scale(0.8);
-    background-color: #83699d;
+#clickBtn:active {
+    transform: scale(0.9);
+    background-color: var(--button-click-color);
 }
 
 #resetButton {
     font-family: 'Rubik', sans-serif;
-    background-color: #cc0c0c;
+    background-color: #575757;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -71,11 +72,17 @@ h1 {
     font-size: 18px;
     cursor: pointer;
     margin-top: 20px;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 #resetButton:hover {
-    background-color: #46c446
+    background-color: #545662;
+    transform: scale(1.1)
+}
+
+#resetButton:active {
+    transform: scale(0.9);
+    background-color: var(--button-click-color);
 }
 
 #upgrades-container {
@@ -100,11 +107,17 @@ h1 {
     font-size: 14px;
     margin-top: 10px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.1s ease;
 }
 
 #upgrades button:hover {
     background-color: #45a049;
+    transform: scale(1.1)
+}
+
+#upgrades button:active {
+    transform: scale(0.7);
+    background-color: var(--button-click-color);
 }
 
 #upgrades button:hover .tooltip {
@@ -247,8 +260,8 @@ h1 {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s, visibility 0.2s;
-    top: 100%;  /* Positionierung unter dem Stats-Container */
-    left: -9%;  /* Zentrierung relativ zum übergeordneten Element */
+    top: 560%;  /* Positionierung unter dem Stats-Container */
+    left: -10%;  /* Zentrierung relativ zum übergeordneten Element */
     transform: translateY(120%);  /* Zentrierung relativ zum Tooltip selbst */
 }
 
@@ -343,5 +356,28 @@ h1 {
 @keyframes fall {
     to {
         transform: translateY(100vh);
+    }
+}
+
+.background {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+    height: 150%;
+    z-index: -1;
+    filter: blur(22px);
+    opacity: 0;
+    transition: all 2s ease;
+    animation: fadeIn 2s ease forwards; /* Verwende die fadeIn-Animation */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }

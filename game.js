@@ -2,7 +2,6 @@
 
 let score = 0;
 let clickMultiplier = 1;
-let bonusChance = 0.1;
 
 // DOM-Elemente
 const clickBtn = document.getElementById('clickBtn');
@@ -95,7 +94,6 @@ function showUpgradeNotification(message) {
 // Click-Event für den Button
 clickBtn.addEventListener('click', function() {
     this.classList.add('clicked');
-    checkBonusClick();
 
     // Überprüfen, ob das "Lucky Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
     const luckyClickUpgrade = upgrades[3];
@@ -127,18 +125,6 @@ clickBtn.addEventListener('click', function() {
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
     }, 50);
 });
-
-// Funktion zur Überprüfung von Bonus-Klicks
-function checkBonusClick() {
-    const randomValue = Math.random();
-    if (randomValue < bonusChance) {
-        score += clickMultiplier;
-        updateScore();
-        updateStats();
-        saveStatsToLocalStorage()
-        saveScoreToLocalStorage();
-    }
-}
 
 function simplifyNumber(number) {
     const suffixes = ["", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St", "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT", "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT", "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT", "DtT", "TtT", "QtTT", "SxTT", "SpTT", "OcTT"];
@@ -233,3 +219,21 @@ document.addEventListener('keydown', function (event) {
         toggleDevOverlay();
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const background = document.querySelector('.background');
+
+    function randomizePosition() {
+        const newX = Math.floor(Math.random() * 101) - 50; // Zufällige X-Position zwischen -50 und 50
+        const newY = Math.floor(Math.random() * 101) - 50; // Zufällige Y-Position zwischen -50 und 50
+
+        background.style.transform = `translate(-50% + ${newX}%, -50% + ${newY}%)`;
+    }
+
+    function randomizeMovement() {
+        randomizePosition();
+    }
+
+    setInterval(randomizeMovement, 5000); // Ändere die Position alle 5 Sekunden (5000 Millisekunden)
+});
+

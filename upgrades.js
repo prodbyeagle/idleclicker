@@ -64,7 +64,7 @@ function buyUpgrade(upgradeId) {
 
     upgrade.owned++;
     upgrade.level++;
-    upgrade.cost *= 40;
+    upgrade.cost *= 35;
 
     if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
         enableAutoClicker();
@@ -73,8 +73,6 @@ function buyUpgrade(upgradeId) {
     updateScore();
     updateUpgradeButtons();
     showUpgradeNotification(`✅ Upgraded ${upgrade.name} to Level ${upgrade.level}`);
-
-    // Speichern Sie die Upgrades nach dem Kauf
     saveUpgradesToLocalStorage();
 }
 
@@ -86,15 +84,14 @@ function enableAutoClicker() {
 }
 
 function calculateCooldown() {
-    const luckyClickUpgrade = upgrades[3]; // Ändern Sie die Upgrade-ID entsprechend Ihrer Struktur
+    const luckyClickUpgrade = upgrades[3];
     const baseCooldown = 60000;
 
-    // Verringern Sie den Cooldown basierend auf dem Upgrade-Level
+    // Verringer den Cooldown basierend auf dem Upgrade-Level
     let reducedCooldown = baseCooldown - luckyClickUpgrade.cooldownReduction;
 
-    // Zusätzliche Reduktion für das Ziel von 15 Sekunden Cooldown auf dem maximalen Level
     if (luckyClickUpgrade.level > 5) {
-        reducedCooldown -= 15000; // Reduzieren Sie den Cooldown um zusätzliche 15 Sekunden
+        reducedCooldown -= 15000;
     }
 
     return reducedCooldown < 0 ? 0 : reducedCooldown; // Der Cooldown kann nicht negativ sein
@@ -191,12 +188,17 @@ function startAutoClicker() {
         // Stelle sicher, dass die Variable 'score' definiert und nicht NaN ist
         if (typeof score !== "undefined" && !isNaN(score) && !isNaN(clickMultiplier) && !isNaN(autoClickerMultiplier)) {
             score += clickMultiplier * autoClickerMultiplier;
+            addAutoClick();
             updateScore();
             saveScoreToLocalStorage();
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
-    }, 250);
+    }, 300);
+}
+
+function stopAutoClicker() {
+    clearInterval(autoClickerInterval);
 }
 
 function toggleAutoClicker() {
@@ -217,6 +219,7 @@ function toggleAutoClicker() {
                 startAutoClicker(autoClickerUpgrade.multiplier);
                 toggleButton.classList.remove('inactive');
                 toggleButton.classList.add('active');
+                addAutoClick();
                 showUpgradeNotification(`✅ Auto-Clicker On`);
             }
         }
