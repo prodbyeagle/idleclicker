@@ -3,7 +3,6 @@
     --counter-primary-color: #8348c0;
     --background-color: #36393f;
     --counter-background-color: #2f3136;
-}
 
 body {
     user-select: none;
@@ -13,7 +12,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh; /* Mindesthöhe auf dem Handy, um Überlappungen zu vermeiden */
     background-color: var(--background-color);
 }
 
@@ -21,8 +20,17 @@ h1 {
     color: var(--primary-color);
     font-family: 'Rubik', sans-serif;
     text-align: center;
+    display: flex;
     margin-bottom: 10px;
 }
+
+    .master-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+    }
 
 #score {
     color: var(--primary-color);
@@ -344,4 +352,4 @@ h1 {
     to {
         transform: translateY(100vh);
     }
-}
+}}
