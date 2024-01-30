@@ -30,11 +30,10 @@ function saveStatsToLocalStorage() {
 // Funktion zum Zurücksetzen der Stats
 function resetStats() {
     try {
-
         // Erstellen Sie die Bestätigungsnachricht mit aktuellen Statistiken
         const confirmationMessage = `
             Möchten Sie wirklich alle Statistiken zurücksetzen?
-            (Lade die Seite neu nachdem Reset)
+            (Lade die Seite neu nach dem Reset)
 
             Aktuelle Statistiken:
             - Total Clicks: ${simplifyNumber(totalClicks)}
@@ -45,14 +44,24 @@ function resetStats() {
         // Zeige die Bestätigungsnachricht
         const isConfirmed = window.confirm(confirmationMessage);
 
+        // Deaktiviere den Auto Clicker, falls aktiv
+        const autoClickerButton = document.getElementById('toggleAutoClicker');
+        if (autoClickerButton.classList.contains('active')) {
+            showUpgradeNotification("Please turn off the Auto Clicker before Reset!");
+            return; // Stoppe den Reset-Prozess, wenn Auto Clicker aktiv ist
+        }
+
         if (isConfirmed) {
             totalClicks = 0;
             totalScore = 0;
             score = 0;
 
+            autoClickerButton.style.display = 'none';
             saveStatsToLocalStorage();
             updateStats();
-            updateScore()
+            updateScore();
+            saveUpgradesToLocalStorage();
+            updateUpgradeButtons();
 
             localStorage.setItem('statsReset', 'true');
             showUpgradeNotification("✅ STATS SUCCESSFULLY RESET");
@@ -65,6 +74,9 @@ function resetStats() {
                     upgrades[upgradeId].cost = upgrades[upgradeId].basecost;
                 }
             }
+            saveStatsToLocalStorage();
+            updateStats();
+            updateScore();
             saveUpgradesToLocalStorage();
             updateUpgradeButtons();
         }

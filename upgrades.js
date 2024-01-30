@@ -138,35 +138,34 @@ let isCloverFalling = false; // Variable, um den Status des Falls zu überprüfe
 
 function createRandomClover() {
     if (isCloverFalling) {
-        return; // Wenn Kleeblätter bereits fallen, dann abbrechen
+        return;
     }
 
-    isCloverFalling = true; // Setzen Sie den Status auf "Falling"
+    isCloverFalling = true;
 
-    const cloverCount = 69; // Anzahl der Kleeblätter
+    const cloverCount = 69;
     const cloverContainer = document.getElementById('clover-container');
 
     // Vor dem Hinzufügen neuer Kleeblätter vorhandene Kleeblätter löschen
-    cloverContainer.innerHTML = '';
+    cloverContainer.textContent = ''; // Änderung hier
 
     for (let i = 0; i < cloverCount; i++) {
         const clover = document.createElement('div');
         clover.className = 'clover';
-        clover.innerHTML = '🍀'; // Emoji für Kleeblatt
+        clover.innerHTML = '🍀';
 
-        // Zufällige Position innerhalb des sichtbaren Bereichs
-        clover.style.left = Math.random() * (window.innerWidth - 20) + 'px'; // 20 ist die Breite des Kleeblattes
-        clover.style.top = Math.random() * -window.innerHeight + 'px'; // Oberhalb des sichtbaren Bereichs positionieren
+        clover.style.left = Math.random() * (window.innerWidth - 20) + 'px';
+        clover.style.top = Math.random() * -window.innerHeight + '20px';
 
-        clover.style.animationDuration = (Math.random() * 2 + 1) + 's'; // Zufällige Fallgeschwindigkeit
+        clover.style.animationDuration = (Math.random() * 2 + 1) + 's';
 
         cloverContainer.appendChild(clover);
     }
 
-    // Verzögerung hinzufügen, um sicherzustellen, dass Kleeblätter Zeit zum Fallen haben
     setTimeout(() => {
-        isCloverFalling = false; // Setzen Sie den Status auf "Nicht Falling" nach der Verzögerung
-    }, 3000); // Passen Sie die Verzögerungszeit nach Bedarf an
+        isCloverFalling = false;
+        cloverContainer.textContent = ''; // Hier werden die Kleeblätter aus dem Container entfernt
+    }, 3000);
 }
 
 function applyUpgradeEffects(upgrade) {
@@ -193,6 +192,7 @@ function startAutoClicker() {
         if (typeof score !== "undefined" && !isNaN(score) && !isNaN(clickMultiplier) && !isNaN(autoClickerMultiplier)) {
             score += clickMultiplier * autoClickerMultiplier;
             updateScore();
+            saveScoreToLocalStorage();
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
