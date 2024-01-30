@@ -188,7 +188,6 @@ function give1kscore() {
     showUpgradeNotification(`⚙️ DEV: Added 1K to the Score`);
     toggleDevOverlay();
 }
-
 function give1mscore() {
     score += 1000000;
     updateScore();
