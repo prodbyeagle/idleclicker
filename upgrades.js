@@ -64,7 +64,7 @@ function buyUpgrade(upgradeId) {
 
     upgrade.owned++;
     upgrade.level++;
-    upgrade.cost *= 15;
+    upgrade.cost *= 40;
 
     if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
         enableAutoClicker();
