@@ -100,7 +100,7 @@ clickBtn.addEventListener('click', function() {
     // Überprüfen, ob das "Lucky Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
     const luckyClickUpgrade = upgrades[3];
     if (luckyClickUpgrade && luckyClickUpgrade.level >= 1) {
-        applyLuckyClick(0.00001); // Passen Sie die Chance nach Bedarf an
+        applyLuckyClick(0.001); // Passen Sie die Chance nach Bedarf an
     }
 
     // Überprüfen, ob das "More Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist

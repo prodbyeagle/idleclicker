@@ -3,7 +3,7 @@
 const upgradesKey = 'savedUpgrades';
 const upgrades = {
     1: { name: "More Clicks", basecost: 50, cost: 15, level: 0, multiplier: 5, maxLevel: 25, owned: 0 },
-    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.00001, cooldownReduction: 0, owned: 0, maxLevel: 25 },
+    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.001, cooldownReduction: 0, owned: 0, maxLevel: 25 },
     6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 10, owned: 0 },
 };
 
