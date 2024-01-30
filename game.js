@@ -109,6 +109,9 @@ clickBtn.addEventListener('click', function() {
         clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
     }
 
+    const scoreValueElement = document.getElementById('scoreValue');
+    scoreValueElement.title = score.toString();
+
     score += clickMultiplier;
     totalClicks++; // Erhöhe die Gesamtanzahl der Klicks
     totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
@@ -229,11 +232,4 @@ document.addEventListener('keydown', function (event) {
     if (event.key === '´') {
         toggleDevOverlay();
     }
-});
-
-// Nachdem die Seite geladen wurde
-document.addEventListener('DOMContentLoaded', function () {
-    // Hole das Element mit der ID 'scoreValue'
-    const scoreValueElement = document.getElementById('scoreValue');
-    scoreValueElement.title = score.toString();
 });
