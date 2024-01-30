@@ -64,7 +64,7 @@ function buyUpgrade(upgradeId) {
 
     upgrade.owned++;
     upgrade.level++;
-    upgrade.cost *= 25;
+    upgrade.cost *= 40;
 
     if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
         enableAutoClicker();
@@ -143,7 +143,7 @@ function createRandomClover() {
 
     isCloverFalling = true; // Setzen Sie den Status auf "Falling"
 
-    const cloverCount = 25; // Anzahl der Kleeblätter
+    const cloverCount = 69; // Anzahl der Kleeblätter
     const cloverContainer = document.getElementById('clover-container');
 
     // Vor dem Hinzufügen neuer Kleeblätter vorhandene Kleeblätter löschen
