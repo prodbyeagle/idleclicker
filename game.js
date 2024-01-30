@@ -174,7 +174,7 @@ function toggleDevOverlay() {
     const isShiftPressed = event.shiftKey;
 
     if (devOverlay) {
-        showUpgradeNotification(`HEYYY!!!!! DONT USE THAT IT CLEARS YOUR STATS ITS ONLY FOR DEVS!`);
+        showUpgradeNotification(`HEY!!!!! DONT USE THAT IT CLEARS YOUR STATS ITS ONLY FOR DEVS!`);
         // Überprüfen Sie, ob das Dev Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
         if (!devOverlay.classList.contains('show') && !isShiftPressed) {
             devOverlay.classList.add('show');
