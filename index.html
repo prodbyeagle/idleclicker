@@ -12,15 +12,14 @@
 </head>
 <body>
 <div class="game-container">
-    <h1>Clicker Game</h1>
+    <h1>Idle Clicker</h1>
     <div id="notification" class="notification"></div>
-
-    <p id="score">Score: <span id="scoreValue">0</span></p>
-
+    <p id="score">Clicks: <span id="scoreValue">0</span></p>
     <button id="clickBtn">Click</button>
-    <button id="resetButton">Reset Stats</button>
+    <button id="resetButton">Reset</button>
     <button id="toggleAutoClicker" onclick="toggleAutoClicker()">Toggle Auto Clicker</button>
 </div>
+
 <div id="upgrades-container">
     <h2>Upgrades:</h2>
     <div id="upgrades">
@@ -29,28 +28,29 @@
         <button onclick="buyUpgrade(6)"></button>
     </div>
 </div>
+<div id="clover-container"></div>
 <div id="stats-container">
     <h2>Stats:</h2>
-    <p>Double Clicks Level: <span id="doubleClicksUpgradeLevel">0</span></p>
-    <p>Lucky Clicks Level: <span id="luckyClicksUpgradeLevel">0</span></p>
-    <p>Auto Clicker Level: <span id="autoClickerUpgradeLevel">0</span></p>
     <p>Total Clicks: <span id="totalClicks">0</span></p>
     <p id="totalScore" class="tooltip" title="Any Type of Bonus is excluded!">Total Score: <span id="totalScoreValue">0</span></p>
 </div>
+
 <div id="achievements-container">
     <h2>Achievements:</h2>
-
 </div>
+
 <div id="devOverlay" class="hidden">
     <div id="devContent">
-        <p>Developer Menu: (Score stays until reload)</p>
+        <p>Developer Menu: (Score stays until reload but +1 Click for PlayerSafe)</p>
         <button id="devButton1" class="devButton" onclick="give1kscore()">+1K Score Points</button>
         <button id="devButton2" class="devButton" onclick="give1mscore()">+1M Score Points</button>
         <button id="devButton3" class="devButton" onclick="give1bscore()">+1B Score Points</button>
         <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Score Points</button>
         <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Score Points</button>
+        <button id="devButton6" class="devButton" onclick="give1qtscore()">+1QT Score Points</button>
     </div>
 </div>
+
 <div class="toast-container"></div>
 <script src="upgrades.js"></script>
 <script src="achievements.js"></script>
