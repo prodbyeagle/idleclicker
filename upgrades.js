@@ -1,8 +1,6 @@
 // upgrades.js
 
 const upgradesKey = 'savedUpgrades';
-
-// Beispiel-Upgrades
 const upgrades = {
     1: { name: "More Clicks", basecost: 50, cost: 15, level: 0, multiplier: 5, maxLevel: 25, owned: 0 },
     3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.00001, cooldownReduction: 0, owned: 0, maxLevel: 25 },
@@ -12,7 +10,6 @@ const upgrades = {
 // Funktion zum Laden der Upgrades aus dem Local Storage
 function loadUpgradesFromLocalStorage() {
     const savedUpgrades = JSON.parse(localStorage.getItem(upgradesKey));
-
     if (savedUpgrades) {
         // Übertragen Sie die Werte aus dem gespeicherten Objekt auf das aktuelle Upgrades-Objekt
         for (const upgradeId in upgrades) {

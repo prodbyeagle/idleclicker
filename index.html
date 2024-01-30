@@ -14,7 +14,7 @@
 <div class="game-container">
     <h1>Idle Clicker</h1>
     <div id="notification" class="notification"></div>
-    <p id="score">Clicks: <span id="scoreValue">0</span></p>
+    <p id="score">Clicks: <span id="scoreValue" title="${score}">0</span></p>
     <button id="clickBtn">Click</button>
     <button id="resetButton">Reset</button>
     <button id="toggleAutoClicker" onclick="toggleAutoClicker()">Toggle Auto Clicker</button>
@@ -23,9 +23,9 @@
 <div id="upgrades-container">
     <h2>Upgrades:</h2>
     <div id="upgrades">
-        <button onclick="buyUpgrade(1)"></button>
-        <button onclick="buyUpgrade(3)"></button>
-        <button onclick="buyUpgrade(6)"></button>
+        <button onclick="buyUpgrade(1)" title="Pro Upgrade = 5x (Stackt sich)"></button>
+        <button onclick="buyUpgrade(3)" title="Jede Minute 1% Chance ein Luck Event zu spawnen"></button>
+        <button onclick="buyUpgrade(6)" title="Naja... Autoclicker!"></button>
     </div>
 </div>
 <div id="clover-container"></div>

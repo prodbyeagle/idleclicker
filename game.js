@@ -60,7 +60,7 @@ function showUpgradeNotification(message) {
         notificationElement.classList.add('enter-animation');
     }, 0);
 
-    let duration = 3000;
+    let duration = 2500;
     const interval = 100;
     let progress = 100;
 
@@ -100,7 +100,13 @@ clickBtn.addEventListener('click', function() {
     // Überprüfen, ob das "Lucky Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
     const luckyClickUpgrade = upgrades[3];
     if (luckyClickUpgrade && luckyClickUpgrade.level >= 1) {
-        applyLuckyClick(0.1); // Passen Sie die Chance nach Bedarf an
+        applyLuckyClick(0.00001); // Passen Sie die Chance nach Bedarf an
+    }
+
+    // Überprüfen, ob das "More Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
+    const moreClicksUpgrade = upgrades[1];
+    if (moreClicksUpgrade && moreClicksUpgrade.level >= 1) {
+        clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
     }
 
     score += clickMultiplier;
@@ -108,7 +114,7 @@ clickBtn.addEventListener('click', function() {
     totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
     updateScore();
     updateStats();
-    saveStatsToLocalStorage()
+    saveStatsToLocalStorage();
     saveScoreToLocalStorage();
 
     // Anti-Auto Clicker:
@@ -116,7 +122,7 @@ clickBtn.addEventListener('click', function() {
     setTimeout(() => {
         clickBtn.disabled = false;
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 40);
+    }, 50);
 });
 
 // Funktion zur Überprüfung von Bonus-Klicks
@@ -147,8 +153,6 @@ function simplifyNumber(number) {
 function updateScore() {
     scoreElement.textContent = simplifyNumber(score);
 }
-
-// Initialisiere Upgrade-Buttons
 updateUpgradeButtons();
 
 
@@ -170,6 +174,7 @@ function toggleDevOverlay() {
     const isShiftPressed = event.shiftKey;
 
     if (devOverlay) {
+        showUpgradeNotification(`HEYYY!!!!! DONT USE THAT IT CLEARS YOUR STATS ITS ONLY FOR DEVS!`);
         // Überprüfen Sie, ob das Dev Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
         if (!devOverlay.classList.contains('show') && !isShiftPressed) {
             devOverlay.classList.add('show');
@@ -216,7 +221,7 @@ function give1qscore() {
 function give1qtscore() {
     score += 1000000000000000000;
     updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1Q to the Score`);
+    showUpgradeNotification(`⚙️ DEV: Added 1Qt to the Score`);
     toggleDevOverlay();
 }
 
@@ -224,4 +229,11 @@ document.addEventListener('keydown', function (event) {
     if (event.key === '´') {
         toggleDevOverlay();
     }
+});
+
+// Nachdem die Seite geladen wurde
+document.addEventListener('DOMContentLoaded', function () {
+    // Hole das Element mit der ID 'scoreValue'
+    const scoreValueElement = document.getElementById('scoreValue');
+    scoreValueElement.title = score.toString();
 });

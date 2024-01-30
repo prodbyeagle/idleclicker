@@ -6,8 +6,8 @@ let totalScore = 0;
 
 // Funktion zum Aktualisieren der Stats
 function updateStats() {
-    document.getElementById("totalClicks").textContent = totalClicks.toString();
-    document.getElementById("totalScoreValue").textContent = totalScore.toString();
+    document.getElementById("totalClicks").textContent = simplifyNumber(totalClicks);
+    document.getElementById("totalScoreValue").textContent = simplifyNumber(totalScore);
 }
 
 // Funktion zum Laden der Stats aus dem Local Storage
@@ -30,7 +30,6 @@ function saveStatsToLocalStorage() {
 // Funktion zum Zurücksetzen der Stats
 function resetStats() {
     try {
-        console.log('Trying to reset Stats...');
 
         // Erstellen Sie die Bestätigungsnachricht mit aktuellen Statistiken
         const confirmationMessage = `
@@ -38,9 +37,9 @@ function resetStats() {
             (Lade die Seite neu nachdem Reset)
 
             Aktuelle Statistiken:
-            - Total Clicks: ${totalClicks}
-            - Total Score: ${totalScore}
-            - Current Score: ${score}
+            - Total Clicks: ${simplifyNumber(totalClicks)}
+            - Total Score: ${simplifyNumber(totalScore)}
+            - Current Score: ${simplifyNumber(score)}
         `;
 
         // Zeige die Bestätigungsnachricht
@@ -73,6 +72,7 @@ function resetStats() {
         console.error('Fehler beim Zurücksetzen der Stats:', error);
     }
 }
+
 
 // Fügen Sie einen Event Listener für den Reset-Button hinzu
 const resetButton = document.getElementById('resetButton');
