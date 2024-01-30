@@ -4,9 +4,9 @@ const upgradesKey = 'savedUpgrades';
 
 // Beispiel-Upgrades
 const upgrades = {
-    1: { name: "More Clicks", basecost: 15, cost: 15, level: 0, multiplier: 5, maxLevel: 25, owned: 0 },
-    3: { name: "Lucky Clicks", basecost: 10000, cost: 10000, level: 0, luckyClickChance: 0.01, owned: 0, maxLevel: 10 },
-    6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 1, owned: 0 },
+    1: { name: "More Clicks", basecost: 50, cost: 15, level: 0, multiplier: 5, maxLevel: 25, owned: 0 },
+    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.00001, cooldownReduction: 0, owned: 0, maxLevel: 25 },
+    6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 10, owned: 0 },
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -67,7 +67,7 @@ function buyUpgrade(upgradeId) {
 
     upgrade.owned++;
     upgrade.level++;
-    upgrade.cost *= 20;
+    upgrade.cost *= 15;
 
     if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
         enableAutoClicker();
@@ -88,26 +88,88 @@ function enableAutoClicker() {
     document.getElementById('toggleAutoClicker').classList.add('active');
 }
 
+function calculateCooldown() {
+    const luckyClickUpgrade = upgrades[3]; // Ändern Sie die Upgrade-ID entsprechend Ihrer Struktur
+    const baseCooldown = 60000;
+
+    // Verringern Sie den Cooldown basierend auf dem Upgrade-Level
+    let reducedCooldown = baseCooldown - luckyClickUpgrade.cooldownReduction;
+
+    // Zusätzliche Reduktion für das Ziel von 15 Sekunden Cooldown auf dem maximalen Level
+    if (luckyClickUpgrade.level > 5) {
+        reducedCooldown -= 15000; // Reduzieren Sie den Cooldown um zusätzliche 15 Sekunden
+    }
+
+    return reducedCooldown < 0 ? 0 : reducedCooldown; // Der Cooldown kann nicht negativ sein
+}
+
+let lastLuckyClickTime = 0;
+
 function applyLuckyClick(chance) {
+    const currentTime = Date.now();
+
+    if (currentTime - lastLuckyClickTime < calculateCooldown()) {
+        return;
+    }
+
     const randomValue = Math.random();
+
     if (randomValue < chance) {
         handleLuckyClick();
+        lastLuckyClickTime = currentTime; // Setzen Sie die Zeit des letzten Lucky Clicks
     }
 }
 
 function handleLuckyClick() {
     const luckyClickUpgrade = upgrades[3]; // Ändern Sie die Upgrade-ID entsprechend Ihrer Struktur
-    const baseLuckyClickValue = 2500; // Basiswert, den Sie hinzufügen möchten
+    const baseLuckyClickValue = 5000; // Basiswert, den Sie hinzufügen möchten
 
     // Wachstumsfaktor - passen Sie nach Bedarf an
-    const growthFactor = 2;
+    const growthFactor = 10.4;
 
     // Berechnen Sie den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
 
     score += Math.round(scaledLuckyClickValue);
+    let finalscore = simplifyNumber(scaledLuckyClickValue);
     updateScore();
-    showUpgradeNotification(`🍀 Lucky Click! +${scaledLuckyClickValue.toFixed(0)} points`);
+    showUpgradeNotification(`🍀 Lucky Click! +${finalscore} Clicks`);
+    createRandomClover();
+}
+
+let isCloverFalling = false; // Variable, um den Status des Falls zu überprüfen
+
+function createRandomClover() {
+    if (isCloverFalling) {
+        return; // Wenn Kleeblätter bereits fallen, dann abbrechen
+    }
+
+    isCloverFalling = true; // Setzen Sie den Status auf "Falling"
+
+    const cloverCount = 25; // Anzahl der Kleeblätter
+    const cloverContainer = document.getElementById('clover-container');
+
+    // Vor dem Hinzufügen neuer Kleeblätter vorhandene Kleeblätter löschen
+    cloverContainer.innerHTML = '';
+
+    for (let i = 0; i < cloverCount; i++) {
+        const clover = document.createElement('div');
+        clover.className = 'clover';
+        clover.innerHTML = '🍀'; // Emoji für Kleeblatt
+
+        // Zufällige Position innerhalb des sichtbaren Bereichs
+        clover.style.left = Math.random() * (window.innerWidth - 20) + 'px'; // 20 ist die Breite des Kleeblattes
+        clover.style.top = Math.random() * -window.innerHeight + 'px'; // Oberhalb des sichtbaren Bereichs positionieren
+
+        clover.style.animationDuration = (Math.random() * 2 + 1) + 's'; // Zufällige Fallgeschwindigkeit
+
+        cloverContainer.appendChild(clover);
+    }
+
+    // Verzögerung hinzufügen, um sicherzustellen, dass Kleeblätter Zeit zum Fallen haben
+    setTimeout(() => {
+        isCloverFalling = false; // Setzen Sie den Status auf "Nicht Falling" nach der Verzögerung
+    }, 3000); // Passen Sie die Verzögerungszeit nach Bedarf an
 }
 
 function applyUpgradeEffects(upgrade) {
@@ -137,7 +199,7 @@ function startAutoClicker() {
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
-    }, 1000);
+    }, 250);
 }
 
 function toggleAutoClicker() {
@@ -149,6 +211,7 @@ function toggleAutoClicker() {
         autoClickerInterval = null;
         toggleButton.classList.remove('active');
         toggleButton.classList.add('inactive');
+        showUpgradeNotification(`❌ Auto-Clicker Off`);
     } else {
 
         if (autoClickerUpgrade.level > 0) {
@@ -157,6 +220,7 @@ function toggleAutoClicker() {
                 startAutoClicker(autoClickerUpgrade.multiplier);
                 toggleButton.classList.remove('inactive');
                 toggleButton.classList.add('active');
+                showUpgradeNotification(`✅ Auto-Clicker On`);
             }
         }
     }

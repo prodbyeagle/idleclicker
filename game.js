@@ -30,14 +30,13 @@ function showUpgradeNotification(message) {
     }
 
     const notificationElement = document.createElement('div');
-    notificationElement.classList.add('toast-notification');
-
     const messageElement = document.createElement('div');
+    const progressBar = document.createElement('div');
+
+    notificationElement.classList.add('toast-notification');
     messageElement.textContent = message;
 
-    const progressBar = document.createElement('div');
     progressBar.classList.add('progress-bar');
-
     notificationElement.appendChild(messageElement);
     notificationElement.appendChild(progressBar);
 
@@ -56,6 +55,11 @@ function showUpgradeNotification(message) {
     // Füge die neue Benachrichtigung hinzu
     toastContainer.appendChild(notificationElement);
 
+    // Füge die Eingangsanimation-Klasse hinzu, nachdem das Element dem DOM hinzugefügt wurde
+    setTimeout(() => {
+        notificationElement.classList.add('enter-animation');
+    }, 0);
+
     let duration = 3000;
     const interval = 100;
     let progress = 100;
@@ -64,11 +68,26 @@ function showUpgradeNotification(message) {
         progress -= (interval / duration) * 100;
         progressBar.style.width = `${progress}%`;
 
+        // Dynamische Farbänderung basierend auf dem Fortschritt
+        if (progress > 75) {
+            progressBar.style.backgroundColor = '#45a049'; // Grün
+        } else if (progress > 30) {
+            progressBar.style.backgroundColor = '#ffd700'; // Gelb
+        } else {
+            progressBar.style.backgroundColor = '#ff4500'; // Rot
+        }
+
         if (progress <= 0) {
+            // Füge die Ausgangsanimation-Klasse hinzu
+            notificationElement.classList.add('exit-animation');
+
             clearInterval(countdownInterval);
-            if (notificationElement.parentNode) {
-                notificationElement.parentNode.removeChild(notificationElement);
-            }
+            // Warte auf das Ende der Ausgangsanimation, bevor die Benachrichtigung entfernt wird
+            setTimeout(() => {
+                if (notificationElement.parentNode) {
+                    notificationElement.parentNode.removeChild(notificationElement);
+                }
+            }, 500); // Hier 500 Millisekunden (0,5 Sekunden) einstellen, um zur Ausgangsanimationsdauer zu passen
         }
     }, interval);
 }
@@ -89,6 +108,7 @@ clickBtn.addEventListener('click', function() {
     totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
     updateScore();
     updateStats();
+    saveStatsToLocalStorage()
     saveScoreToLocalStorage();
 
     // Anti-Auto Clicker:
@@ -96,7 +116,7 @@ clickBtn.addEventListener('click', function() {
     setTimeout(() => {
         clickBtn.disabled = false;
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 70);
+    }, 40);
 });
 
 // Funktion zur Überprüfung von Bonus-Klicks
@@ -105,6 +125,8 @@ function checkBonusClick() {
     if (randomValue < bonusChance) {
         score += clickMultiplier;
         updateScore();
+        updateStats();
+        saveStatsToLocalStorage()
         saveScoreToLocalStorage();
     }
 }
@@ -143,33 +165,60 @@ document.addEventListener('keydown', function (event) {
 
 function toggleDevOverlay() {
     const devOverlay = document.getElementById('devOverlay');
-    devOverlay.classList.toggle('show');
-}
 
-function navigateToMongoDB() {
-    window.open('https://cloud.mongodb.com/v2/65a8486c3ad4e31de65feda7#/metrics/replicaSet/65a848ff4a03411f028d0a9b/explorer', '_blank');
+    // Überprüfen Sie, ob die Shift-Taste gedrückt ist
+    const isShiftPressed = event.shiftKey;
+
+    if (devOverlay) {
+        // Überprüfen Sie, ob das Dev Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
+        if (!devOverlay.classList.contains('show') && !isShiftPressed) {
+            devOverlay.classList.add('show');
+        } else {
+            // Wenn Shift gedrückt ist, das Overlay nicht schließen
+            if (!isShiftPressed) {
+                devOverlay.classList.remove('show');
+            }
+        }
+    }
 }
 
 function give1kscore() {
     score += 1000;
     updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1K to the Score`);
+    toggleDevOverlay();
 }
 
 function give1mscore() {
     score += 1000000;
     updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1M to the Score`);
+    toggleDevOverlay();
 }
 function give1bscore() {
     score += 1000000000;
     updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1B to the Score`);
+    toggleDevOverlay();
 }
 function give1tscore() {
     score += 1000000000000;
     updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1T to the Score`);
+    toggleDevOverlay();
 }
 function give1qscore() {
     score += 1000000000000000;
     updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1Q to the Score`);
+    toggleDevOverlay();
+}
+
+function give1qtscore() {
+    score += 1000000000000000000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1Q to the Score`);
+    toggleDevOverlay();
 }
 
 document.addEventListener('keydown', function (event) {

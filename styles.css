@@ -112,8 +112,19 @@ h1 {
     margin-bottom: 10px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    bottom: -200px; /* Startposition unten aus dem Bildschirm */
+    right: 0;
+    transform-origin: bottom right;
+    transition: transform 0.5s ease-in-out;
 }
 
+.toast-notification.enter-animation {
+    transform: translateY(-12%); /* Verschiebe die Benachrichtigung nach oben */
+}
+
+.toast-notification.exit-animation {
+    transform: translateX(200%); /* Verschiebe die Benachrichtigung nach rechts */
+}
 
 .progress-bar {
     height: 5px;
@@ -137,6 +148,7 @@ h1 {
     margin-left: 20px;
     cursor: pointer;
     transition: background-color 0.2s ease;
+    left: 20px;
 }
 
 #toggleAutoClicker.active {
@@ -291,4 +303,27 @@ h1 {
 
 #devContent p {
     margin: 0;
+}
+
+#clover-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    overflow: hidden;
+    width: 100vw; /* Breite des Containers auf die gesamte Bildschirmbreite setzen */
+    height: 100vh; /* Höhe des Containers auf die gesamte Bildschirmhöhe setzen */
+}
+
+.clover {
+    position: absolute;
+    font-size: 20px;
+    color: green; /* Ändern Sie die Farbe nach Bedarf */
+    animation: fall linear;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh);
+    }
 }
