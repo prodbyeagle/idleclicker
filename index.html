@@ -19,7 +19,8 @@
 <div class="game-container">
     <h1>Idle Clicker</h1>
     <div id="notification" class="notification"></div>
-    <p id="score">Clicks: <span id="scoreValue" title="${score}">0</span></p>
+    <div id="prodbyeagle">@prodbyeagle</div>
+    <p id="score">Clicks: <span id="scoreValue" title="${score} (Thats the Score before the Recent Click)">0</span></p>
     <button id="clickBtn">Click</button>
     <button id="resetButton">Reset</button>
     <button id="toggleAutoClicker" onclick="toggleAutoClicker()">Toggle Auto Clicker</button>
@@ -32,6 +33,7 @@
         <button onclick="buyUpgrade(3)" title="Jede Minute 1% Chance ein Luck Event zu spawnen"></button>
         <button onclick="buyUpgrade(6)" title="Naja... Auto clicker!"></button>
     </div>
+    <button id="quantityFilterButton">testtext</button>
 </div>
 <div id="clover-container"></div>
 <div id="stats-container">
@@ -57,6 +59,8 @@
         <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Score Points</button>
         <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Score Points</button>
         <button id="devButton6" class="devButton" onclick="give100qscore()">+100Q Score Points</button>
+        <button id="devButton7" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
+
     </div>
 </div>
 <div class="toast-container"></div>

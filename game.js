@@ -123,7 +123,7 @@ clickBtn.addEventListener('click', function() {
     setTimeout(() => {
         clickBtn.disabled = false;
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 70);
+    }, 80);
 });
 
 function simplifyNumber(number) {
@@ -214,26 +214,15 @@ function give100qscore() {
     toggleDevOverlay();
 }
 
+function dev_resetscore() {
+    score = 0;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Reseted Score`);
+    toggleDevOverlay();
+}
+
 document.addEventListener('keydown', function (event) {
     if (event.key === '´') {
         toggleDevOverlay();
     }
 });
-
-document.addEventListener('DOMContentLoaded', function() {
-    const background = document.querySelector('.background');
-
-    function randomizePosition() {
-        const newX = Math.floor(Math.random() * 101) - 50; // Zufällige X-Position zwischen -50 und 50
-        const newY = Math.floor(Math.random() * 101) - 50; // Zufällige Y-Position zwischen -50 und 50
-
-        background.style.transform = `translate(-50% + ${newX}%, -50% + ${newY}%)`;
-    }
-
-    function randomizeMovement() {
-        randomizePosition();
-    }
-
-    setInterval(randomizeMovement, 5000); // Ändere die Position alle 5 Sekunden (5000 Millisekunden)
-});
-

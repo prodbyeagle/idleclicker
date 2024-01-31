@@ -40,7 +40,7 @@ function saveUpgradesToLocalStorage() {
     localStorage.setItem(upgradesKey, JSON.stringify(savedUpgrades));
 }
 
-// Kaufe Upgrade-Funktion
+// Kaufe Upgrade-Funktion mit dynamischer Menge
 function buyUpgrade(upgradeId) {
     const upgrade = upgrades[upgradeId];
 
@@ -54,26 +54,48 @@ function buyUpgrade(upgradeId) {
         return;
     }
 
-    if (score < upgrade.cost) {
+    // Lese die aktuelle Menge vom Button
+    const currentQuantity = parseInt(document.getElementById('quantityFilterButton').textContent);
+
+    // Berechne den Gesamtpreis für die angegebene Menge
+    const totalCost = upgrade.cost * currentQuantity;
+
+    if (score < totalCost) {
         showUpgradeNotification("❌ Insufficient points.");
         return;
     }
 
-    score -= upgrade.cost;
-    applyUpgradeEffects(upgrade);
+    // Überprüfe, ob der Kauf möglich ist
+    if (upgrade.cost > 0) {
+        const maxAffordableQuantity = Math.floor(score / upgrade.cost);
 
-    upgrade.owned++;
-    upgrade.level++;
-    upgrade.cost *= 5;
-
-    if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
-        enableAutoClicker();
+        if (currentQuantity > maxAffordableQuantity) {
+            // Reduziere die Menge auf die maximale erschwingliche Menge
+            currentQuantity = maxAffordableQuantity;
+            document.getElementById('quantityFilterButton').textContent = `${currentQuantity}x`;
+        }
     }
 
-    updateScore();
-    updateUpgradeButtons();
-    showUpgradeNotification(`✅ Upgraded ${upgrade.name} to Level ${upgrade.level}`);
-    saveUpgradesToLocalStorage();
+    for (let i = 0; i < currentQuantity; i++) {
+        score -= totalCost;
+        applyUpgradeEffects(upgrade);
+
+        upgrade.owned++;
+        upgrade.level++;
+        upgrade.cost *= 5;
+
+        if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
+            enableAutoClicker();
+        }
+
+        updateScore();
+        updateUpgradeButtons();
+        showUpgradeNotification(`✅ Upgraded ${upgrade.name} to Level ${upgrade.level}`);
+        saveUpgradesToLocalStorage();
+
+        console.log('Upgraded', upgrade.name, 'to Level', upgrade.level);
+        console.log('Remaining Score:', score);
+    }
 }
 
 function enableAutoClicker() {
@@ -119,7 +141,7 @@ function handleLuckyClick() {
     const baseLuckyClickValue = 5000; // Basiswert
 
     // Wachstumsfaktor
-    const growthFactor = 10.4;
+    const growthFactor = 4.69;
 
     // Berechne den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
@@ -180,45 +202,61 @@ function applyUpgradeEffects(upgrade) {
 let autoClickerInterval;
 let clickCounter = 0;
 let totalAutoScoreValue = 0;
-let cpsCounterInterval;
+let spmCounterInterval;
 let startTime;
 
-function startAutoClicker() {
-    const autoClickerUpgrade = upgrades[6];
-    const autoClickerMultiplier = autoClickerUpgrade.level;
-
-    startTime = Date.now();
+function startAutoClicker(autoClickerMultiplier) {
+    startTime = Date.now(); // Set the start time
+    totalAutoScoreValue = 0; // Reset totalAutoScoreValue when starting the AutoClicker
+    clearInterval(autoClickerInterval);
 
     autoClickerInterval = setInterval(() => {
-
-        // Stelle sicher, dass die Variable 'score' definiert und nicht NaN ist
         if (typeof score !== "undefined" && !isNaN(score) && !isNaN(clickMultiplier) && !isNaN(autoClickerMultiplier)) {
-            score += clickMultiplier * autoClickerMultiplier;
-            
+            const incrementalScore = clickMultiplier * autoClickerMultiplier;
+            score += incrementalScore;
+            totalAutoScoreValue += incrementalScore; // Update totalAutoScoreValue
             updateScore();
             saveScoreToLocalStorage();
             addAutoClick();
-
-            // Erhöhe den Click-Zähler
-            clickCounter++;
-
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
     }, 250);
 
-    // Starte den CPS-Zähler
-    startCPSCounter();
+    startSPMCounter(); // Start the SPM counter
 }
+
 
 function stopAutoClicker() {
     clearInterval(autoClickerInterval);
-    stopCPSCounter();
+    stopSPMCounter();
+}
+
+function startSPMCounter() {
+    startTime = Date.now(); // Set the start time when starting the SPM counter
+    spmCounterInterval = setInterval(() => {
+        const spm = getSPM();
+        document.getElementById('cpsValue').textContent = spm;
+    }, 1); // Update every second
+}
+
+function getSPM() {
+    const elapsedTime = (Date.now() - startTime) / 1000 / 60; // Convert to minutes
+    const spm = totalAutoScoreValue / elapsedTime; // Calculate SPM
+    const spmscore = simplifyNumber(spm);
+    return spmscore;
+}
+
+function stopSPMCounter() {
+    clearInterval(spmCounterInterval);
 }
 
 function toggleAutoClicker() {
+    console.log("toggleAutoClicker called");
     const autoClickerUpgrade = upgrades[6];
     const toggleButton = document.getElementById('toggleAutoClicker');
+    console.log("autoClickerInterval:", autoClickerInterval);
+    console.log("autoClickerUpgrade.level:", autoClickerUpgrade.level);
 
     if (autoClickerInterval) {
         clearInterval(autoClickerInterval);
@@ -227,11 +265,10 @@ function toggleAutoClicker() {
         toggleButton.classList.add('inactive');
         showUpgradeNotification(`❌ Auto-Clicker Off`);
     } else {
-
         if (autoClickerUpgrade.level > 0) {
             // Ensure that the 'score' variable is defined before starting the AutoClicker
             if (typeof score !== "undefined" && !isNaN(score)) {
-                startAutoClicker(autoClickerUpgrade.multiplier);
+                startAutoClicker(autoClickerUpgrade.level); // Pass the level as an argument
                 toggleButton.classList.remove('inactive');
                 toggleButton.classList.add('active');
                 addAutoClick();
@@ -239,25 +276,6 @@ function toggleAutoClicker() {
             }
         }
     }
-}
-
-function startCPSCounter() {
-    cpsCounterInterval = 0;
-    cpsCounterInterval = setInterval(() => {
-        const cps = getCPS();
-        document.getElementById('cpsValue').textContent = cps;
-    }, 690);
-}
-
-function stopCPSCounter() {
-    clearInterval(cpsCounterInterval);
-}
-
-function getCPS() {
-    const elapsedTime = (Date.now() - startTime) / 1000; // Zeit in Sekunden umrechnen
-    const cps = clickCounter / elapsedTime;
-    const cpsscore = simplifyNumber(cps)
-    return cpsscore
 }
 
 function simplifyNumber(number) {
@@ -276,7 +294,11 @@ function simplifyNumber(number) {
     }
 }
 
+// Funktion zum Aktualisieren der Upgrade-Buttons
 function updateUpgradeButtons() {
+    const quantityFilterButton = document.getElementById('quantityFilterButton');
+    const currentQuantity = parseInt(quantityFilterButton.textContent);
+
     Object.values(upgrades).forEach((upgrade, index) => {
         const button = upgradeButtons[index];
         if (button) {
@@ -286,7 +308,9 @@ function updateUpgradeButtons() {
             const hasAllProperties = requiredProperties.every(prop => upgrade.hasOwnProperty(prop));
 
             if (hasAllProperties) {
-                const simplifiedCost = simplifyNumber(upgrade.cost);
+                // Berechne den Gesamtpreis basierend auf der ausgewählten Menge
+                const totalCost = upgrade.cost * Math.pow(5, currentQuantity - 1);
+                const simplifiedCost = simplifyNumber(totalCost);
                 const levelText = upgrade.maxLevel ? `${upgrade.level}/${upgrade.maxLevel}` : upgrade.level;
 
                 button.textContent = `${upgrade.name} (Cost: ${simplifiedCost}, Level: ${levelText})`;
@@ -312,7 +336,6 @@ function updateUpgradeButtons() {
         }
     });
 }
-
 function resetUpgrades() {
     for (const upgradeId in upgrades) {
         if (upgrades.hasOwnProperty(upgradeId)) {
@@ -325,4 +348,56 @@ function resetUpgrades() {
     updateUpgradeButtons();
 }
 
+let quantityFilterButton = document.getElementById('quantityFilterButton');
+let quantityValues = [1, 5, 10, 20, 50, 100, 500, 1000];
+let currentIndex = 0;
+
+// Funktion zum Ändern der ausgewählten Menge
+function changeQuantity() {
+    quantityFilterButton.addEventListener('click', function() {
+        // Inkrementiere den Index und setze ihn zurück, wenn das Ende erreicht ist
+        currentIndex = (currentIndex + 1) % quantityValues.length;
+
+        // Ändere den Wert des Buttons basierend auf dem aktuellen Index
+        let currentValue = quantityValues[currentIndex];
+        quantityFilterButton.textContent = currentValue + 'x';
+        updateUpgradeButtons();
+    });
+}
+
+document.getElementById('quantityFilterButton').textContent = quantityValues[0] + 'x';
+
+// Funktion zum Kauf von Upgrades mit dynamischer Quantity
+function buyUpgradeWithDynamicQuantity(upgradeId) {
+    const upgrade = upgrades[upgradeId];
+
+    if (!upgrade) {
+        showUpgradeNotification("❌ Upgrade not found.");
+        return;
+    }
+
+    const currentQuantity = parseFloat(document.getElementById('quantityFilterButton').textContent);
+
+    if (!isNaN(currentQuantity) && currentQuantity > 0) {
+        const totalCost = upgrade.cost * (Math.pow(5, currentQuantity) - 1) / 4;
+
+        console.log('Current Quantity:', currentQuantity);
+        console.log('Total Cost:', totalCost);
+        console.log('Available Score:', score);
+
+        if (score >= totalCost) {
+            console.log('Buying upgrades...');
+            // Kaufe die ausgewählte Menge an Upgrades
+            for (let i = 0; i < currentQuantity; i++) {
+                buyUpgrade(upgradeId);
+            }
+        } else {
+            showUpgradeNotification("❌ Insufficient points.");
+        }
+    } else {
+        showUpgradeNotification("❌ Invalid quantity.");
+    }
+}
+
+changeQuantity();
 loadUpgradesFromLocalStorage();
