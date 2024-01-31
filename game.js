@@ -207,10 +207,10 @@ function give1qscore() {
     toggleDevOverlay();
 }
 
-function give1qtscore() {
-    score += 1000000000000000000;
+function give100qscore() {
+    score += 100000000000000000;
     updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1Qt to the Score`);
+    showUpgradeNotification(`⚙️ DEV: Added 100Q to the Score`);
     toggleDevOverlay();
 }
 

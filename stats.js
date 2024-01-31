@@ -44,21 +44,13 @@ function saveStatsToLocalStorage() {
     }));
 }
 
-function calculatePrestigeBonus() {
-    const baseBonus = 1000000;
-    const bonusMultiplier = 1.2;
-    const prestigeLevel = 1;
-
-    return Math.floor(baseBonus * Math.pow(bonusMultiplier, prestigeLevel));
-}
-
 function resetStats() {
     try {
         // Erstellen Sie die Bestätigungsnachricht mit aktuellen Statistiken
         const confirmationMessage = `
             Möchten Sie wirklich alle Statistiken zurücksetzen?
             (Lade die Seite neu nach dem Reset)
-            (Es wird immer einmal Geklickt aus verschiedenen Gründen)
+            (Vielleicht brauchst du Glück?)
 
             Aktuelle Statistiken:
             - Total Clicks: ${simplifyNumber(totalClicks)}
@@ -68,8 +60,6 @@ function resetStats() {
 
         // Zeige die Bestätigungsnachricht
         const isConfirmed = window.confirm(confirmationMessage);
-        const prestigeChance = 0.00005;
-        const hasPrestige = Math.random() < prestigeChance;
 
         // Deaktiviere den Auto Clicker, falls aktiv
         const autoClickerButton = document.getElementById('toggleAutoClicker');
@@ -80,48 +70,23 @@ function resetStats() {
         }
 
         if (isConfirmed) {
-            if (hasPrestige) {
-                const prestigeBonus = calculatePrestigeBonus();
-                showUpgradeNotification(`🌟 Prestige Bonus: +${simplifyNumber(prestigeBonus)} added!`);
-                totalScore += prestigeBonus;
-            } else {
-                // Wenn kein Prestige, setze die Statistiken zurück
-                totalClicks = 0;
-                totalScore = 0;
-                score = 0;
-                totalautoScore = 0;
-                totalautoClicks = 0;
+            totalClicks = 0;
+            totalScore = 0;
+            score = 0;
+            totalautoScore = 0;
+            totalautoClicks = 0;
 
-                autoClickerButton.style.display = 'none';
-                saveStatsToLocalStorage();
-            }
+            autoClickerButton.style.display = 'none';
 
             saveStatsToLocalStorage();
             updateStats();
             updateScore();
             saveUpgradesToLocalStorage();
             updateUpgradeButtons();
-
             localStorage.setItem('statsReset', 'true');
+            resetUpgrades();
             showUpgradeNotification("✅ STATS SUCCESSFULLY RESET");
-
-            // Upgrade-Levels auf null zurücksetzen
-            for (const upgradeId in upgrades) {
-                if (upgrades.hasOwnProperty(upgradeId)) {
-                    upgrades[upgradeId].level = 0;
-                    upgrades[upgradeId].owned = 0;
-                    upgrades[upgradeId].cost = upgrades[upgradeId].basecost;
-                }
-            }
-
-            // Überprüfe nach dem Zurücksetzen die Werte der Stats und Upgrade-Levels
-            console.log("Stats nach dem Reset:", totalClicks, totalScore, totalautoClicks, totalautoScore);
-            console.log("Upgrade-Levels nach dem Reset:", upgrades);
-
-            // Speichere die Änderungen im Local Storage, bevor die Seite neu geladen wird
-            saveStatsToLocalStorage();
-
-            // Simuliere einen Klick auf den Clicker-Button
+            // Simuliere einen Klick auf den Reset-Button
             const clickBtn = document.getElementById('clickBtn');
             if (clickBtn) {
                 clickBtn.click();
@@ -130,13 +95,12 @@ function resetStats() {
             // Lade die Seite nach 5 Sekunden neu
             setTimeout(() => {
                 location.reload();
-            }, 1000);
+            }, 1);
         }
     } catch (error) {
         console.error('Fehler beim Zurücksetzen der Stats:', error);
     }
 }
-
 
 // Fügen Sie einen Event Listener für den Reset-Button hinzu
 const resetButton = document.getElementById('resetButton');
@@ -145,8 +109,3 @@ if (resetButton) {
 }
 
 loadStatsFromLocalStorage();
-saveStatsToLocalStorage();
-updateStats();
-updateScore();
-saveUpgradesToLocalStorage();
-updateUpgradeButtons();

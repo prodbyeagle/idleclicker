@@ -2,9 +2,9 @@
 
 const upgradesKey = 'savedUpgrades';
 const upgrades = {
-    1: { name: "More Clicks", basecost: 50, cost: 15, level: 0, multiplier: 5, maxLevel: 25, owned: 0 },
-    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.001, cooldownReduction: 0, owned: 0, maxLevel: 25 },
-    6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 10, owned: 0 },
+    1: { name: "More Clicks", basecost: 20, cost: 15, level: 0, multiplier: 2, maxLevel: 250, owned: 0 },
+    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.001, cooldownReduction: 0, owned: 0, maxLevel: 50 },
+    6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 100, owned: 0 },
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -115,13 +115,13 @@ function applyLuckyClick(chance) {
 }
 
 function handleLuckyClick() {
-    const luckyClickUpgrade = upgrades[3]; // Ändern Sie die Upgrade-ID entsprechend Ihrer Struktur
-    const baseLuckyClickValue = 5000; // Basiswert, den Sie hinzufügen möchten
+    const luckyClickUpgrade = upgrades[3];
+    const baseLuckyClickValue = 5000; // Basiswert
 
-    // Wachstumsfaktor - passen Sie nach Bedarf an
+    // Wachstumsfaktor
     const growthFactor = 10.4;
 
-    // Berechnen Sie den Zuwachs basierend auf dem Upgrade-Level
+    // Berechne den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
 
     score += Math.round(scaledLuckyClickValue);
@@ -144,7 +144,7 @@ function createRandomClover() {
     const cloverContainer = document.getElementById('clover-container');
 
     // Vor dem Hinzufügen neuer Kleeblätter vorhandene Kleeblätter löschen
-    cloverContainer.textContent = ''; // Änderung hier
+    cloverContainer.textContent = '';
 
     for (let i = 0; i < cloverCount; i++) {
         const clover = document.createElement('div');
@@ -188,13 +188,13 @@ function startAutoClicker() {
         // Stelle sicher, dass die Variable 'score' definiert und nicht NaN ist
         if (typeof score !== "undefined" && !isNaN(score) && !isNaN(clickMultiplier) && !isNaN(autoClickerMultiplier)) {
             score += clickMultiplier * autoClickerMultiplier;
-            addAutoClick();
             updateScore();
             saveScoreToLocalStorage();
+            addAutoClick();
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
-    }, 300);
+    }, 175);
 }
 
 function stopAutoClicker() {
@@ -277,6 +277,18 @@ function updateUpgradeButtons() {
             }
         }
     });
+}
+
+function resetUpgrades() {
+    for (const upgradeId in upgrades) {
+        if (upgrades.hasOwnProperty(upgradeId)) {
+            upgrades[upgradeId].level = 0;
+            upgrades[upgradeId].cost = upgrades[upgradeId].basecost;
+            upgrades[upgradeId].owned = 0;
+        }
+    }
+    saveUpgradesToLocalStorage();
+    updateUpgradeButtons();
 }
 
 loadUpgradesFromLocalStorage();
