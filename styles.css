@@ -260,8 +260,8 @@ h1 {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.2s, visibility 0.2s;
-    top: 560%;  /* Positionierung unter dem Stats-Container */
-    left: -10%;  /* Zentrierung relativ zum übergeordneten Element */
+    top: 670%;  /* Positionierung unter dem Stats-Container */
+    left: -14%;  /* Zentrierung relativ zum übergeordneten Element */
     transform: translateY(120%);  /* Zentrierung relativ zum Tooltip selbst */
 }
 
@@ -314,7 +314,7 @@ h1 {
 }
 .devButton:hover {
     background-color: #45a049;
-    transform: scale(1.1);
+    transform: scale(0.9);
     transition: all 0.2s ease-in-out;
 }
 

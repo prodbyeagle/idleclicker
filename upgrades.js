@@ -64,7 +64,7 @@ function buyUpgrade(upgradeId) {
 
     upgrade.owned++;
     upgrade.level++;
-    upgrade.cost *= 25;
+    upgrade.cost *= 5;
 
     if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
         enableAutoClicker();
@@ -178,27 +178,42 @@ function applyUpgradeEffects(upgrade) {
 }
 
 let autoClickerInterval;
+let clickCounter = 0;
+let totalAutoScoreValue = 0;
+let cpsCounterInterval;
+let startTime;
 
 function startAutoClicker() {
     const autoClickerUpgrade = upgrades[6];
     const autoClickerMultiplier = autoClickerUpgrade.level;
+
+    startTime = Date.now();
 
     autoClickerInterval = setInterval(() => {
 
         // Stelle sicher, dass die Variable 'score' definiert und nicht NaN ist
         if (typeof score !== "undefined" && !isNaN(score) && !isNaN(clickMultiplier) && !isNaN(autoClickerMultiplier)) {
             score += clickMultiplier * autoClickerMultiplier;
+            
             updateScore();
             saveScoreToLocalStorage();
             addAutoClick();
+
+            // Erhöhe den Click-Zähler
+            clickCounter++;
+
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
-    }, 175);
+    }, 250);
+
+    // Starte den CPS-Zähler
+    startCPSCounter();
 }
 
 function stopAutoClicker() {
     clearInterval(autoClickerInterval);
+    stopCPSCounter();
 }
 
 function toggleAutoClicker() {
@@ -226,8 +241,27 @@ function toggleAutoClicker() {
     }
 }
 
+function startCPSCounter() {
+    cpsCounterInterval = 0;
+    cpsCounterInterval = setInterval(() => {
+        const cps = getCPS();
+        document.getElementById('cpsValue').textContent = cps;
+    }, 690);
+}
+
+function stopCPSCounter() {
+    clearInterval(cpsCounterInterval);
+}
+
+function getCPS() {
+    const elapsedTime = (Date.now() - startTime) / 1000; // Zeit in Sekunden umrechnen
+    const cps = clickCounter / elapsedTime;
+    const cpsscore = simplifyNumber(cps)
+    return cpsscore
+}
+
 function simplifyNumber(number) {
-    const suffixes = ["", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc"];
+    const suffixes = ["", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St", "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT", "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT", "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT", "DtT", "TtT", "QtTT", "SxTT", "SpTT", "OcTT"];
     let suffixIndex = 0;
 
     // Vereinfache nur, wenn die Zahl größer als 1000 ist

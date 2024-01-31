@@ -123,7 +123,7 @@ clickBtn.addEventListener('click', function() {
     setTimeout(() => {
         clickBtn.disabled = false;
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 50);
+    }, 70);
 });
 
 function simplifyNumber(number) {
