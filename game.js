@@ -204,6 +204,14 @@ window.addEventListener('load', function () {
     if (window.innerWidth <= 600) {
         mobileWarning.style.display = 'block';
     }
+    
+        // Überprüfen Sie, ob die Seite im Desktop-Modus ausgeführt wird
+        if (/Mobi|Android/i.test(navigator.userAgent)) {
+            // Mobilgerät erkannt, zeige die Warnung an
+            document.getElementById('warningOverlay').style.display = 'flex';
+        }
+
+
 });
 
 
