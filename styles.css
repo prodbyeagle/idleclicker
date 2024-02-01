@@ -239,34 +239,18 @@ h1 {
 
 #achievements-container p {
     font-size: 22px; /* Schriftgröße für die Statistik informationen */
-    margin: 5px 0; /* Abstand oben und unten für jede Statistik information */
+    margin: 10px 0; /* Abstand oben und unten für jede Statistik information */
 }
 
 .tooltip {
-    position: relative;
-    display: inline-block;
-    margin-top: 10px;  /* Ändere den Abstand zum darüberliegenden Element nach Bedarf */
-}
-
-.tooltip::after {
-    content: attr(title);
-    position: absolute;
-    background: #2d2e33;
-    color: var(--primary-color);
+    position: fixed;
+    background-color: #333;
+    color: #fff;
     padding: 5px;
     border-radius: 5px;
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.2s, visibility 0.2s;
-    top: 670%;  /* Positionierung unter dem Stats-Container */
-    left: -9%;  /* Zentrierung relativ zum übergeordneten Element */
-    transform: translateY(120%);  /* Zentrierung relativ zum Tooltip selbst */
-}
-
-.tooltip:hover::after {
-    opacity: 1;
-    visibility: visible;
+    display: none;
+    bottom: 10px; /* Abstand zum unteren Rand */
+    left: 10px; /* Abstand zum linken Rand */
 }
 
 /* Developer Overlay */
@@ -433,7 +417,7 @@ h1 {
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
-    font-size: 18px;
+    font-size: 14px;
     cursor: pointer;
     margin-top: 20px;
     transition: all 0.2s ease;
@@ -445,5 +429,5 @@ h1 {
 
 #quantityFilterButton:active {
     transform: scale(0.9);
-    background-color: var(--button-click-color);
+    background-color: red;
 }

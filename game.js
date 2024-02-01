@@ -19,6 +19,10 @@ function saveScoreToLocalStorage() {
     localStorage.setItem('score', score.toString());
 }
 
+
+// Notification System
+ 
+
 function showUpgradeNotification(message) {
     let toastContainer = document.querySelector('.toast-container');
 
@@ -91,6 +95,48 @@ function showUpgradeNotification(message) {
     }, interval);
 }
 
+// ToolTip System
+
+const tooltipTriggerElements = document.querySelectorAll('.tooltip-trigger');
+const tooltip = document.getElementById('tooltip');
+
+function setTooltip(content) {
+    tooltip.textContent = content;
+    tooltip.style.display = 'block';
+}
+
+function hideTooltip() {
+    tooltip.style.display = 'none';
+}
+
+function handleTooltip(event) {
+    const content = event.currentTarget.getAttribute('data-tooltip-content');
+    setTooltip(content);
+
+    // Positioniere den Tooltip relativ zum Trigger
+    tooltipTrigger.addEventListener('mousemove', (event) => {
+        const x = event.clientX + 10; // Versatz in X-Richtung
+        const y = event.clientY + 10; // Versatz in Y-Richtung
+
+        // Setze den Text im Tooltip-Container
+        tooltip.textContent = content;
+
+        // Setze die Position des Tooltips basierend auf der Mausposition
+        tooltip.style.left = x + 'px';
+
+        // Setze die Position des Tooltips oberhalb des Texts im Container
+        const tooltipHeight = tooltip.offsetHeight;
+        tooltip.style.top = Math.max(y - tooltipHeight, 0) + 'px';
+    });
+}
+
+
+tooltipTriggerElements.forEach(trigger => {
+    trigger.addEventListener('mouseover', handleTooltip);
+    trigger.addEventListener('mouseout', hideTooltip);
+});
+
+
 // Click-Event für den Button
 clickBtn.addEventListener('click', function() {
     this.classList.add('clicked');
@@ -117,13 +163,15 @@ clickBtn.addEventListener('click', function() {
     updateStats();
     saveStatsToLocalStorage();
     saveScoreToLocalStorage();
+    checkAchievements();
+    updateAchievements();
 
     // Anti-Auto Clicker:
     clickBtn.disabled = true;
     setTimeout(() => {
         clickBtn.disabled = false;
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 50);
+    }, 75);
 });
 
 function simplifyNumber(number) {
@@ -146,8 +194,9 @@ updateUpgradeButtons();
 
 
 // Dev Overlay
-
+ 
 document.addEventListener('DOMContentLoaded', () => {
+    loadAchievements();
 });
 
 document.addEventListener('keydown', function (event) {

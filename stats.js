@@ -85,6 +85,7 @@ function resetStats() {
             updateUpgradeButtons();
             localStorage.setItem('statsReset', 'true');
             resetUpgrades();
+            resetAchievements()
             showUpgradeNotification("✅ STATS SUCCESSFULLY RESET");
             // Simuliere einen Klick auf den Reset-Button
             const clickBtn = document.getElementById('clickBtn');

@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idle Clicker</title>
+    <title>🦅's Idle Clicker</title>
     <link rel="icon" type="image/x-icon" href="/icon.ico">
     <link rel="stylesheet" type="text/css" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,13 +12,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" />
 </head>
+
 <body>
+
 <video class="background" autoplay loop muted>
     <source src="background.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
+
 <div class="game-container">
-    <h1>Idle Clicker</h1>
+    <h1>🦅's Idle Clicker</h1>
     <div id="notification" class="notification"></div>
     <div id="prodbyeagle">@prodbyeagle</div>
     <p id="score">Clicks: <span id="scoreValue" title="${score} (Thats the Score before the Recent Click)">0</span></p>
@@ -27,27 +31,39 @@
 </div>
 
 <div id="upgrades-container">
-    <h2>Upgrades:</h2>
+    <h2>Upgrades: <button id="quantityFilterButton"></button></h2>
     <div id="upgrades">
         <button onclick="buyUpgrade(1)" title="Pro Upgrade = 5x (Stack sich)"></button>
         <button onclick="buyUpgrade(3)" title="Jede Minute 1% Chance ein Luck Event zu spawnen"></button>
         <button onclick="buyUpgrade(6)" title="Naja... Auto clicker!"></button>
     </div>
-    <button id="quantityFilterButton">testtext</button>
 </div>
-<div id="clover-container"></div>
+
 <div id="stats-container">
     <h2>Stats:</h2>
-    <p>Total Clicks: <span id="totalClicks">0</span></p>
-    <p id="totalScore" class="tooltip" title="Any Type of Bonus is excluded!">Total Score: <span id="totalScoreValue">0</span></p>
+    <p class="tooltip-trigger" data-tooltip-content="☝️ Your Strength in Power of that Index Finger has made">
+        Total Score: <span id="totalClicks">0</span>
+      </p>
+      
+    <p class="tooltip-trigger" data-tooltip-content="⚠️ All Bonuses are opt-out. Just the Bonus Clicks">
+        Total Score: <span id="totalScoreValue">0</span>
+      </p>
     <h2>Auto-Clicker Stats:</h2>
-    <p>Total Clicks: <span id="totalautoClicks">0</span></p>
-    <p>Total Score: <span id="totalautoScoreValue">0</span></p>
-    <p id="totalScore" class="tooltip" title="Score per Minute">CPM: <span id="cpsValue">0</span></p>
+    <p class="tooltip-trigger" data-tooltip-content="📄 Clicks that the Auto Clicker made since the First Start">
+        Total Score: <span id="totalautoClicks">0</span>
+      </p>
+      
+    <p class="tooltip-trigger" data-tooltip-content="📄 Total of the Score that the Auto Clicker made">
+        Total Score: <span id="totalautoScoreValue">0</span>
+      </p>
+    <p class="tooltip-trigger" data-tooltip-content="🪙 Clicks per Minute">
+        CPM: <span id="cpsValue">0</span>
+      </p>
 </div>
 
 <div id="achievements-container">
     <h2>Achievements:</h2>
+    
 </div>
 
 <div id="devOverlay" class="hidden">
@@ -62,7 +78,11 @@
         <button id="devButton10" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
     </div>
 </div>
+
 <div class="toast-container"></div>
+<div id="tooltip" class="tooltip"></div>
+<div id="clover-container"></div>
+
 <script src="upgrades.js"></script>
 <script src="achievements.js"></script>
 <script src="game.js"></script>
