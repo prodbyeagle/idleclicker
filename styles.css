@@ -63,7 +63,7 @@ h1 {
 
 #resetButton {
     font-family: 'Rubik', sans-serif;
-    background-color: #ff3737;
+    background-color: #ff4d4d;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -80,7 +80,7 @@ h1 {
 
 #resetButton:active {
     transform: scale(0.9);
-    background-color: #ff2020;
+    background-color: #ff4d4d;
 }
 
 #upgrades-container {
