@@ -41,7 +41,7 @@ h1 {
 
 #clickBtn {
     font-family: 'Rubik', sans-serif;
-    background-color: var(--primary-color);
+    background-color: #45a049;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -63,7 +63,7 @@ h1 {
 
 #resetButton {
     font-family: 'Rubik', sans-serif;
-    background-color: #575757;
+    background-color: #ff3737;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -75,13 +75,12 @@ h1 {
 }
 
 #resetButton:hover {
-    background-color: #545662;
-    transform: scale(1.1)
+    transform: scale(1.1);
 }
 
 #resetButton:active {
     transform: scale(0.9);
-    background-color: var(--button-click-color);
+    background-color: #ff2020;
 }
 
 #upgrades-container {
@@ -173,7 +172,7 @@ h1 {
     font-size: 14px;
     margin-top: 20px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.2s ease;
 }
 
 #toggleAutoClicker.active {
@@ -185,7 +184,8 @@ h1 {
 }
 
 #toggleAutoClicker:hover {
-    background-color: #575757;  /* Grau bei Hover, hier kannst du die gewünschte Farbe anpassen */
+    background-color: #575757;
+    transform: scale(0.9)  /* Grau bei Hover, hier kannst du die gewünschte Farbe anpassen */
 }
 
 .game-container {

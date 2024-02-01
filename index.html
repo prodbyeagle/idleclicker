@@ -24,7 +24,7 @@
     <h1>🦅's Idle Clicker</h1>
     <div id="notification" class="notification"></div>
     <div id="prodbyeagle">@prodbyeagle</div>
-    <p id="score">Clicks: <span id="scoreValue" title="${score} (Thats the Score before the Recent Click)">0</span></p>
+    <p id="score">🪙 <span id="scoreValue" title="${score} (Thats the Score before the Recent Click)">0</span></p>
     <button id="clickBtn">Click</button>
     <button id="resetButton">Reset</button>
     <button id="toggleAutoClicker" onclick="toggleAutoClicker()">Toggle Auto Clicker</button>
@@ -33,20 +33,26 @@
 <div id="upgrades-container">
     <h2>Upgrades: <button id="quantityFilterButton"></button></h2>
     <div id="upgrades">
-        <button onclick="buyUpgrade(1)" title="Pro Upgrade = 5x (Stack sich)"></button>
-        <button onclick="buyUpgrade(3)" title="Jede Minute 1% Chance ein Luck Event zu spawnen"></button>
-        <button onclick="buyUpgrade(6)" title="Naja... Auto clicker!"></button>
+        <p class="tooltip-trigger" data-tooltip-content="📄 Pro Upgrade = 5x (Stacking!)">
+            <button onclick="buyUpgrade(1)"></button>
+          </p>
+          <p class="tooltip-trigger" data-tooltip-content="📄 Every Minute 1% Chance spawning an Lucky Event">
+            <button onclick="buyUpgrade(3)"></button>
+        </p> 
+        <p class="tooltip-trigger" data-tooltip-content="📄 Upgrade the Auto-Clicker for More Coins">
+            <button onclick="buyUpgrade(6)"></button>
+          </p> 
     </div>
 </div>
 
 <div id="stats-container">
     <h2>Stats:</h2>
     <p class="tooltip-trigger" data-tooltip-content="☝️ Your Strength in Power of that Index Finger has made">
-        Total Score: <span id="totalClicks">0</span>
+        Total Clicks: <span id="totalClicks">0</span>
       </p>
       
     <p class="tooltip-trigger" data-tooltip-content="⚠️ All Bonuses are opt-out. Just the Bonus Clicks">
-        Total Score: <span id="totalScoreValue">0</span>
+        Total Coins: <span id="totalScoreValue">0</span>
       </p>
     <h2>Auto-Clicker Stats:</h2>
     <p class="tooltip-trigger" data-tooltip-content="📄 Clicks that the Auto Clicker made since the First Start">
