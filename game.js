@@ -147,15 +147,16 @@ clickBtn.addEventListener('click', function() {
     updateStats();
     saveStatsToLocalStorage();
     saveScoreToLocalStorage();
-    checkAchievements();
-    updateAchievements();
 
     // Anti-Auto Clicker:
     clickBtn.disabled = true;
     setTimeout(() => {
         clickBtn.disabled = false;
         this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 75);
+    }, 70);
+
+    checkAchievements();
+    updateAchievements();
 });
 
 function simplifyNumber(number) {
@@ -175,6 +176,50 @@ function updateScore() {
     scoreElement.textContent = simplifyNumber(score);
 }
 updateUpgradeButtons();
+
+
+// Display Error
+
+// Funktion zum Anzeigen von Fehlern auf dem HUD
+function displayError(message) {
+    const errorContainer = document.getElementById('error-container');
+
+    // Erstelle ein neues Element für den Fehler
+    const errorElement = document.createElement('div');
+    errorElement.classList.add('error');
+    errorElement.textContent = message;
+
+    // Füge das Fehler-Element zum Container hinzu
+    errorContainer.appendChild(errorElement);
+
+    // Setze ein Timeout, um den Fehler nach einer gewissen Zeit zu entfernen
+    setTimeout(() => {
+        errorContainer.removeChild(errorElement);
+    }, 5000); // Fehler wird nach 5 Sekunden entfernt (passen Sie die Zeit nach Bedarf an)
+}
+
+window.addEventListener('load', function () {
+    const mobileWarning = document.getElementById('mobile-warning');
+    
+    if (window.innerWidth <= 600) {
+        mobileWarning.style.display = 'block';
+    }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // Dev Overlay

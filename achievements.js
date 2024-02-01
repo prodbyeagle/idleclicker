@@ -2,73 +2,87 @@
 
 const achievements = [
     {
-        id: 'click_100',
-        name: '👶 Click Novice',
-        description: 'Click 100 times',
-        target: 100,
-        unlocked: false
-    },
-    {
         id: 'click_500',
-        name: '🏅 Click Expert',
-        description: 'Click 500 times',
+        name: '👶 Click Novice',
+        description: '👶 Click 500 times',
         target: 500,
         unlocked: false
     },
     {
         id: 'score_100k',
         name: '🚀 Score Beginner',
-        description: 'Reach a score of 100,000',
+        description: '🚀 Reach a score of 100,000',
         target: 100000,
         unlocked: false
     },
     {
         id: 'click_1000',
         name: '🔥 Click Master',
-        description: 'Click 1,000 times',
+        description: '🔥 Click 1,000 times',
         target: 1000,
         unlocked: false
     },
     {
         id: 'click_10000',
         name: '🌟 Click Legend',
-        description: 'Click 10,000 times',
+        description: '🌟 Click 10,000 times',
         target: 10000,
         unlocked: false
     },
     {
         id: 'score_500k',
         name: '🏆 Score Pro',
-        description: 'Reach a score of 500,000',
+        description: '🏆 Reach a score of 500,000',
         target: 500000,
         unlocked: false
     },
     {
-        id: 'score_1m',
+        id: 'score_10m',
         name: '🎖️ Score Master',
-        description: 'Reach a score of 1 million',
-        target: 1000000,
+        description: '🎖️ Reach a score of 10 million',
+        target: 10000000,
         unlocked: false
     },
     {
         id: 'click_5000',
         name: '👑 Click Grandmaster',
-        description: 'Click 5,000 times',
+        description: '👑 Click 5,000 times',
         target: 5000,
         unlocked: false
     },
     {
         id: 'score_2m',
         name: '🌠 Score Grandmaster',
-        description: 'Reach a score of 2 million',
+        description: '🌠 Reach a score of 2 million',
         target: 2000000,
         unlocked: false
     },
     {
         id: 'click_100000',
         name: '🎮 Click God',
-        description: 'Click 100,000 times',
+        description: '🎮 Click 100,000 times',
         target: 100000,
+        unlocked: false
+    },
+    {
+        id: 'click_50000',
+        name: '🔱 Click Deity',
+        description: '🔱 Click 50,000 times',
+        target: 50000,
+        unlocked: false
+    },
+    {
+        id: 'score_5m',
+        name: '🏅 Score Legend',
+        description: '🏅 Reach a score of 5 million',
+        target: 5000000,
+        unlocked: false
+    },
+    {
+        id: 'click_250000',
+        name: '💎 Click Supreme',
+        description: '💎 Click 250,000 times',
+        target: 250000,
         unlocked: false
     },
 ];
@@ -125,26 +139,38 @@ function checkAchievements() {
     });
 }
 
+const achievementsContainer = document.getElementById('achievements-container');
+let activeTooltipElement; // Globale Variable für das aktive Tooltip-Element
+let tooltipTimeout;
+
 function updateAchievements() {
-    const achievementsContainer = document.getElementById('achievements-container');
     achievementsContainer.innerHTML = '<h2>Achievements:</h2>'; // Setze den Titel zurück
 
     achievements.forEach(achievement => {
+        const achievementElement = document.createElement('div');
+        achievementElement.textContent = achievement.unlocked ? `${achievement.name}: ✅` : `${achievement.name}: ❌`;
+
         if (achievement.unlocked) {
-            const achievementElement = document.createElement('div');
-            achievementElement.textContent = `${achievement.name}: Unlocked`;
-
-            // Erstelle ein Tooltip-Element
-            const tooltip = document.createElement('div');
-            tooltip.classList.add('achtooltip');
-            tooltip.textContent = achievement.description;
-
-            // Füge das Tooltip-Element als Kind zum Achievement-Element hinzu
-            achievementElement.appendChild(tooltip);
-
-            // Füge das Achievement-Element zum Container hinzu
-            achievementsContainer.appendChild(achievementElement);
+            achievementElement.classList.add('achievement', 'unlocked');
+            achievementElement.setAttribute('data-tooltip-content', achievement.description);
+        } else {
+            achievementElement.classList.add('');
         }
+
+        // Füge das Achievement-Element zum Container hinzu
+        achievementsContainer.appendChild(achievementElement);
+
+        // Füge Event-Listener für Tooltip-Hover hinzu
+        achievementElement.addEventListener('mouseover', (event) => {
+            const content = achievementElement.getAttribute('data-tooltip-content');
+            handleTooltip(event, content);
+        });
+
+        // Verwende mouseleave anstelle von mouseout für stabilere Effekte
+        achievementElement.addEventListener('mouseleave', () => {
+            clearTimeout(tooltipTimeout);
+            hideTooltip();
+        });
     });
 }
 
