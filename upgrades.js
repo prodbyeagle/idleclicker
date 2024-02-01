@@ -40,7 +40,7 @@ function saveUpgradesToLocalStorage() {
     localStorage.setItem(upgradesKey, JSON.stringify(savedUpgrades));
 }
 
-// Kaufe Upgrade-Funktion mit dynamischer Menge
+// Kaufe Upgrade-Funktion
 function buyUpgrade(upgradeId) {
     const upgrade = upgrades[upgradeId];
 
@@ -54,48 +54,26 @@ function buyUpgrade(upgradeId) {
         return;
     }
 
-    // Lese die aktuelle Menge vom Button
-    const currentQuantity = parseInt(document.getElementById('quantityFilterButton').textContent);
-
-    // Berechne den Gesamtpreis für die angegebene Menge
-    const totalCost = upgrade.cost * currentQuantity;
-
-    if (score < totalCost) {
+    if (score < upgrade.cost) {
         showUpgradeNotification("❌ Insufficient points.");
         return;
     }
 
-    // Überprüfe, ob der Kauf möglich ist
-    if (upgrade.cost > 0) {
-        const maxAffordableQuantity = Math.floor(score / upgrade.cost);
+    score -= upgrade.cost;
+    applyUpgradeEffects(upgrade);
 
-        if (currentQuantity > maxAffordableQuantity) {
-            // Reduziere die Menge auf die maximale erschwingliche Menge
-            currentQuantity = maxAffordableQuantity;
-            document.getElementById('quantityFilterButton').textContent = `${currentQuantity}x`;
-        }
+    upgrade.owned++;
+    upgrade.level++;
+    upgrade.cost *= 35;
+
+    if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
+        enableAutoClicker();
     }
 
-    for (let i = 0; i < currentQuantity; i++) {
-        score -= totalCost;
-        applyUpgradeEffects(upgrade);
-
-        upgrade.owned++;
-        upgrade.level++;
-        upgrade.cost *= 5;
-
-        if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
-            enableAutoClicker();
-        }
-
-        updateScore();
-        updateUpgradeButtons();
-        showUpgradeNotification(`✅ Upgraded ${upgrade.name} to Level ${upgrade.level}`);
-        saveUpgradesToLocalStorage();
-
-        console.log('Upgraded', upgrade.name, 'to Level', upgrade.level);
-        console.log('Remaining Score:', score);
-    }
+    updateScore();
+    updateUpgradeButtons();
+    showUpgradeNotification(`✅ Upgraded ${upgrade.name} to Level ${upgrade.level}`);
+    saveUpgradesToLocalStorage();
 }
 
 function enableAutoClicker() {
@@ -303,9 +281,6 @@ function simplifyNumber(number) {
 
 // Funktion zum Aktualisieren der Upgrade-Buttons
 function updateUpgradeButtons() {
-    const quantityFilterButton = document.getElementById('quantityFilterButton');
-    const currentQuantity = parseInt(quantityFilterButton.textContent);
-
     Object.values(upgrades).forEach((upgrade, index) => {
         const button = upgradeButtons[index];
         if (button) {
@@ -315,9 +290,7 @@ function updateUpgradeButtons() {
             const hasAllProperties = requiredProperties.every(prop => upgrade.hasOwnProperty(prop));
 
             if (hasAllProperties) {
-                // Berechne den Gesamtpreis basierend auf der ausgewählten Menge
-                const totalCost = upgrade.cost * Math.pow(5, currentQuantity - 1);
-                const simplifiedCost = simplifyNumber(totalCost);
+                const simplifiedCost = simplifyNumber(upgrade.cost);
                 const levelText = upgrade.maxLevel ? `${upgrade.level}/${upgrade.maxLevel}` : upgrade.level;
 
                 button.textContent = `${upgrade.name} (Cost: ${simplifiedCost}, Level: ${levelText})`;
@@ -343,6 +316,7 @@ function updateUpgradeButtons() {
         }
     });
 }
+
 function resetUpgrades() {
     for (const upgradeId in upgrades) {
         if (upgrades.hasOwnProperty(upgradeId)) {
@@ -355,61 +329,4 @@ function resetUpgrades() {
     updateUpgradeButtons();
 }
 
-let quantityFilterButton = document.getElementById('quantityFilterButton');
-let quantityValues = [1, 5, 10, 25];
-let currentIndex = 0;
-
-// Funktion zum Ändern der ausgewählten Menge
-function changeQuantity() {
-    quantityFilterButton.addEventListener('click', function() {
-        // Inkrementiere den Index und setze ihn zurück, wenn das Ende erreicht ist
-        currentIndex = (currentIndex + 1) % quantityValues.length;
-
-        // Ändere den Wert des Buttons basierend auf dem aktuellen Index
-        let currentValue = quantityValues[currentIndex];
-        quantityFilterButton.textContent = currentValue + 'x';
-        updateUpgradeButtons();
-    });
-}
-
-document.getElementById('quantityFilterButton').textContent = quantityValues[0] + 'x';
-
-// Funktion zum Kauf von Upgrades mit dynamischer Quantity
-function buyUpgradeWithDynamicQuantity(upgradeId) {
-    const upgrade = upgrades[upgradeId];
-
-    if (!upgrade) {
-        showUpgradeNotification("❌ Upgrade not found.");
-        return;
-    }
-
-    const currentQuantity = parseFloat(document.getElementById('quantityFilterButton').textContent);
-
-    if (!isNaN(currentQuantity) && currentQuantity > 0) {
-        const totalCost = upgrade.cost * (Math.pow(5, currentQuantity) - 1) / 4;
-
-        console.log('Current Quantity:', currentQuantity);
-        console.log('Total Cost:', totalCost);
-        console.log('Available Score:', score);
-
-        if (score >= totalCost) {
-            console.log('Buying upgrades...');
-            // Kaufe die ausgewählte Menge an Upgrades
-            for (let i = 0; i < currentQuantity; i++) {
-                if (upgrade.level < upgrade.maxlevel) {
-                    buyUpgrade(upgradeId);
-                } else {
-                    showUpgradeNotification("❌ To Much LvL.");
-                    break;
-                }
-            }
-        } else {
-            showUpgradeNotification("❌ Insufficient points.");
-        }
-    } else {
-        showUpgradeNotification("❌ Invalid quantity.");
-    }
-}
-
-changeQuantity();
 loadUpgradesFromLocalStorage();

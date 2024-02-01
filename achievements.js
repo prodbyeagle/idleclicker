@@ -37,13 +37,6 @@ const achievements = [
         unlocked: false
     },
     {
-        id: 'score_10m',
-        name: '🎖️ Score Master',
-        description: '🎖️ Reach a score of 10 million',
-        target: 10000000,
-        unlocked: false
-    },
-    {
         id: 'click_5000',
         name: '👑 Click Grandmaster',
         description: '👑 Click 5,000 times',
@@ -76,6 +69,13 @@ const achievements = [
         name: '🏅 Score Legend',
         description: '🏅 Reach a score of 5 million',
         target: 5000000,
+        unlocked: false
+    },
+    {
+        id: 'score_10m',
+        name: '🎖️ Score Master',
+        description: '🎖️ Reach a score of 10 million',
+        target: 10000000,
         unlocked: false
     },
     {
