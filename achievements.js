@@ -147,30 +147,30 @@ function updateAchievements() {
     achievementsContainer.innerHTML = '<h2>Achievements:</h2>'; // Setze den Titel zurück
 
     achievements.forEach(achievement => {
-        const achievementElement = document.createElement('div');
-        achievementElement.textContent = achievement.unlocked ? `${achievement.name}: ✅` : `${achievement.name}: ❌`;
-
+        // Nur für entsperrte Achievements Elemente erstellen
         if (achievement.unlocked) {
+            const achievementElement = document.createElement('div');
+            achievementElement.textContent = `${achievement.name}: ✅`;
+
+            // Füge immer die 'achievement' und 'unlocked' Klasse hinzu
             achievementElement.classList.add('achievement', 'unlocked');
             achievementElement.setAttribute('data-tooltip-content', achievement.description);
-        } else {
-            achievementElement.classList.add('');
+
+            // Füge das Achievement-Element zum Container hinzu
+            achievementsContainer.appendChild(achievementElement);
+
+            // Füge Event-Listener für Tooltip-Hover hinzu
+            achievementElement.addEventListener('mouseover', (event) => {
+                const content = achievementElement.getAttribute('data-tooltip-content');
+                handleTooltip(event, content);
+            });
+
+            // Verwende mouseleave anstelle von mouseout für stabilere Effekte
+            achievementElement.addEventListener('mouseleave', () => {
+                clearTimeout(tooltipTimeout);
+                hideTooltip();
+            });
         }
-
-        // Füge das Achievement-Element zum Container hinzu
-        achievementsContainer.appendChild(achievementElement);
-
-        // Füge Event-Listener für Tooltip-Hover hinzu
-        achievementElement.addEventListener('mouseover', (event) => {
-            const content = achievementElement.getAttribute('data-tooltip-content');
-            handleTooltip(event, content);
-        });
-
-        // Verwende mouseleave anstelle von mouseout für stabilere Effekte
-        achievementElement.addEventListener('mouseleave', () => {
-            clearTimeout(tooltipTimeout);
-            hideTooltip();
-        });
     });
 }
 

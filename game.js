@@ -123,40 +123,44 @@ tooltipTriggerElements.forEach(trigger => {
 
 // Click-Event für den Button
 clickBtn.addEventListener('click', function() {
-    this.classList.add('clicked');
+    try {
+        this.classList.add('clicked');
 
-    // Überprüfen, ob das "Lucky Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
-    const luckyClickUpgrade = upgrades[3];
-    if (luckyClickUpgrade && luckyClickUpgrade.level >= 1) {
-        applyLuckyClick(0.01); // Passen Sie die Chance nach Bedarf an
+        // Überprüfen, ob das "Lucky Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
+        const luckyClickUpgrade = upgrades[3];
+        if (luckyClickUpgrade && luckyClickUpgrade.level >= 1) {
+            applyLuckyClick(0.01); // Passen Sie die Chance nach Bedarf an
+        }
+
+        // Überprüfen, ob das "More Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
+        const moreClicksUpgrade = upgrades[1];
+        if (moreClicksUpgrade && moreClicksUpgrade.level >= 1) {
+            clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
+        }
+
+        const scoreValueElement = document.getElementById('scoreValue');
+        scoreValueElement.title = score.toString();
+
+        score += clickMultiplier;
+        totalClicks++; // Erhöhe die Gesamtanzahl der Klicks
+        totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
+        updateScore();
+        updateStats();
+        saveStatsToLocalStorage();
+        saveScoreToLocalStorage();
+
+        // Anti-Auto Clicker:
+        clickBtn.disabled = true;
+        setTimeout(() => {
+            clickBtn.disabled = false;
+            this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
+        }, 70);
+
+        checkAchievements();
+        updateAchievements();
+    } catch (error) {
+        displayError(error.message);
     }
-
-    // Überprüfen, ob das "More Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
-    const moreClicksUpgrade = upgrades[1];
-    if (moreClicksUpgrade && moreClicksUpgrade.level >= 1) {
-        clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
-    }
-
-    const scoreValueElement = document.getElementById('scoreValue');
-    scoreValueElement.title = score.toString();
-
-    score += clickMultiplier;
-    totalClicks++; // Erhöhe die Gesamtanzahl der Klicks
-    totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
-    updateScore();
-    updateStats();
-    saveStatsToLocalStorage();
-    saveScoreToLocalStorage();
-
-    // Anti-Auto Clicker:
-    clickBtn.disabled = true;
-    setTimeout(() => {
-        clickBtn.disabled = false;
-        this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-    }, 70);
-
-    checkAchievements();
-    updateAchievements();
 });
 
 function simplifyNumber(number) {
@@ -194,7 +198,13 @@ function displayError(message) {
 
     // Setze ein Timeout, um den Fehler nach einer gewissen Zeit zu entfernen
     setTimeout(() => {
-        errorContainer.removeChild(errorElement);
+        // Füge die Klasse 'fade-out' hinzu, um die Transitionsanimation auszulösen
+        errorElement.classList.add('fade-out');
+
+        // Warte auf das Ende der Animation und entferne dann das Element
+        errorElement.addEventListener('transitionend', () => {
+            errorContainer.removeChild(errorElement);
+        }, { once: true });
     }, 5000); // Fehler wird nach 5 Sekunden entfernt (passen Sie die Zeit nach Bedarf an)
 }
 
@@ -204,14 +214,7 @@ window.addEventListener('load', function () {
     if (window.innerWidth <= 600) {
         mobileWarning.style.display = 'block';
     }
-
-        // Überprüfen Sie, ob die Seite im Desktop-Modus ausgeführt wird
-        if (/Mobi|Android/i.test(navigator.userAgent)) {
-            // Mobilgerät erkannt, zeige die Warnung an
-            document.getElementById('warningOverlay').style.display = 'flex';
-        }
-
-
+    
 });
 
 

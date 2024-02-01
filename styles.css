@@ -457,3 +457,24 @@ h1 {
     max-width: 80%;
     padding: 20px;
 }
+
+#error-container {
+    position: fixed;
+    top: 10px; /* Anpassen Sie die Position nach Bedarf */
+    left: 10px; /* Anpassen Sie die Position nach Bedarf */
+    z-index: 1000; /* Stellen Sie sicher, dass es über anderen Elementen liegt */
+}
+
+.error {
+    background-color: red; /* Hintergrundfarbe des Fehlerelements */
+    border-radius: 5px;
+    color: white; /* Textfarbe des Fehlerelements */
+    padding: 10px; /* Innenabstand für das Fehlerelement */
+    margin-bottom: 5px; /* Abstand zwischen aufeinanderfolgenden Fehlern */
+    opacity: 1;
+    transition: opacity 1s ease;
+}
+
+.error.fade-out {
+    opacity: 0;
+}
