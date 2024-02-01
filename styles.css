@@ -450,3 +450,10 @@ h1 {
     max-width: 80%;
     padding: 20px;
 }
+
+.warningOverlay{
+    text-align: center;
+    color: white;
+    max-width: 80%;
+    padding: 20px;
+}
