@@ -2,8 +2,8 @@
 
 const upgradesKey = 'savedUpgrades';
 const upgrades = {
-    1: { name: "More Clicks", basecost: 20, cost: 15, level: 0, multiplier: 2, maxLevel: 250, owned: 0 },
-    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.001, cooldownReduction: 0, owned: 0, maxLevel: 50 },
+    1: { name: "More Clicks", basecost: 20, cost: 15, level: 0, multiplier: 2, maxLevel: 100, owned: 0 },
+    3: { name: "Lucky Clicks", basecost: 500000, cost: 10000, level: 0, luckyClickChance: 0.001, cooldownReduction: 0, owned: 0, maxLevel: 25},
     6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 100, owned: 0 },
 };
 
@@ -138,7 +138,7 @@ function applyLuckyClick(chance) {
 
 function handleLuckyClick() {
     const luckyClickUpgrade = upgrades[3];
-    const baseLuckyClickValue = 5000; // Basiswert
+    const baseLuckyClickValue = 200000; // Basiswert
 
     // Wachstumsfaktor
     const growthFactor = 4.69;
@@ -162,7 +162,7 @@ function createRandomClover() {
 
     isCloverFalling = true;
 
-    const cloverCount = 69;
+    const cloverCount = 25;
     const cloverContainer = document.getElementById('clover-container');
 
     // Vor dem Hinzufügen neuer Kleeblätter vorhandene Kleeblätter löschen
@@ -184,7 +184,7 @@ function createRandomClover() {
     setTimeout(() => {
         isCloverFalling = false;
         cloverContainer.textContent = ''; // Hier werden die Kleeblätter aus dem Container entfernt
-    }, 3000);
+    }, 4500);
 }
 
 function applyUpgradeEffects(upgrade) {
@@ -221,7 +221,7 @@ function startAutoClicker(autoClickerMultiplier) {
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
-    }, 250);
+    }, 175);
 
     startSPMCounter(); // Start the SPM counter
 }
@@ -237,7 +237,7 @@ function startSPMCounter() {
     spmCounterInterval = setInterval(() => {
         const spm = getSPM();
         document.getElementById('cpsValue').textContent = spm;
-    }, 1); // Update every second
+    }, 175); // Update every second
 }
 
 function getSPM() {
@@ -279,7 +279,17 @@ function toggleAutoClicker() {
 }
 
 function simplifyNumber(number) {
-    const suffixes = ["", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St", "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT", "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT", "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT", "DtT", "TtT", "QtTT", "SxTT", "SpTT", "OcTT"];
+    const suffixes = [
+        "", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc",
+        "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St",
+        "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT",
+        "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT",
+        "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT",
+        "DtT", "TtT", "QtTT", "SxTT", "SpTT", "OcTT", "NoTT", "DcTT",
+        "UnTT", "DuTT", "TrTT", "QuTT", "QiTT", "SeTT", "StTT", "OtTT", "NvTT",
+        "VgTT", "CtTT", "UtTT", "DtTT", "TtTT", "QtTTT", "SxTTT", "SpTTT", "OcTTT",
+        "NoTTT", "DcTTT", "UnTTT", "DuTTT", "TrTTT", "QuTTT", "QiTTT", "SeTTT", "StTTT", "OtTTT"
+    ];
     let suffixIndex = 0;
 
     // Vereinfache nur, wenn die Zahl größer als 1000 ist
@@ -349,7 +359,7 @@ function resetUpgrades() {
 }
 
 let quantityFilterButton = document.getElementById('quantityFilterButton');
-let quantityValues = [1, 5, 10, 20, 50, 100, 500, 1000];
+let quantityValues = [1, 5, 10, 25];
 let currentIndex = 0;
 
 // Funktion zum Ändern der ausgewählten Menge
@@ -389,7 +399,12 @@ function buyUpgradeWithDynamicQuantity(upgradeId) {
             console.log('Buying upgrades...');
             // Kaufe die ausgewählte Menge an Upgrades
             for (let i = 0; i < currentQuantity; i++) {
-                buyUpgrade(upgradeId);
+                if (upgrade.level < upgrade.maxlevel) {
+                    buyUpgrade(upgradeId);
+                } else {
+                    showUpgradeNotification("❌ To Much LvL.");
+                    break;
+                }
             }
         } else {
             showUpgradeNotification("❌ Insufficient points.");

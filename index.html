@@ -43,7 +43,7 @@
     <h2>Auto-Clicker Stats:</h2>
     <p>Total Clicks: <span id="totalautoClicks">0</span></p>
     <p>Total Score: <span id="totalautoScoreValue">0</span></p>
-    <p>CPS: <span id="cpsValue">0</span></p>
+    <p id="totalScore" class="tooltip" title="Score per Minute">CPM: <span id="cpsValue">0</span></p>
 </div>
 
 <div id="achievements-container">
@@ -53,14 +53,13 @@
 <div id="devOverlay" class="hidden">
     <div id="devContent">
         <p>Developer Menu: (Score stays until reload but +1 Click for PlayerSafe)</p>
-        <button id="devButton1" class="devButton" onclick="give1kscore()">+1K Score Points</button>
-        <button id="devButton2" class="devButton" onclick="give1mscore()">+1M Score Points</button>
-        <button id="devButton3" class="devButton" onclick="give1bscore()">+1B Score Points</button>
-        <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Score Points</button>
-        <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Score Points</button>
-        <button id="devButton6" class="devButton" onclick="give100qscore()">+100Q Score Points</button>
-        <button id="devButton7" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
-
+        <button id="devButton1" class="devButton" onclick="give1kscore()">+1K Points</button>
+        <button id="devButton2" class="devButton" onclick="give1mscore()">+1M Points</button>
+        <button id="devButton3" class="devButton" onclick="give1bscore()">+1B Points</button>
+        <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Points</button>
+        <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Points</button>
+        <button id="devButton6" class="devButton" onclick="give100qscore()">+100Q Points</button>
+        <button id="devButton10" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
     </div>
 </div>
 <div class="toast-container"></div>
