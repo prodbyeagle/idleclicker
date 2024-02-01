@@ -112,23 +112,7 @@ function hideTooltip() {
 function handleTooltip(event) {
     const content = event.currentTarget.getAttribute('data-tooltip-content');
     setTooltip(content);
-
-    // Positioniere den Tooltip relativ zum Trigger
-    tooltipTrigger.addEventListener('mousemove', (event) => {
-        const x = event.clientX + 10; // Versatz in X-Richtung
-        const y = event.clientY + 10; // Versatz in Y-Richtung
-
-        // Setze den Text im Tooltip-Container
-        tooltip.textContent = content;
-
-        // Setze die Position des Tooltips basierend auf der Mausposition
-        tooltip.style.left = x + 'px';
-
-        // Setze die Position des Tooltips oberhalb des Texts im Container
-        const tooltipHeight = tooltip.offsetHeight;
-        tooltip.style.top = Math.max(y - tooltipHeight, 0) + 'px';
-    });
-}
+    }
 
 
 tooltipTriggerElements.forEach(trigger => {

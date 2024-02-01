@@ -113,7 +113,6 @@ function resetAchievements() {
 }
 
 function checkAchievements() {
-    console.log('Checking Achievements...');
     achievements.forEach(achievement => {
         if (!achievement.unlocked) {
             if ((achievement.id.startsWith('click') && totalClicks >= achievement.target) ||

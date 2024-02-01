@@ -252,11 +252,8 @@ function stopSPMCounter() {
 }
 
 function toggleAutoClicker() {
-    console.log("toggleAutoClicker called");
     const autoClickerUpgrade = upgrades[6];
     const toggleButton = document.getElementById('toggleAutoClicker');
-    console.log("autoClickerInterval:", autoClickerInterval);
-    console.log("autoClickerUpgrade.level:", autoClickerUpgrade.level);
 
     if (autoClickerInterval) {
         clearInterval(autoClickerInterval);
