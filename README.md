@@ -1,5 +1,5 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d8691ecc-f18d-4efd-b2d0-5063671a8799/deploy-status)](https://app.netlify.com/sites/clicker-chilly/deploys)
-[![Latest Release](https://img.shields.io/github/v/release/prodbyeagle/ClickerGame)](https://github.com/prodbyeagle/ClickerGame/)
+[![Latest Release](https://img.shields.io/github/v/release/prodbyeagle/ClickerGame)](https://github.com/prodbyeagle/ClickerGame)
 
 # ☝️ Clicker Game
 
