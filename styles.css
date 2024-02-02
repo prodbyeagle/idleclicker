@@ -388,18 +388,17 @@ h1 {
     transform: translate(-50%, -50%);
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+    transition: all 0.5s ease-in-out;
 }
 
 #prodbyeagle:hover::before {
-    content: "👀👀";
+    content: "🦅";
     background-color: #2e2e2e;
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    color: #333;
+    color: #ff0000;
     font-size: 13px;
-    text-align: center;
     opacity: 1;
     visibility: visible;
 }
