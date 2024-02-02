@@ -126,11 +126,18 @@ function resetAchievements() {
     updateAchievements(); // Aktualisiere die Anzeige nach dem Zurücksetzen
 }
 
+const achievementsSound = document.getElementById('achievementsSound');
+
 function checkAchievements() {
     achievements.forEach(achievement => {
         if (!achievement.unlocked) {
             if ((achievement.id.startsWith('click') && totalClicks >= achievement.target) ||
                 (achievement.id.startsWith('score') && score >= achievement.target)) {
+
+                achievementsSound.currentTime = 0; // Setze die Abspielposition zurück
+                achievementsSound.play();
+                achievementsSound.volume = 0.2;
+
                 achievement.unlocked = true;
                 saveAchievements(); // Speichere die aktualisierten Achievements
                 showUpgradeNotification(`🏆 Achievement unlocked: ${achievement.name}`);

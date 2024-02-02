@@ -114,6 +114,8 @@ function applyLuckyClick(chance) {
     }
 }
 
+const luckyEventSound = document.getElementById('luckyEventSound');
+
 function handleLuckyClick() {
     const luckyClickUpgrade = upgrades[3];
     const baseLuckyClickValue = 200000; // Basiswert
@@ -126,6 +128,11 @@ function handleLuckyClick() {
 
     score += Math.round(scaledLuckyClickValue);
     let finalscore = simplifyNumber(scaledLuckyClickValue);
+
+    luckyEventSound.currentTime = 0; // Setze die Abspielposition zurück
+    luckyEventSound.play();
+    luckyEventSound.volume = 0.2;
+
     updateScore();
     showUpgradeNotification(`🍀 Lucky Click! +${finalscore} Clicks`);
     createRandomClover();

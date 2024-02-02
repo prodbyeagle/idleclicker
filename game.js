@@ -7,6 +7,8 @@ let clickMultiplier = 1;
 const clickBtn = document.getElementById('clickBtn');
 const scoreElement = document.getElementById('scoreValue');
 const upgradeButtons = document.querySelectorAll('#upgrades button');
+const clickSound = document.getElementById('clickSound');
+const errorSound = document.getElementById('errorSound');
 
 // Versuche, den Spielstand aus dem Local Storage abzurufen
 const savedScore = localStorage.getItem('score');
@@ -35,7 +37,9 @@ function showUpgradeNotification(message) {
     const notificationElement = document.createElement('div');
     const messageElement = document.createElement('div');
     const progressBar = document.createElement('div');
-
+    notiSound.currentTime = 0; // Setze die Abspielposition zurück
+    notiSound.play();
+    notiSound.volume = 0.2;
     notificationElement.classList.add('toast-notification');
     messageElement.textContent = message;
 
@@ -141,6 +145,9 @@ clickBtn.addEventListener('click', function() {
         const scoreValueElement = document.getElementById('scoreValue');
         scoreValueElement.title = score.toString();
 
+        ambientSound.play();
+        ambientSound.volume = 0.1;
+
         score += clickMultiplier;
         totalClicks++; // Erhöhe die Gesamtanzahl der Klicks
         totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
@@ -193,6 +200,10 @@ function displayError(message) {
     errorElement.classList.add('error');
     errorElement.textContent = message;
 
+    errorSound.currentTime = 0; // Setze die Abspielposition zurück
+    errorSound.play();
+    errorSound.volume = 0.2;
+
     // Füge das Fehler-Element zum Container hinzu
     errorContainer.appendChild(errorElement);
 
@@ -216,21 +227,40 @@ window.addEventListener('load', function () {
     }
     
 });
+    // Die Audio-Elemente
+    const notiSound = document.getElementById('notiSound');
+    const ambientSound = document.getElementById('ambientSound');
 
+    // Der Global Mute-Button
+    const globalMuteButton = document.getElementById('globalMuteButton');
 
+    // Lese den gespeicherten Zustand aus dem localStorage
+    const isMuted = localStorage.getItem('isMuted') === 'true';
 
+    // Setze den initialen Zustand des Buttons basierend auf localStorage
+    luckyEventSound.muted = isMuted;
+    errorSound.muted = isMuted;
+    notiSound.muted = isMuted;
+    ambientSound.muted = isMuted;
+    achievementsSound.muted = isMuted;
 
+    // Event-Listener für den Global Mute-Button
+    globalMuteButton.addEventListener('click', () => {
+        // Umschalten zwischen stumm und nicht stumm für alle Sounds
+        luckyEventSound.muted = !luckyEventSound.muted;
+        errorSound.muted = !errorSound.muted;
+        notiSound.muted = !notiSound.muted;
+        ambientSound.muted = !ambientSound.muted;
+        achievementsSound.muted = !achievementsSound.muted;
 
+        // Speichere den aktuellen Zustand im localStorage
+        localStorage.setItem('isMuted', luckyEventSound.muted);
 
+        // Aktualisiere den Text des Buttons basierend auf dem aktuellen Zustand
+        globalMuteButton.textContent = luckyEventSound.muted ? '🔇' : '🔊';
+    });
 
-
-
-
-
-
-
-
-
+    globalMuteButton.textContent = luckyEventSound.muted ? '🔇' : '🔊';
 
 
 // Dev Overlay
