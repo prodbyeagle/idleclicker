@@ -7,7 +7,7 @@ Welcome to the Clicker Game repository! This is a simple web-based clicker game 
 
 ## 🤔 How to Play
 
-1. Open `index.html` in your web browser.
+1. Open the Setup File in the zip and install the Game.
 2. Click on the big button to earn points.
 3. Purchase upgrades to increase your points per click and unlock special features.
 
