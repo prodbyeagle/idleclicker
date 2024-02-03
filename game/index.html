@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idle Clicker</title>
+    <link rel="icon" type="image/x-icon" href="/icon.ico">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" />
+</head>
+
+<body>
+
+<video class="background" autoplay loop muted>
+    <source src="background.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+</video>
+
+<div class="game-container">
+    <h1>Idle Clicker</h1>
+    <div id="notification" class="notification"></div>
+    <div id="prodbyeagle">@prodbyeagle</div>
+    <p id="score">🪙 <span id="scoreValue">0</span></p>
+    <button id="clickBtn">Click</button>
+    <button id="resetButton">Reset</button>
+    <button id="toggleAutoClicker" onclick="toggleAutoClicker()">Toggle Auto Clicker</button>
+    <button id="toggleAutoBuy" onclick="toggleAutoBuy()">Toggle Auto Buy</button>
+</div>
+
+<div id="upgrades-container">
+  <h2>Upgrades: <select id="strategyDropdown" onchange="changeStrategy(this.value)">
+    <option value="cheapest">Cheapest Upgrade</option>
+    <option value="highestLevel">Highest Level</option>
+    <option value="random">Random Upgrade</option>
+  </select></h2> 
+    <div id="upgrades">
+        <p class="tooltip-trigger" data-tooltip-content="📄 Pro Upgrade = 5x (Stacking!)">
+            <button onclick="buyUpgrade(1)"></button>
+          </p>
+          <p class="tooltip-trigger" data-tooltip-content="📄 Every Minute 1% Chance spawning an Lucky Event">
+            <button onclick="buyUpgrade(3)"></button>
+        </p> 
+        <p class="tooltip-trigger" data-tooltip-content="📄 Upgrade the Auto-Clicker for More Coins">
+            <button onclick="buyUpgrade(6)"></button>
+          </p> 
+        <p class="tooltip-trigger" data-tooltip-content="📄 Buys Upgrades for You">
+            <button onclick="buyUpgrade(9)"></button>
+          </p> 
+
+    </div>
+</div>
+
+<div id="stats-container">
+    <h2>Stats:</h2>
+    <p class="tooltip-trigger" data-tooltip-content="☝️ Your Strength in Power of that Index Finger has made">
+        Total Clicks: <span id="totalClicks">0</span>
+      </p>
+      
+    <p class="tooltip-trigger" data-tooltip-content="⚠️ All Bonuses are opt-out. Just the Bonus Clicks">
+        Total Coins: <span id="totalScoreValue">0</span>
+      </p>
+    <h2>Auto-Clicker Stats:</h2>
+    <p class="tooltip-trigger" data-tooltip-content="📄 Clicks that the Auto Clicker made since the First Start">
+        Total Score: <span id="totalautoClicks">0</span>
+      </p>
+      
+    <p class="tooltip-trigger" data-tooltip-content="📄 Total of the Score that the Auto Clicker made">
+        Total Score: <span id="totalautoScoreValue">0</span>
+      </p>
+    <p class="tooltip-trigger" data-tooltip-content="🪙 Clicks per Minute">
+        CPM: <span id="cpsValue">0</span>
+      </p>
+</div>
+
+<div id="achievements-container">
+    <h2>Achievements:</h2>
+</div>
+
+<!-- Warnung für mobile Geräte -->
+<div id="mobile-warning" class="overlay" style="display:none;">
+  <div class="warning-content">
+    <h1>Warnung</h1>
+      <p>This game is best played on a desktop. For the best experience, switch to a larger screen.</p>
+  </div>
+</div>
+
+<div id="settingsOverlay" class="hidden">
+  <div id="settingsContent">
+      <p>Settings</p>
+      <label>
+        <input type="range" class="volumeSlider" id="luckyEventSoundVolume" min="0" max="1" step="0.1"> Lucky Event Sound
+    </label>
+    <label>
+        <input type="range" class="volumeSlider" id="errorSoundVolume" min="0" max="1" step="0.1"> Error Sound
+    </label>
+    <label>
+        <input type="range" class="volumeSlider" id="notiSoundVolume" min="0" max="1" step="0.1"> Notification Sound
+    </label>
+    <label>
+        <input type="range" class="volumeSlider" id="ambientSoundVolume" min="0" max="1" step="0.1"> Ambient Sound
+    </label>
+    <label>
+        <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1"> Achievements Sound
+    </label>
+      <button id="closeSettings" onclick="closeSettings()">Close</button>
+  </div>
+</div>
+
+
+<div id="devOverlay" class="hidden">
+    <div id="devContent">
+        <p>Developer Menu: (Score stays until reload but +1 Click for PlayerSafe)</p>
+        <button id="devButton1" class="devButton" onclick="give1kscore()">+1K Points</button>
+        <button id="devButton2" class="devButton" onclick="give1mscore()">+1M Points</button>
+        <button id="devButton3" class="devButton" onclick="give1bscore()">+1B Points</button>
+        <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Points</button>
+        <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Points</button>
+        <button id="devButton6" class="devButton" onclick="give100qscore()">+100Q Points</button>
+        <button id="devButton10" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
+    </div>
+</div>
+
+<div class="toast-container"></div>
+<div id="tooltip" class="tooltip"></div>
+<div id="clover-container"></div>
+<div id="error-container"></div>
+
+<audio id="luckyEventSound" src="luckyevent.wav"></audio>
+<audio id="errorSound" src="error.wav"></audio>
+<audio id="notiSound" src="notification.wav"></audio>
+<audio id="ambientSound" src="ambiente.mp3"></audio>
+<audio id="achievementsSound" src="achievement.wav"></audio>
+
+
+<button id="ToggleBackgroundButton"></button>
+<button id="ToggleSettingsButton">Settings</button>
+<button id="globalMuteButton">Settings</button>
+
+<script src="upgrades.js"></script>
+<script src="achievements.js"></script>
+<script src="game.js"></script>
+<script src="stats.js"></script>
+</body>
+</html>
