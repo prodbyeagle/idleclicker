@@ -16,7 +16,7 @@
 <body>
 
 <video class="background" autoplay loop muted>
-    <source src="../sounds-videos/background.mp4" type="video/mp4">
+    <source src="background.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 
@@ -25,10 +25,7 @@
     <div id="notification" class="notification"></div>
     <div id="prodbyeagle">@prodbyeagle</div>
     <p id="score">🪙 <span id="scoreValue">0</span></p>
-    <button id="clickBtn">Click</button>
-    <button id="resetButton">Reset</button>
-    <button id="toggleAutoClicker" onclick="toggleAutoClicker()">Toggle Auto Clicker</button>
-    <button id="toggleAutoBuy" onclick="toggleAutoBuy()">Toggle Auto Buy</button>
+    <button id="clickBtn">☝️ Click</button>
 </div>
 
 <div id="upgrades-container">
@@ -55,7 +52,7 @@
 </div>
 
 <div id="stats-container">
-    <h2>Stats:</h2>
+    <h2>📄 Stats:</h2>
     <p class="tooltip-trigger" data-tooltip-content="☝️ Your Strength in Power of that Index Finger has made">
         Total Clicks: <span id="totalClicks">0</span>
       </p>
@@ -63,7 +60,7 @@
     <p class="tooltip-trigger" data-tooltip-content="⚠️ All Bonuses are opt-out. Just the Bonus Clicks">
         Total Coins: <span id="totalScoreValue">0</span>
       </p>
-    <h2>Auto-Clicker Stats:</h2>
+    <h2>🤖 Auto-Clicker Stats:</h2>
     <p class="tooltip-trigger" data-tooltip-content="📄 Clicks that the Auto Clicker made since the First Start">
         Total Score: <span id="totalautoClicks">0</span>
       </p>
@@ -77,7 +74,7 @@
 </div>
 
 <div id="achievements-container">
-    <h2>Achievements:</h2>
+    <h2>🏆 Achievements:</h2>
 </div>
 
 <!-- Warnung für mobile Geräte -->
@@ -129,16 +126,19 @@
 <div id="clover-container"></div>
 <div id="error-container"></div>
 
-<audio id="luckyEventSound" src="../sounds-videos/luckyevent.wav"></audio>
-<audio id="errorSound" src="../sounds-videos/error.wav"></audio>
-<audio id="notiSound" src="../sounds-videos/notification.wav"></audio>
-<audio id="ambientSound" src="../sounds-videos/ambiente.mp3"></audio>
-<audio id="achievementsSound" src="../sounds-videos/achievement.wav"></audio>
+<audio id="luckyEventSound" src="luckyevent.wav"></audio>
+<audio id="errorSound" src="error.wav"></audio>
+<audio id="notiSound" src="notification.wav"></audio>
+<audio id="ambientSound" src="ambiente.mp3"></audio>
+<audio id="achievementsSound" src="achievement.wav"></audio>
 
 
 <button id="ToggleBackgroundButton"></button>
-<button id="ToggleSettingsButton">Settings</button>
-<button id="globalMuteButton">Settings</button>
+<button id="ToggleSettingsButton">⚙️ Settings</button>
+<button id="globalMuteButton"></button>
+<button id="resetButton">🔃 Reset</button>
+<button id="toggleAutoClicker" onclick="toggleAutoClicker()">☝️ Toggle Auto Clicker</button>
+<button id="toggleAutoBuy" onclick="toggleAutoBuy()">💵 Toggle Auto Buy</button>
 
 <script src="upgrades.js"></script>
 <script src="achievements.js"></script>

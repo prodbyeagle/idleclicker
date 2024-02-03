@@ -299,27 +299,39 @@ if (initialState) {
 
 // Die Audio-Elemente
 
-// Der global Mute-Button
-const globalMuteButton = document.getElementById('globalMuteButton');
-
 // Lese den gespeicherten Zustand aus dem localStorage
 const isMuted = localStorage.getItem('isMuted') === 'true';
+const globalMuteButton = document.getElementById('globalMuteButton');
 
 // Setze den initialen Zustand des Buttons basierend auf localStorage
-    ambientSound.muted = isMuted;
+ambientSound.muted = isMuted;
 
-    // Event-Listener für den global Mute-Button
-    globalMuteButton.addEventListener('click', () => {
-        ambientSound.muted = !ambientSound.muted;
+// Funktion zur Aktualisierung des Button-Stils und Texts
+function updateButtonStyleAndText() {
+    if (ambientSound.muted) {
+        globalMuteButton.classList.add('inactive');
+        globalMuteButton.classList.remove('active');
+        globalMuteButton.textContent = '🔇';
+    } else {
+        globalMuteButton.classList.add('active');
+        globalMuteButton.classList.remove('inactive');
+        globalMuteButton.textContent = '🔊';
+    }
+}
 
-        // Speichere den aktuellen Zustand im localStorage
-        localStorage.setItem('isMuted', ambientSound.muted);
+// Setze den initialen Stil und Text des Buttons
+updateButtonStyleAndText();
 
-        // Aktualisiere den Text des Buttons basierend auf dem aktuellen Zustand
-        globalMuteButton.textContent = ambientSound.muted ? '🔇' : '🔊';
-    });
+// Event-Listener für den global Mute-Button
+globalMuteButton.addEventListener('click', () => {
+    ambientSound.muted = !ambientSound.muted;
 
-    globalMuteButton.textContent = ambientSound.muted ? '🔇' : '🔊';
+    // Aktualisiere den Stil und Text des Buttons
+    updateButtonStyleAndText();
+
+    // Speichere den aktuellen Zustand im localStorage
+    localStorage.setItem('isMuted', ambientSound.muted);
+});
 
 
 const settingsOverlay = document.getElementById("settingsOverlay");

@@ -150,7 +150,7 @@ const achievementsContainer = document.getElementById('achievements-container');
 let tooltipTimeout;
 
 function updateAchievements() {
-    achievementsContainer.innerHTML = '<h2>Achievements:</h2>'; // Setze den Titel zurück
+    achievementsContainer.innerHTML = '<h2>🏆 Achievements:</h2>'; // Setze den Titel zurück
 
     achievements.forEach(achievement => {
         // Nur für entsperrte Achievements Elemente erstellen

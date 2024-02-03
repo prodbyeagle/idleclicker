@@ -362,7 +362,6 @@ function resetUpgrades() {
 
 // Auto Upgrade Buy
 
-
 function buyAutoUpgrades(strategy) {
     let selectedUpgrade;
   

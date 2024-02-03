@@ -16,8 +16,8 @@ function createWindow() {
     },
     autoHideMenuBar: true, // Verstecke die Menüleiste automatisch
   });
-
   mainWindow.loadFile('index.html');
+
 
   mainWindow.on('closed', function () {
     mainWindow = null;
