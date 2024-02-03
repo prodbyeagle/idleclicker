@@ -501,6 +501,22 @@ h1 {
     display: block;
 }
 
+#ToggleSettingsButton {
+    font-family: 'Rubik', sans-serif;
+    background-color: #45a049;
+    color: white;
+    border: none;
+    position: fixed;
+    left: 10px;
+    top: 420px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1; /* Verringert gegenüber dem globalMuteButton, um darunter zu liegen */
+}
+
 #ToggleBackgroundButton {
     font-family: 'Rubik', sans-serif;
     background-color: #45a049;
@@ -524,7 +540,7 @@ h1 {
     border: none;
     position: fixed;
     left: 10px;
-    top: 420px; /* 10px Gap hinzugefügt */
+    top: 480px; /* 10px Gap hinzugefügt */
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 18px;
@@ -554,6 +570,10 @@ h1 {
 }
 
 #globalMuteButton:hover {
+    transform: scale(0.9);
+}
+
+#ToggleSettingsButton:hover {
     transform: scale(0.9);
 }
 

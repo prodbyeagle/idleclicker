@@ -259,10 +259,10 @@ window.addEventListener('load', function () {
 
     // Initialen Zustand aus dem Local Storage wiederherstellen
 const initialState = localStorage.getItem('backgroundState') === 'visible';
-var background = document.querySelector(".background");
-    var button = document.getElementById("ToggleBackgroundButton");
+const background = document.querySelector(".background");
+const button = document.getElementById("ToggleBackgroundButton");
 
-    if (initialState) {
+if (initialState) {
         background.style.display = "block";
         background.style.opacity = 1;
         button.innerText = "✅ Background ON";
@@ -273,8 +273,8 @@ var background = document.querySelector(".background");
     }
 
     document.getElementById("ToggleBackgroundButton").addEventListener("click", function() {
-        var currentState = background.style.display === "none" || background.style.display === "";
-    
+        const currentState = background.style.display === "none" || background.style.display === "";
+
         // Zustand im Local Storage aktualisieren
         localStorage.setItem('backgroundState', currentState ? 'visible' : 'hidden');
     
@@ -305,41 +305,24 @@ const globalMuteButton = document.getElementById('globalMuteButton');
 // Lese den gespeicherten Zustand aus dem localStorage
 const isMuted = localStorage.getItem('isMuted') === 'true';
 
-    // Setze den initialen Zustand des Buttons basierend auf localStorage
-    // Setze den initialen Zustand des Buttons basierend auf localStorage
-    luckyEventSound.muted = isMuted;
-    errorSound.muted = isMuted;
-    notiSound.muted = isMuted;
 // Setze den initialen Zustand des Buttons basierend auf localStorage
-    luckyEventSound.muted = isMuted;
-    errorSound.muted = isMuted;
-    notiSound.muted = isMuted;
     ambientSound.muted = isMuted;
-    ambientSound.muted = isMuted;
-    achievementsSound.muted = isMuted;
-ambientSound.muted = isMuted;
-    achievementsSound.muted = isMuted;
 
-// Event-Listener für den global Mute-Button
-globalMuteButton.addEventListener('click', () => {
-    // Umschalten zwischen stumm und nicht stumm für alle Sounds
+    // Event-Listener für den global Mute-Button
+    globalMuteButton.addEventListener('click', () => {
         ambientSound.muted = !ambientSound.muted;
-        ambientSound.muted = !ambientSound.muted;
-        achievementsSound.muted = !achievementsSound.muted;
-    ambientSound.muted = !ambientSound.muted;
-        achievementsSound.muted = !achievementsSound.muted;
 
-    // Speichere den aktuellen Zustand im localStorage
-    localStorage.setItem('isMuted', luckyEventSound.muted);
+        // Speichere den aktuellen Zustand im localStorage
+        localStorage.setItem('isMuted', ambientSound.muted);
 
-    // Aktualisiere den Text des Buttons basierend auf dem aktuellen Zustand
-    globalMuteButton.textContent = luckyEventSound.muted ? '🔇' : '🔊';
-});
+        // Aktualisiere den Text des Buttons basierend auf dem aktuellen Zustand
+        globalMuteButton.textContent = ambientSound.muted ? '🔇' : '🔊';
+    });
 
-globalMuteButton.textContent = luckyEventSound.muted ? '🔇' : '🔊';
+    globalMuteButton.textContent = ambientSound.muted ? '🔇' : '🔊';
 
 
-var settingsOverlay = document.getElementById("settingsOverlay");
+const settingsOverlay = document.getElementById("settingsOverlay");
 
 document.getElementById("ToggleSettingsButton").addEventListener("click", function() {
     toggleSettingsOverlay();

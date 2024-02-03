@@ -16,7 +16,7 @@
 <body>
 
 <video class="background" autoplay loop muted>
-    <source src="background.mp4" type="video/mp4">
+    <source src="../sounds-videos/background.mp4" type="video/mp4">
     Your browser does not support the video tag.
 </video>
 
@@ -32,9 +32,9 @@
 </div>
 
 <div id="upgrades-container">
-  <h2>Upgrades: <select id="strategyDropdown" onchange="changeStrategy(this.value)">
+  <h2>Upgrades: <label for="strategyDropdown"></label><select id="strategyDropdown" onchange="changeStrategy(this.value)">
     <option value="cheapest">Cheapest Upgrade</option>
-    <option value="highestLevel">Highest Level</option>
+    <option value="highestLevel">Highest Level</option>~~
     <option value="random">Random Upgrade</option>
   </select></h2> 
     <div id="upgrades">
@@ -129,11 +129,11 @@
 <div id="clover-container"></div>
 <div id="error-container"></div>
 
-<audio id="luckyEventSound" src="luckyevent.wav"></audio>
-<audio id="errorSound" src="error.wav"></audio>
-<audio id="notiSound" src="notification.wav"></audio>
-<audio id="ambientSound" src="ambiente.mp3"></audio>
-<audio id="achievementsSound" src="achievement.wav"></audio>
+<audio id="luckyEventSound" src="../sounds-videos/luckyevent.wav"></audio>
+<audio id="errorSound" src="../sounds-videos/error.wav"></audio>
+<audio id="notiSound" src="../sounds-videos/notification.wav"></audio>
+<audio id="ambientSound" src="../sounds-videos/ambiente.mp3"></audio>
+<audio id="achievementsSound" src="../sounds-videos/achievement.wav"></audio>
 
 
 <button id="ToggleBackgroundButton"></button>
