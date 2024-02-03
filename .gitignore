@@ -2,3 +2,10 @@
 /dist/
 package.json
 package-lock.json
+/.idea/inspectionProfiles/Project_Default.xml
+/.idea/.gitignore
+/.idea/Clicker.iml
+/.idea/discord.xml
+/.idea/icon.svg
+/.idea/modules.xml
+/.idea/vcs.xml
