@@ -79,10 +79,45 @@ const achievements = [
         unlocked: false
     },
     {
-        id: 'click_250000',
+        id: 'score_10m',
         name: '💎 Click Supreme',
         description: '💎 Click 250,000 times',
         target: 250000,
+        unlocked: false
+    },
+    {
+        id: 'score_1b',
+        name: '❓ Are you Crazy?',
+        description: '❓ Click 1,000,000,000 times',
+        target: 1000000000,
+        unlocked: false
+    },
+    {
+        id: 'score_100b',
+        name: '🏆 Click Superior',
+        description: '💎 Click 100,000,000,000 times',
+        target: 100000000000,
+        unlocked: false
+    },
+    {
+        id: 'score_250b',
+        name: '☝️ Click GOD',
+        description: '💎 Click 250,000,000,000 times',
+        target: 250000000000,
+        unlocked: false
+    },
+    {
+        id: 'score_1un',
+        name: '🧙‍♀️ Click ... cant tell',
+        description: '🧙‍♀️ Reach an Score of 1 Undecillion',
+        target: 100000000000000000000000000000000,
+        unlocked: false
+    },
+    {
+        id: 'click_bruh',
+        name: '🔱 IDK HOW?!!?',
+        description: '🔱 Click INFINITY times',
+        target: 100000000000000000000000000000000,
         unlocked: false
     },
 ];
@@ -126,17 +161,34 @@ function resetAchievements() {
     updateAchievements(); // Aktualisiere die Anzeige nach dem Zurücksetzen
 }
 
-const achievementsSound = document.getElementById('achievementsSound');
-
 function checkAchievements() {
     achievements.forEach(achievement => {
         if (!achievement.unlocked) {
             if ((achievement.id.startsWith('click') && totalClicks >= achievement.target) ||
                 (achievement.id.startsWith('score') && score >= achievement.target)) {
 
-                achievementsSound.currentTime = 0; // Setze die Abspielposition zurück
-                achievementsSound.play();
-                achievementsSound.volume = 0.2;
+                const achievementsSoundVolume = parseFloat(localStorage.getItem('achievementsSoundVolume')) || 1;
+
+                const achievementsSoundElement = document.getElementById('achievementsSound');
+                let achievementsSound;
+
+                if (achievementsSoundElement) {
+                    achievementsSound = new Audio(achievementsSoundElement.src);
+                    achievementsSound.volume = achievementsSoundVolume;
+                    achievementsSound.currentTime = 0;
+
+                    // Check if user interaction is required
+                    const playPromise = achievementsSound.play();
+
+                    if (playPromise !== undefined) {
+                        playPromise.then(_ => {
+                            // Audio playback started successfully
+                        }).catch(error => {
+                            // Audio playback failed, handle the error
+                            displayError('Audio playback failed:', error);
+                        });
+                    }
+                }
 
                 achievement.unlocked = true;
                 saveAchievements(); // Speichere die aktualisierten Achievements

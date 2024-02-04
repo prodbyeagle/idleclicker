@@ -7,7 +7,8 @@ let clickMultiplier = 1;
 const clickBtn = document.getElementById('clickBtn');
 const scoreElement = document.getElementById('scoreValue');
 const upgradeButtons = document.querySelectorAll('#upgrades button');
-const errorSound = document.getElementById('errorSound');
+const notiSound = document.getElementById('notiSound');
+const ambientSound = document.getElementById('ambientSound');
 
 // Versuche, den Spielstand aus dem Local Storage abzurufen
 const savedScore = localStorage.getItem('score');
@@ -22,7 +23,8 @@ function saveScoreToLocalStorage() {
 
 
 // Notification System
- 
+
+
 
 function showUpgradeNotification(message) {
     let toastContainer = document.querySelector('.toast-container');
@@ -36,9 +38,31 @@ function showUpgradeNotification(message) {
     const notificationElement = document.createElement('div');
     const messageElement = document.createElement('div');
     const progressBar = document.createElement('div');
-    notiSound.currentTime = 0; // Setze die Abspielposition zurück
-    notiSound.play();
-    notiSound.volume = 0.2;
+
+// Lese die gespeicherten Lautstärke-Werte aus dem localStorage
+    const notiSoundVolume = parseFloat(localStorage.getItem('notiSoundVolume')) || 1;
+
+    const notiSoundElement = document.getElementById('notiSound');
+    let notiSound;
+
+    if (notiSoundElement) {
+        notiSound = new Audio(notiSoundElement.src);
+        notiSound.volume = notiSoundVolume;
+        notiSound.currentTime = 0;
+
+        // Check if user interaction is required
+        const playPromise = notiSound.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Audio playback started successfully
+            }).catch(error => {
+                // Audio playback failed, handle the error
+                displayError('Audio playback failed:', error);
+            });
+        }
+    }
+
     notificationElement.classList.add('toast-notification');
     messageElement.textContent = message;
 
@@ -80,7 +104,7 @@ function showUpgradeNotification(message) {
         } else if (progress > 30) {
             progressBar.style.backgroundColor = '#ffd700'; // Gelb
         } else {
-            progressBar.style.backgroundColor = '#ff4500'; // Rot
+            progressBar.style.backgroundColor = '#ff0000'; // Rot
         }
 
         if (progress <= 0) {
@@ -98,7 +122,9 @@ function showUpgradeNotification(message) {
     }, interval);
 }
 
-// ToolTip System
+
+//TODO: Tooltip System
+
 
 const tooltipTriggerElements = document.querySelectorAll('.tooltip-trigger');
 const tooltip = document.getElementById('tooltip');
@@ -117,14 +143,17 @@ function handleTooltip(event) {
     setTooltip(content);
     }
 
-
 tooltipTriggerElements.forEach(trigger => {
     trigger.addEventListener('mouseover', handleTooltip);
     trigger.addEventListener('mouseout', hideTooltip);
 });
 
 
-// Click-Event für den Button
+
+
+//TODO: BUTTON EVENT
+
+
 clickBtn.addEventListener('click', function() {
     try {
         this.classList.add('clicked');
@@ -166,6 +195,16 @@ clickBtn.addEventListener('click', function() {
     }
 });
 
+// Funktion zur Aktualisierung des Spielstands im DOM
+function updateScore() {
+    scoreElement.textContent = simplifyNumber(score);
+}
+updateUpgradeButtons();
+
+
+//TODO: Simplify Number
+
+
 function simplifyNumber(number) {
     const suffixes = ["", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St", "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT", "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT", "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT", "DtT", "TtT", "QtTT", "SxTT", "SpTT", "OcTT"];
     let suffixIndex = 0;
@@ -178,16 +217,10 @@ function simplifyNumber(number) {
     return (number >= 1 ? number.toFixed(number % 1 === 0 ? 0 : 2) : number.toFixed(0)).toString() + suffixes[suffixIndex];
 }
 
-// Funktion zur Aktualisierung des Spielstands im DOM
-function updateScore() {
-    scoreElement.textContent = simplifyNumber(score);
-}
-updateUpgradeButtons();
+
+//TODO: Display Error
 
 
-// Display Error
-
-// Funktion zum Anzeigen von Fehlern auf dem HUD
 function displayError(message) {
     const errorContainer = document.getElementById('error-container');
 
@@ -196,9 +229,29 @@ function displayError(message) {
     errorElement.classList.add('error');
     errorElement.textContent = message;
 
-    errorSound.currentTime = 0; // Setze die Abspielposition zurück
-    errorSound.play();
-    errorSound.volume = 0.2;
+// Lese die gespeicherten Lautstärke-Werte aus dem localStorage
+    const errorSoundVolume = parseFloat(localStorage.getItem('errorSoundVolume')) || 1;
+
+    const errorSoundElement = document.getElementById('errorSound');
+    let errorSound;
+
+    if (errorSoundElement) {
+        errorSound = new Audio(errorSoundElement.src);
+        errorSound.volume = errorSoundVolume;
+        errorSound.currentTime = 0;
+
+        // Check if user interaction is required
+        const playPromise = errorSound.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Audio playback started successfully
+            }).catch(error => {
+                // Audio playback failed, handle the error
+                displayError('Audio playback failed:', error);
+            });
+        }
+    }
 
     // Füge das Fehler-Element zum Container hinzu
     errorContainer.appendChild(errorElement);
@@ -215,60 +268,47 @@ function displayError(message) {
     }, 5000); // Fehler wird nach 5 Sekunden entfernt (passen Sie die Zeit nach Bedarf an)
 }
 
+
+//TODO: Anti Phone
+
+
 window.addEventListener('load', function () {
     const mobileWarning = document.getElementById('mobile-warning');
-    
+
     if (window.innerWidth <= 600) {
         mobileWarning.style.display = 'block';
     }
-    
+
 });
-    // Die Audio-Elemente
-    const notiSound = document.getElementById('notiSound');
-    const ambientSound = document.getElementById('ambientSound');
+
+
+//TODO: Sound System
+
+
+
+// Die Audio-Elemente
 
     // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
     const notiSoundVolume = parseFloat(localStorage.getItem('notiSoundVolume')) || 1;
-    const ambientSoundVolume = parseFloat(localStorage.getItem('ambientSoundVolume')) || 1;
 
     // Setze die initialen Lautstärke-Werte basierend auf localStorage
     notiSound.volume = notiSoundVolume;
-    ambientSound.volume = ambientSoundVolume;
 
     // Setze die initialen Werte der Lautstärke-Regler
     document.getElementById('notiSoundVolume').value = notiSoundVolume;
-    document.getElementById('ambientSoundVolume').value = ambientSoundVolume;
 
-    // Event-Listener für die Lautstärke-Regler
-    document.getElementById('notiSoundVolume').addEventListener('input', function () {
-        const volume = parseFloat(this.value);
-        notiSound.volume = volume;
-        localStorage.setItem('notSoundVolume', volume);
-    });
+        // Initialen Zustand aus dem Local Storage wiederherstellen
+    const initialState = localStorage.getItem('backgroundState') === 'visible';
+    const background = document.querySelector(".background");
+    const button = document.getElementById("ToggleBackgroundButton");
 
-    document.getElementById('ambientSoundVolume').addEventListener('input', function () {
-        const volume = parseFloat(this.value);
-        ambientSound.volume = volume;
-        localStorage.setItem('ambientSoundVolume', volume);
-    });
-
-    // Überprüfe, ob das Element stumm ist
-    console.log('notiSound muted:', notiSound.muted);
-    console.log('ambientSound muted:', ambientSound.muted);
-
-
-    // Initialen Zustand aus dem Local Storage wiederherstellen
-const initialState = localStorage.getItem('backgroundState') === 'visible';
-const background = document.querySelector(".background");
-const button = document.getElementById("ToggleBackgroundButton");
-
-if (initialState) {
+    if (initialState) {
         background.style.display = "block";
-        background.style.opacity = 1;
+        background.style.opacity = "1";
         button.innerText = "✅ Background ON";
     } else {
         background.style.display = "none";
-        background.style.opacity = 0;
+        background.style.opacity = "0";
         button.innerText = "❌ Background OFF";
     }
 
@@ -277,17 +317,17 @@ if (initialState) {
 
         // Zustand im Local Storage aktualisieren
         localStorage.setItem('backgroundState', currentState ? 'visible' : 'hidden');
-    
+
         if (currentState) {
             background.style.display = "block";
-            background.style.opacity = 1;
+            background.style.opacity = "1";
             button.innerText = "✅ Background ON";
             background.style.animation = "fadeIn 2s ease forwards";
             button.classList.add('active');
             button.classList.remove('inactive');
         } else {
             background.style.display = "none";
-            background.style.opacity = 0;
+            background.style.opacity = "0";
             button.innerText = "❌ Background OFF";
             background.style.animation = "fadeOut 2s ease forwards";
             button.classList.add('inactive');
@@ -295,7 +335,7 @@ if (initialState) {
         }
     });
 
-// Settings 
+// Settings
 
 // Die Audio-Elemente
 
@@ -334,75 +374,112 @@ globalMuteButton.addEventListener('click', () => {
 });
 
 
-const settingsOverlay = document.getElementById("settingsOverlay");
+//TODO: Settings
 
-document.getElementById("ToggleSettingsButton").addEventListener("click", function() {
+
+const settingsOverlay = document.getElementById('settingsOverlay');
+const volumeSliders = document.querySelectorAll('.volumeSlider');
+
+document.getElementById('ToggleSettingsButton').addEventListener('click', function() {
     toggleSettingsOverlay();
 });
 
 function toggleSettingsOverlay() {
-    const settingsOverlay = document.getElementById('settingsOverlay');
+    settingsOverlay.classList.toggle('show');
+}
 
-    // Überprüfen Sie, ob die Shift-Taste gedrückt ist
-    const isShiftPressed = event.shiftKey;
+function saveSoundVolume(soundId, volume) {
+    localStorage.setItem(`${soundId}Volume`, volume);
+}
 
-    if (devOverlay) {
-        // Überprüfen Sie, ob das Settings Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
-        if (!settingsOverlay.classList.contains('show') && !isShiftPressed) {
-            settingsOverlay.classList.add('show');
-        } else {
-            // Wenn Shift gedrückt ist, das Overlay nicht schließen
-            if (!isShiftPressed) {
-                settingsOverlay.classList.remove('show');
-            }
+function applySavedVolumes() {
+    volumeSliders.forEach(function (slider) {
+        const soundId = slider.id.replace('Volume', '');
+        const soundElement = document.getElementById(soundId);
+
+        if (soundElement) {
+            const savedVolume = parseFloat(localStorage.getItem(`${soundId}Volume`)) || 1;
+            slider.value = savedVolume;
+
+            // Log initial values for debugging
+            console.log(`${soundId} Initial Volume: ${savedVolume}`);
+
+            soundElement.volume = savedVolume;
         }
-    }
+    });
 }
 
 function closeSettings() {
     settingsOverlay.classList.remove('show');
-    console.log('close settings: notiSound volume:', notiSound.volume);
-    console.log('close settings: ambientSound volume:', ambientSound.volume);
-    // Speichere alle Einstellungen im Local Storage
     saveAllSettings();
 }
 
 function saveAllSettings() {
-    const notiSoundVolume = parseFloat(localStorage.getItem('notiSoundVolume')) || 1;
-    const ambientSoundVolume = parseFloat(localStorage.getItem('ambientSoundVolume')) || 1;
+    const settings = {
+        notiSoundVolume: parseFloat(document.getElementById('notiSoundVolume').value),
+        luckyEventSoundVolume: parseFloat(document.getElementById('luckyEventSoundVolume').value),
+        errorSoundVolume: parseFloat(document.getElementById('errorSoundVolume').value),
+        achievementsSoundVolume: parseFloat(document.getElementById('achievementsSoundVolume').value),
+    };
 
     // Speichere die Einstellungen im Local Storage
-    localStorage.setItem('notiSoundVolume', notiSoundVolume);
-    localStorage.setItem('ambientSoundVolume', ambientSoundVolume);
+    localStorage.setItem('settings', JSON.stringify(settings));
 
+    console.log("noti", notiSoundVolume)
     console.log('Alle Einstellungen wurden gespeichert.');
 }
 
-const volumeSliders = document.querySelectorAll('.volumeSlider');
+// Setze den initialen Wert der Slider basierend auf localStorage
+applySavedVolumes();
 
-volumeSliders.forEach(function(slider) {
-    slider.addEventListener('input', function() {
-        const soundId = slider.id.replace('Volume', ''); // Entferne das "Volume" von der ID, um die entsprechende Sound-ID zu erhalten
+// Event-Listener für Änderungen der Lautstärke
+volumeSliders.forEach(function (slider) {
+    slider.addEventListener('input', function () {
+        const soundId = slider.id.replace('Volume', '');
         const soundElement = document.getElementById(soundId);
 
         if (soundElement) {
-            const volume = parseFloat(slider.value);
+            let volume = parseFloat(slider.value);
+
+            // Check if the volume is 0, set it to a small non-zero value
+            if (volume === 0) {
+                volume = 0.00001;
+            }
+
+            // Log the volume and soundId to check if the event is triggered
+            console.log(`Volume changed for ${soundId}: ${volume}`);
+
             soundElement.volume = volume;
-            localStorage.setItem(`${soundId}Volume`, volume);
+            saveSoundVolume(soundId, volume);
         }
     });
-
-    // Setze den initialen Wert des Sliders basierend auf localStorage
-    const soundId = slider.id.replace('Volume', '');
-    const soundElement = document.getElementById(soundId);
-
-    if (soundElement) {
-        const savedVolume = parseFloat(localStorage.getItem(`${soundId}Volume`)) || 1;
-        slider.value = savedVolume;
-        soundElement.volume = savedVolume;
-    }
 });
 
+
+// Sharing System
+
+// JavaScript
+document.getElementById('shareTwitter').addEventListener('click', shareOnTwitter);
+document.getElementById('shareWhatsApp').addEventListener('click', shareOnWhatsApp);
+
+
+function shareOnTwitter() {
+    const statsToShare = loadStatsFromLocalStorage();
+    const shareText = encodeURIComponent(`Check out my awesome stats:\n${statsToShare}\n\nPlay it now: https://clicker-chilly.netlify.app/`);
+    const hashtags = 'MyAwesomeStats,GameStats'; // Füge hier die gewünschten Hashtags hinzu
+    const shareUrl = `https://twitter.com/intent/tweet?text=${shareText}&hashtags=${hashtags}`;
+    openNewWindow(shareUrl);
+}
+
+function shareOnWhatsApp() {
+    const statsToShare = loadStatsFromLocalStorage();
+    const shareUrl = `https://wa.me/?text=Check%20out%20my%20awesome%20stats%3A%20${encodeURIComponent(statsToShare)}`;
+    openNewWindow(shareUrl);
+}
+
+function openNewWindow(url) {
+    window.open(url, '_blank', 'width=600,height=400');
+}
 
 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY             // DEV OVERLAY                   // DEV OVERLAY 
@@ -495,7 +572,6 @@ function toggleDevOverlay() {
     const isShiftPressed = event.shiftKey;
 
     if (devOverlay) {
-        showUpgradeNotification(`HEY!!!!! DONT USE THAT IT CLEARS YOUR STATS ITS ONLY FOR DEVS!`);
         // Überprüfen Sie, ob das Dev Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
         if (!devOverlay.classList.contains('show') && !isShiftPressed) {
             devOverlay.classList.add('show');

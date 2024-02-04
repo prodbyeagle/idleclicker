@@ -32,6 +32,7 @@ function loadStatsFromLocalStorage() {
         totalautoScore = savedStats.totalautoScore || 0;
         totalautoClicks = savedStats.totalautoClicks || 0;
     }
+    return `Total Clicks: ${simplifyNumber(totalClicks)}, Total Score: ${simplifyNumber(totalScore)}, Total Auto Score: ${simplifyNumber(totalautoScore)}, Total Auto Clicks: ${simplifyNumber(totalautoClicks)}`;
 }
 
 // Funktion zum Speichern der Stats im Local Storage

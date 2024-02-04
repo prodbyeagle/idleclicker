@@ -78,7 +78,7 @@
 </div>
 
 <!-- Warnung für mobile Geräte -->
-<div id="mobile-warning" class="overlay" style="display:none;">
+<div id="mobile-warning" class="overlay" style="display:none">
   <div class="warning-content">
     <h1>Warnung</h1>
       <p>This game is best played on a desktop. For the best experience, switch to a larger screen.</p>
@@ -89,19 +89,16 @@
   <div id="settingsContent">
       <p>Settings</p>
       <label>
-        <input type="range" class="volumeSlider" id="luckyEventSoundVolume" min="0" max="1" step="0.1"> Lucky Event Sound
+          Lucky Event Sound <input type="range" class="volumeSlider" id="luckyEventSoundVolume" min="0" max="1" step="0.1">
     </label>
     <label>
-        <input type="range" class="volumeSlider" id="errorSoundVolume" min="0" max="1" step="0.1"> Error Sound
+        Error Sound <input type="range" class="volumeSlider" id="errorSoundVolume" min="0" max="1" step="0.1">
     </label>
     <label>
-        <input type="range" class="volumeSlider" id="notiSoundVolume" min="0" max="1" step="0.1"> Notification Sound
+        Notification Sound <input type="range" class="volumeSlider" id="notiSoundVolume" min="0" max="1" step="0.1">
     </label>
     <label>
-        <input type="range" class="volumeSlider" id="ambientSoundVolume" min="0" max="1" step="0.1"> Ambient Sound
-    </label>
-    <label>
-        <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1"> Achievements Sound
+        Achievements Sound <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1">
     </label>
       <button id="closeSettings" onclick="closeSettings()">Close</button>
   </div>
@@ -132,13 +129,32 @@
 <audio id="ambientSound" src="ambiente.mp3"></audio>
 <audio id="achievementsSound" src="achievement.wav"></audio>
 
+<div class="button-container">
+<p class="tooltip-trigger" data-tooltip-content="🖼️ Toggle The Background ON/OFF (Performance)">
+    <button id="ToggleBackgroundButton"></button>
+</p>
+<p class="tooltip-trigger" data-tooltip-content="⚙️ Go to Settings to Change the other Sounds!">
+    <button id="ToggleSettingsButton">⚙️ Settings</button>
+</p>
+<p class="tooltip-trigger" data-tooltip-content="🎧 Toggle the Music">
+    <button id="globalMuteButton"></button>
+</p>
+<p class="tooltip-trigger" data-tooltip-content="🔃 Reset your Player!">
+    <button id="resetButton">🔃 Reset</button>
+</p>
+<p class="tooltip-trigger" data-tooltip-content="📄 Toggle The AutoClicker ON/OFF">
+    <button onclick="toggleAutoClicker()" id="toggleAutoClicker">☝️ Toggle Auto Clicker</button>
+</p>
+<p class="tooltip-trigger" data-tooltip-content="📄 Toggle The Auto-Buy ON/OFF">
+    <button onclick="toggleAutoBuy()" id="toggleAutoBuy">💵 Toggle Auto-Buy</button>
+</p>
+</div>
 
-<button id="ToggleBackgroundButton"></button>
-<button id="ToggleSettingsButton">⚙️ Settings</button>
-<button id="globalMuteButton"></button>
-<button id="resetButton">🔃 Reset</button>
-<button id="toggleAutoClicker" onclick="toggleAutoClicker()">☝️ Toggle Auto Clicker</button>
-<button id="toggleAutoBuy" onclick="toggleAutoBuy()">💵 Toggle Auto Buy</button>
+<div id="socialSharing">
+    <button id="shareFacebook">Share on Facebook</button>
+    <button id="shareTwitter">Share on Twitter</button>
+    <button id="shareWhatsApp">Share on WhatsApp</button>
+</div>
 
 <script src="upgrades.js"></script>
 <script src="achievements.js"></script>
