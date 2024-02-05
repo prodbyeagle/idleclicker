@@ -5,7 +5,7 @@ const upgrades = {
     1: { name: "More Clicks", basecost: 20, cost: 20, level: 0, multiplier: 2, maxLevel: 800, owned: 0},
     3: { name: "Lucky Clicks", basecost: 500000, cost: 500000, level: 0, luckyClickChance: 1, cooldownReduction: 0, owned: 0, maxLevel: 25},
     6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 100, owned: 0},
-    9: { name: "Auto-Buy", basecost: 100000000000, cost: 100000000000, level: 0, maxLevel: 1, owned: 0},
+    9: { name: "Auto Buy", basecost: 100000000000, cost: 100000000000, level: 0, maxLevel: 1, owned: 0},
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -118,7 +118,7 @@ function handleLuckyClick() {
     const baseLuckyClickValue = 200000; // Basiswert
 
     // Wachstumsfaktor
-    const growthFactor = 4.69;
+    const growthFactor = 5;
 
     // Berechne den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
@@ -452,12 +452,12 @@ function updateUpgradeButtons() {
                 // Überprüfe, ob das maximale Level erreicht wurde, und deaktiviere den Button entsprechend
                 if (upgrade.level >= upgrade.maxLevel) {
                     button.disabled = true;
-                    button.style.cursor = "not-allowed"; // Setze den Cursor-Stil auf "not-allowed"
+                    button.style.cursor = not-allowed;
                     button.style.transition = "all 0.2s";
                 } else {
                     button.disabled = false;
                     button.style.backgroundColor = ""; // Setze die Hintergrundfarbe auf den Standardwert
-                    button.style.cursor = ""; // Setze den Cursor-Stil auf den Standardwert
+                    button.style.cursor = "url('cursor.png'), not-allowed";
                 }
 
                 // Event listeners for hover effect
@@ -524,6 +524,7 @@ function unlockAutoBuy() {
         // Make the button visible
         const autoBuyButton = document.getElementById('toggleAutoBuy');
         if (!autoBuyButton) {
+            autoBuyButton.style.display = 'block';
             displayError("Auto Buy button not found.");
         }
 

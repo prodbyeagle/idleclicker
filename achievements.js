@@ -3,120 +3,155 @@
 const achievements = [
     {
         id: 'click_500',
-        name: '👶 Click Novice',
-        description: '👶 Click 500 times',
+        name: '☝️ Click Novice',
+        description: '📃 Click 500 times',
         target: 500,
         unlocked: false
     },
     {
         id: 'score_100k',
-        name: '🚀 Score Beginner',
-        description: '🚀 Reach a score of 100,000',
+        name: '📈 100k Clicks',
+        description: '📃 Reach a score of 100,000',
         target: 100000,
         unlocked: false
     },
     {
         id: 'click_1000',
-        name: '🔥 Click Master',
-        description: '🔥 Click 1,000 times',
+        name: '☝️ Click Master',
+        description: '📃 Click 1,000 times',
         target: 1000,
         unlocked: false
     },
     {
         id: 'click_10000',
-        name: '🌟 Click Legend',
-        description: '🌟 Click 10,000 times',
+        name: '☝️ Click Legend',
+        description: '📃 Click 10,000 times',
         target: 10000,
         unlocked: false
     },
     {
         id: 'score_500k',
-        name: '🏆 Score Pro',
-        description: '🏆 Reach a score of 500,000',
+        name: '📈 500k Clicks',
+        description: '📃 Reach a score of 500,000',
         target: 500000,
         unlocked: false
     },
     {
         id: 'click_5000',
-        name: '👑 Click Grandmaster',
-        description: '👑 Click 5,000 times',
+        name: '☝️ Click Grandmaster',
+        description: '📃 Click 5,000 times',
         target: 5000,
         unlocked: false
     },
     {
         id: 'score_2m',
-        name: '🌠 Score Grandmaster',
-        description: '🌠 Reach a score of 2 million',
+        name: '📈 2m Clicks',
+        description: '📃 Reach a score of 2 million',
         target: 2000000,
         unlocked: false
     },
     {
         id: 'click_100000',
-        name: '🎮 Click God',
-        description: '🎮 Click 100,000 times',
+        name: '☝️ Click God',
+        description: '📃 Click 100,000 times',
         target: 100000,
         unlocked: false
     },
     {
         id: 'click_50000',
-        name: '🔱 Click Deity',
-        description: '🔱 Click 50,000 times',
+        name: '☝️ Click Deity',
+        description: '📃 Click 50,000 times',
         target: 50000,
         unlocked: false
     },
     {
         id: 'score_5m',
-        name: '🏅 Score Legend',
-        description: '🏅 Reach a score of 5 million',
+        name: '📈 5m Clicks',
+        description: '📃 Reach a score of 5 million',
         target: 5000000,
         unlocked: false
     },
     {
         id: 'score_10m',
-        name: '🎖️ Score Master',
-        description: '🎖️ Reach a score of 10 million',
+        name: '📈 10m Clicks',
+        description: '📃 Reach a score of 10 million',
         target: 10000000,
         unlocked: false
     },
     {
-        id: 'score_10m',
-        name: '💎 Click Supreme',
-        description: '💎 Click 250,000 times',
+        id: 'click_250k',
+        name: '☝️ Click Supreme',
+        description: '📃 Click 250,000 times',
         target: 250000,
         unlocked: false
     },
     {
-        id: 'score_1b',
-        name: '❓ Are you Crazy?',
-        description: '❓ Click 1,000,000,000 times',
+        id: 'score_10m',
+        name: '📈 10m Clicks',
+        description: '📃 Reach a score of 10 million',
+        target: 10000000,
+        unlocked: false
+    },
+    {
+        id: 'click_1b',
+        name: '📈 Are you Crazy?',
+        description: '📃 Click 1,000,000,000 times',
         target: 1000000000,
         unlocked: false
     },
     {
         id: 'score_100b',
-        name: '🏆 Click Superior',
-        description: '💎 Click 100,000,000,000 times',
+        name: '📈 100b Score',
+        description: '📃 Reach a score of 100,000,000,000 million',
         target: 100000000000,
         unlocked: false
     },
     {
         id: 'score_250b',
-        name: '☝️ Click GOD',
-        description: '💎 Click 250,000,000,000 times',
+        name: '📈 250b Clicks',
+        description: '📃 Reach a score of 250,000,000,000 million',
         target: 250000000000,
         unlocked: false
     },
     {
+        id: 'score_1t',
+        name: '📈 1T Clicks',
+        description: '📃 Reach a score of 1,000,000,000,000 million',
+        target: 100000000000000,
+        unlocked: false
+    },
+    {
+        id: 'score_500t',
+        name: '📈 500T Clicks',
+        description: '📃 Reach a score of 500,000,000,000,000 million',
+        target: 50000000000000,
+        unlocked: false
+    },
+    {
+        id: 'score_1q',
+        name: '📈 1Q Clicks',
+        description: '📃 Reach a score of 1,000,000,000,000,000 million',
+        target: 100000000000000000,
+        unlocked: false
+    },
+    {
+        id: 'score_500q',
+        name: '📈 500Q Clicks',
+        description: '📃 Reach a score of 500,000,000,000,000,000 million',
+        target: 25000000000000000000,
+        unlocked: false
+    },
+    {
         id: 'score_1un',
-        name: '🧙‍♀️ Click ... cant tell',
-        description: '🧙‍♀️ Reach an Score of 1 Undecillion',
+        name: '📈 Click ... cant tell',
+        description: '📃️ Reach an Score of 1 Undecillion',
         target: 100000000000000000000000000000000,
         unlocked: false
     },
     {
         id: 'click_bruh',
-        name: '🔱 IDK HOW?!!?',
-        description: '🔱 Click INFINITY times',
+        name: '☝️ IDK HOW?!!?',
+        description: '📃 Click INFINITY times',
         target: 100000000000000000000000000000000,
         unlocked: false
     },

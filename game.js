@@ -10,6 +10,8 @@ const upgradeButtons = document.querySelectorAll('#upgrades button');
 const notiSound = document.getElementById('notiSound');
 const ambientSound = document.getElementById('ambientSound');
 
+
+
 // Versuche, den Spielstand aus dem Local Storage abzurufen
 const savedScore = localStorage.getItem('score');
 if (savedScore) {
@@ -401,9 +403,6 @@ function applySavedVolumes() {
             const savedVolume = parseFloat(localStorage.getItem(`${soundId}Volume`)) || 1;
             slider.value = savedVolume;
 
-            // Log initial values for debugging
-            console.log(`${soundId} Initial Volume: ${savedVolume}`);
-
             soundElement.volume = savedVolume;
         }
     });
@@ -424,9 +423,6 @@ function saveAllSettings() {
 
     // Speichere die Einstellungen im Local Storage
     localStorage.setItem('settings', JSON.stringify(settings));
-
-    console.log("noti", notiSoundVolume)
-    console.log('Alle Einstellungen wurden gespeichert.');
 }
 
 // Setze den initialen Wert der Slider basierend auf localStorage
@@ -443,11 +439,8 @@ volumeSliders.forEach(function (slider) {
 
             // Check if the volume is 0, set it to a small non-zero value
             if (volume === 0) {
-                volume = 0.00001;
+                volume = 0.0000001;
             }
-
-            // Log the volume and soundId to check if the event is triggered
-            console.log(`Volume changed for ${soundId}: ${volume}`);
 
             soundElement.volume = volume;
             saveSoundVolume(soundId, volume);
@@ -458,29 +451,42 @@ volumeSliders.forEach(function (slider) {
 
 // Sharing System
 
-// JavaScript
 document.getElementById('shareTwitter').addEventListener('click', shareOnTwitter);
 document.getElementById('shareWhatsApp').addEventListener('click', shareOnWhatsApp);
 
 
 function shareOnTwitter() {
     const statsToShare = loadStatsFromLocalStorage();
-    const shareText = encodeURIComponent(`Check out my awesome stats:\n${statsToShare}\n\nPlay it now: https://clicker-chilly.netlify.app/`);
-    const hashtags = 'MyAwesomeStats,GameStats'; // Füge hier die gewünschten Hashtags hinzu
-    const shareUrl = `https://twitter.com/intent/tweet?text=${shareText}&hashtags=${hashtags}`;
+    const formattedStats = formatStatsForTwitter(statsToShare);
+
+    const tweetText = `${formattedStats}\n\n`;
+    const hashtags = 'IdleClicker,Idle,Clicker,prodbyeagle,Chilly,ChillLounge';
+
+    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&hashtags=${hashtags}`;
     openNewWindow(shareUrl);
 }
 
 function shareOnWhatsApp() {
     const statsToShare = loadStatsFromLocalStorage();
-    const shareUrl = `https://wa.me/?text=Check%20out%20my%20awesome%20stats%3A%20${encodeURIComponent(statsToShare)}`;
+    const formattedStats = formatStatsForWhatsApp(statsToShare);
+    const shareUrl = `https://wa.me/?text=${encodeURIComponent(formattedStats)}`;
     openNewWindow(shareUrl);
+}
+
+function formatStatsForTwitter(stats) {
+    return `🚀 Check out my awesome stats:\n\n${stats}\n\nPlay it now: https://clicker-chilly.netlify.app/`;
+}
+
+function formatStatsForWhatsApp(stats) {
+    return `🚀 Check out my awesome stats:\n${stats}\nPlay it now: https://clicker-chilly.netlify.app/`;
 }
 
 function openNewWindow(url) {
     window.open(url, '_blank', 'width=600,height=400');
 }
 
+
+//TODO: DISCORD RICH PRESENCE
 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY             // DEV OVERLAY                   // DEV OVERLAY 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY             // DEV OVERLAY                   // DEV OVERLAY 
