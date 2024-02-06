@@ -683,6 +683,7 @@ h1 {
     background-color: black;
     background-size: contain; /* Adjust this property as needed */
     color: #fff;
+    font-family: 'Rubik', sans-serif;
     border: 2px solid #ffffff;
     margin: 5px;
     padding: 10px 15px 10px 40px; /* Adjust the right padding to create space for the image */
@@ -702,6 +703,7 @@ h1 {
     background-color: black;
     background-size: contain; /* Adjust this property as needed */
     color: #fff;
+    font-family: 'Rubik', sans-serif;
     border: 2px solid #ffffff;
     margin: 5px;
     padding: 10px 15px 10px 40px; /* Adjust the right padding to create space for the image */
@@ -721,6 +723,7 @@ h1 {
     background-color: #000000;
     color: #fff;
     margin: 5px;
+    font-family: 'Rubik', sans-serif;
     border: 2px solid #ffffff;
     padding: 10px 15px 10px 40px; /* Adjust the right padding to create space for the image */
     border-radius: 5px;
