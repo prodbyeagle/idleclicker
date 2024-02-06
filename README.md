@@ -19,11 +19,13 @@ The game features various upgrades, including:
 - More Clicks
 - Lucky Clicks
 - Auto Clicker
+- Auto Upgrade Buy
 
 ## ✅ Features
 
-- Persistent storage of upgrades using Local Storage.
 - Fun animations and lucky click events.
+- Rainbow MODE omg crazy!!!?!!?!?!!!!!11!!!!11
+- and other u need to find yourself.
 
 ## ⚠️ Contributions
 
