@@ -10,8 +10,6 @@ const upgradeButtons = document.querySelectorAll('#upgrades button');
 const notiSound = document.getElementById('notiSound');
 const ambientSound = document.getElementById('ambientSound');
 
-
-
 // Versuche, den Spielstand aus dem Local Storage abzurufen
 const savedScore = localStorage.getItem('score');
 if (savedScore) {
@@ -155,6 +153,7 @@ tooltipTriggerElements.forEach(trigger => {
 
 //TODO: BUTTON EVENT
 
+const clickAnimation = document.getElementById('clickAnimation');
 
 clickBtn.addEventListener('click', function() {
     try {
@@ -182,6 +181,7 @@ clickBtn.addEventListener('click', function() {
         updateStats();
         saveStatsToLocalStorage();
         saveScoreToLocalStorage();
+         
 
         // Anti-Auto Clicker:
         clickBtn.disabled = true;
@@ -590,91 +590,6 @@ document.getElementById('rainbowModeButton').addEventListener('click', toggleRai
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY                             // DEV OVERLAY 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY                             // DEV OVERLAY 
 
-
-
-
-
-
-
-
- 
 document.addEventListener('DOMContentLoaded', () => {
     loadAchievements();
-});
-
-
-document.addEventListener('keydown', function (event) {
-    if (event.key === '~') {
-        toggleDevOverlay();
-    }
-});
-
-function toggleDevOverlay() {
-    const devOverlay = document.getElementById('devOverlay');
-
-    // Überprüfen Sie, ob die Shift-Taste gedrückt ist
-    const isShiftPressed = event.shiftKey;
-
-    if (devOverlay) {
-        // Überprüfen Sie, ob das Dev Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
-        if (!devOverlay.classList.contains('show') && !isShiftPressed) {
-            devOverlay.classList.add('show');
-        } else {
-            // Wenn Shift gedrückt ist, das Overlay nicht schließen
-            if (!isShiftPressed) {
-                devOverlay.classList.remove('show');
-            }
-        }
-    }
-}
-
-function give1kscore() {
-    score += 1000;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1K to the Score`);
-    toggleDevOverlay();
-}
-function give1mscore() {
-    score += 1000000;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1M to the Score`);
-    toggleDevOverlay();
-}
-function give1bscore() {
-    score += 1000000000;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1B to the Score`);
-    toggleDevOverlay();
-}
-function give1tscore() {
-    score += 1000000000000;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1T to the Score`);
-    toggleDevOverlay();
-}
-function give1qscore() {
-    score += 1000000000000000;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 1Q to the Score`);
-    toggleDevOverlay();
-}
-
-function give100qscore() {
-    score += 100000000000000000;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Added 100Q to the Score`);
-    toggleDevOverlay();
-}
-
-function dev_resetscore() {
-    score = 0;
-    updateScore();
-    showUpgradeNotification(`⚙️ DEV: Reseted Score`);
-    toggleDevOverlay();
-}
-
-document.addEventListener('keydown', function (event) {
-    if (event.key === '´') {
-        toggleDevOverlay();
-    }
 });
