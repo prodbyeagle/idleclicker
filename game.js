@@ -451,18 +451,18 @@ volumeSliders.forEach(function (slider) {
 
 // Sharing System
 
-document.getElementById('shareTwitter').addEventListener('click', shareOnTwitter);
+document.getElementById('shareX').addEventListener('click', shareOnX);
 document.getElementById('shareWhatsApp').addEventListener('click', shareOnWhatsApp);
 
 
-function shareOnTwitter() {
+function shareOnX() {
     const statsToShare = loadStatsFromLocalStorage();
-    const formattedStats = formatStatsForTwitter(statsToShare);
+    const formattedStats = formatStatsForX(statsToShare);
 
     const tweetText = `${formattedStats}\n\n`;
     const hashtags = 'IdleClicker,Idle,Clicker,prodbyeagle,Chilly,ChillLounge';
 
-    const shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}&hashtags=${hashtags}`;
+    const shareUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(tweetText)}&hashtags=${hashtags}`;
     openNewWindow(shareUrl);
 }
 
@@ -473,18 +473,56 @@ function shareOnWhatsApp() {
     openNewWindow(shareUrl);
 }
 
-function formatStatsForTwitter(stats) {
-    return `🚀 Check out my awesome stats:\n\n${stats}\n\nPlay it now: https://clicker-chilly.netlify.app/`;
+function formatStatsForX(stats) {
+    return `Check out my awesome stats:\n\n${stats}\n\nPlay it now: https://clicker-chilly.netlify.app/`;
 }
 
 function formatStatsForWhatsApp(stats) {
-    return `🚀 Check out my awesome stats:\n${stats}\nPlay it now: https://clicker-chilly.netlify.app/`;
+    return `Check out my awesome stats:\n${stats}\nPlay it now: https://clicker-chilly.netlify.app/`;
 }
 
 function openNewWindow(url) {
-    window.open(url, '_blank', 'width=600,height=400');
+    window.open(url, '_blank', 'width=800,height=600');
 }
 
+let interval; // Globaler Bereich für das Intervall
+
+function toggleRainbowMode() {
+    const rainbowModeActive = !document.documentElement.classList.contains('rainbow-mode');
+    if (rainbowModeActive) {
+      startRainbowAnimation();
+      document.getElementById('rainbowModeButton').textContent = '🌈 Rainbow Mode ON!';
+      document.getElementById('rainbowModeButton').style.backgroundColor = '#45a049';
+      document.querySelectorAll('.upgradeButton').forEach(button => {
+        button.style.backgroundColor = '#45a049';
+      });
+    } else {
+      stopRainbowAnimation();
+      document.getElementById('rainbowModeButton').textContent = '🌧️ Rainbow Mode OFF!';
+      document.getElementById('rainbowModeButton').style.backgroundColor = '#ff4d4d';
+      document.querySelectorAll('.upgradeButton').forEach(button => {
+        button.style.backgroundColor = '#545662';
+      });
+    }
+    document.documentElement.classList.toggle('rainbow-mode', rainbowModeActive);
+  }
+
+function startRainbowAnimation() {
+    let hueValue = 0; // Startwert für den Hue-Wert
+    interval = setInterval(() => {
+        hueValue = (hueValue + 1) % 360; // Ändert den Hue-Wert, um eine Farbrotation zu erzeugen
+        document.documentElement.style.setProperty('--primary-color', `hsl(${hueValue}, 100%, 50%)`);
+        document.getElementById('clickBtn').style.backgroundColor = `hsl(${hueValue}, 100%, 50%)`;
+    }, 70); // Geschwindigkeit der Farbänderung in Millisekunden
+}
+
+function stopRainbowAnimation() {
+    clearInterval(interval);
+    document.documentElement.style.setProperty('--primary-color', '#a985d3'); // Setzt den Hue-Wert auf den Standardwert zurück
+    document.getElementById('clickBtn').style.backgroundColor = '#45a049'; // Setzt die Hintergrundfarbe von clickBtn auf Standardwert zurück
+}
+
+document.getElementById('rainbowModeButton').addEventListener('click', toggleRainbowMode);
 
 //TODO: DISCORD RICH PRESENCE
 

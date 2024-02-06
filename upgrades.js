@@ -70,7 +70,7 @@ function buyUpgrade(upgradeId) {
         enableAutoClicker();
     }
 
-    if (upgrade.name === "Auto-Buy" && upgrade.level === 1) {
+    if (upgrade.name === "Auto Buy" && upgrade.level === 1) {
         unlockAutoBuy();
     }
 
@@ -268,7 +268,7 @@ function toggleAutoClicker() {
         autoClickerInterval = null;
         toggleButton.classList.remove('active');
         toggleButton.classList.add('inactive');
-        showUpgradeNotification(`❌ Auto-Clicker Off`);
+        showUpgradeNotification(`❌ Auto-Clicker OFF!`);
     } else {
         if (autoClickerUpgrade.level > 0) {
             // Ensure that the 'score' variable is defined before starting the AutoClicker
@@ -277,7 +277,7 @@ function toggleAutoClicker() {
                 toggleButton.classList.remove('inactive');
                 toggleButton.classList.add('active');
                 addAutoClick();
-                showUpgradeNotification(`✅ Auto-Clicker On`);
+                showUpgradeNotification(`✅ Auto-Clicker ON!`);
             }
         }
     }
@@ -314,6 +314,10 @@ function buyAutoUpgrades(strategy) {
     let selectedUpgrade;
 
     switch (strategy) {
+        case 'random':
+            selectedUpgrade = getRandomUpgrade();
+            break;
+
         case 'cheapest':
             selectedUpgrade = getCheapestUpgrade();
             break;
@@ -322,12 +326,8 @@ function buyAutoUpgrades(strategy) {
             selectedUpgrade = getHighestLevelUpgrade();
             break;
 
-        case 'random':
-            selectedUpgrade = getRandomUpgrade();
-            break;
-
         default:
-            selectedUpgrade = getCheapestUpgrade();
+            selectedUpgrade = getRandomUpgrade();
     }
 
     // Kaufe das ausgewählte Upgrade
@@ -366,7 +366,7 @@ function getHighestLevelUpgrade() {
     const affordableUpgrades = Object.values(upgrades).filter(upgrade => upgrade.cost <= score && upgrade.level < upgrade.maxLevel);
 
     if (affordableUpgrades.length > 0) {
-        return affordableUpgrades.reduce((prev, curr) => (prev.cost < curr.cost ? prev : curr), {});
+        return affordableUpgrades.reduce((prev, curr) => (prev.level > curr.level ? prev : curr), {});
     }
 
     return null; // Kein Upgrade gefunden
@@ -377,7 +377,7 @@ function getRandomUpgrade() {
     const affordableUpgrades = Object.values(upgrades).filter(upgrade => upgrade.cost <= score && upgrade.level < upgrade.maxLevel);
 
     if (affordableUpgrades.length > 0) {
-        return affordableUpgrades.reduce((prev, curr) => (prev.cost < curr.cost ? prev : curr), {});
+        return affordableUpgrades[Math.floor(Math.random() * affordableUpgrades.length)];
     }
 
     return null; // Kein Upgrade gefunden
@@ -392,12 +392,12 @@ function toggleAutoBuy() {
         autotoggleButton.classList.remove('inactive');
         autotoggleButton.classList.add('active');
         startAutoBuy();
-        showUpgradeNotification("✅ Automatischer Kauf eingeschaltet");
+        showUpgradeNotification("✅ Auto Buy ON!");
     } else {
         autotoggleButton.classList.remove('active');
         autotoggleButton.classList.add('inactive');
         stopAutoBuy();
-        showUpgradeNotification("❌ Automatischer Kauf ausgeschaltet");
+        showUpgradeNotification("❌ Auto Buy OFF!");
     }
 }
 
@@ -417,18 +417,13 @@ function stopAutoBuy() {
     clearInterval(autoBuyInterval);
 }
 
-strategy = 'cheapest';
+strategy = 'random';
 
 // Funktion zum Ändern der Upgrade-Strategie
 function changeStrategy(newStrategy) {
     strategy = newStrategy;
     showUpgradeNotification(`✨ Strategy changed to: ${newStrategy}`);
 }
-
-
-
-
-
 
 
 // Funktion zum Aktualisieren der Upgrade-Buttons
@@ -452,12 +447,12 @@ function updateUpgradeButtons() {
                 // Überprüfe, ob das maximale Level erreicht wurde, und deaktiviere den Button entsprechend
                 if (upgrade.level >= upgrade.maxLevel) {
                     button.disabled = true;
-                    button.style.cursor = not-allowed;
+                    button.style.cursor = "not-allowed";
                     button.style.transition = "all 0.2s";
                 } else {
                     button.disabled = false;
                     button.style.backgroundColor = ""; // Setze die Hintergrundfarbe auf den Standardwert
-                    button.style.cursor = "url('cursor.png'), not-allowed";
+                    button.style.cursor = "cursor";
                 }
 
                 // Event listeners for hover effect
@@ -476,9 +471,10 @@ function updateUpgradeButtons() {
                 // Überprüfe, ob es sich um das Auto Clicker-Upgrade handelt und es aufgewertet wurde
                 if (upgrade.name === "Auto Clicker" && upgrade.level > 0) {
                     document.getElementById("toggleAutoClicker").style.display = "block";
+                    document.getElementById("toggleAutoClicker").style.cursor = "pointer";
                 }
                 // Überprüfe, ob es sich um das Auto Clicker-Upgrade handelt und es aufgewertet wurde
-                if (upgrade.name === "Auto-Buy" && upgrade.level > 0) {
+                if (upgrade.name === "Auto Buy" && upgrade.level > 0) {
                     document.getElementById("toggleAutoBuy").style.display = "block";
                     document.getElementById("strategyDropdown").style.display = "block";
                 }
@@ -502,9 +498,7 @@ function resetUpgrades() {
 }
 
 
-
 // Auto Upgrade Buy
-
 function unlockAutoBuy() {
     try {
         const autoBuyUpgrade = upgrades[9];
@@ -524,7 +518,6 @@ function unlockAutoBuy() {
         // Make the button visible
         const autoBuyButton = document.getElementById('toggleAutoBuy');
         if (!autoBuyButton) {
-            autoBuyButton.style.display = 'block';
             displayError("Auto Buy button not found.");
         }
 

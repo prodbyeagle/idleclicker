@@ -29,9 +29,9 @@
 
 <div id="upgrades-container">
   <h2>Upgrades: <label for="strategyDropdown"></label><select id="strategyDropdown" onchange="changeStrategy(this.value)">
+    <option value="random">Random Upgrade</option>
     <option value="cheapest">Cheapest Upgrade</option>
     <option value="highestLevel">Highest Level</option>~~
-    <option value="random">Random Upgrade</option>
   </select></h2> 
     <div id="upgrades">
         <p class="tooltip-trigger" data-tooltip-content="📄 Pro Upgrade = 5x (Stacking!)">
@@ -86,35 +86,39 @@
 
 <div id="settingsOverlay" class="hidden">
   <div id="settingsContent">
-      <p>Settings</p>
-      <label>
-          Lucky Event Sound <input type="range" class="volumeSlider" id="luckyEventSoundVolume" min="0" max="1" step="0.1">
-    </label>
-    <label>
-        Error Sound <input type="range" class="volumeSlider" id="errorSoundVolume" min="0" max="1" step="0.1">
-    </label>
-    <label>
-        Notification Sound <input type="range" class="volumeSlider" id="notiSoundVolume" min="0" max="1" step="0.1">
-    </label>
-    <label>
-        Achievements Sound <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1">
-    </label>
-      <button id="closeSettings" onclick="closeSettings()">Close</button>
+    <h2>Settings</h2>
+    <div class="setting">
+      <label for="luckyEventSoundVolume">Lucky Event Sound</label>
+      <input type="range" class="volumeSlider" id="luckyEventSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label for="errorSoundVolume">Error Sound</label>
+      <input type="range" class="volumeSlider" id="errorSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label for="notiSoundVolume">Notification Sound</label>
+      <input type="range" class="volumeSlider" id="notiSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label for="achievementsSoundVolume">Achievements Sound</label>
+      <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <button id="closeSettings" onclick="closeSettings()">Close</button>
   </div>
 </div>
 
 
 <div id="devOverlay" class="hidden">
-    <div id="devContent">
-        <p>Developer Menu: (Score stays until reload but +1 Click for PlayerSafe)</p>
-        <button id="devButton1" class="devButton" onclick="give1kscore()">+1K Points</button>
-        <button id="devButton2" class="devButton" onclick="give1mscore()">+1M Points</button>
-        <button id="devButton3" class="devButton" onclick="give1bscore()">+1B Points</button>
-        <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Points</button>
-        <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Points</button>
-        <button id="devButton6" class="devButton" onclick="give100qscore()">+100Q Points</button>
-        <button id="devButton10" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
-    </div>
+  <div id="devContent">
+      <p>Developer Menu: (Score stays until reload but +1 Click for PlayerSafe)</p>
+      <button id="devButton1" class="devButton" onclick="give1kscore()">+1K Points</button>
+      <button id="devButton2" class="devButton" onclick="give1mscore()">+1M Points</button>
+      <button id="devButton3" class="devButton" onclick="give1bscore()">+1B Points</button>
+      <button id="devButton4" class="devButton" onclick="give1tscore()">+1T Points</button>
+      <button id="devButton5" class="devButton" onclick="give1qscore()">+1Q Points</button>
+      <button id="devButton6" class="devButton" onclick="give100qscore()">+100Q Points</button>
+      <button id="devButton10" class="devButton" onclick="dev_resetscore()">Reset Score Points</button>
+  </div>
 </div>
 
 <div class="toast-container"></div>
@@ -149,13 +153,16 @@
 </p>
 </div>
 
-<div id="socialSharing">
-    <button id="shareTwitter">Share on Twitter</button>
-    <button id="shareWhatsApp">Share on WhatsApp</button>
-</div>
+<button id="rainbowModeButton">🌈 Toggle Rainbow Mode</button>
 
+<button id="shareX" class="img">
+  Share X
+</button>
+<button id="shareWhatsApp" class="img">
+  Share WhatsApp
+</button>
 <a href="https://github.com/prodbyeagle/ClickerGame" download>
-    <button id="downloadGame">DOWNLOAD NOW!</button>
+  <button id="downloadGame">Get the Desktop App!</button>
 </a>
 
 <script src="upgrades.js"></script>

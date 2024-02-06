@@ -86,10 +86,10 @@ const achievements = [
         unlocked: false
     },
     {
-        id: 'score_10m',
-        name: '📈 10m Clicks',
-        description: '📃 Reach a score of 10 million',
-        target: 10000000,
+        id: 'score_250m',
+        name: '📈 250m Clicks',
+        description: '📃 Reach a score of 250 million',
+        target: 2500000000,
         unlocked: false
     },
     {

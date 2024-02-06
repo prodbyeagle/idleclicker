@@ -44,7 +44,7 @@ h1 {
     padding: 10px 15px;
     border-radius: 5px;
     font-size: 18px;
-    cursor: url('cursor.png'),auto;
+    cursor: pointer;
     margin-top: 20px;
     transition: all 0.1s ease;
 }
@@ -203,6 +203,7 @@ h1 {
 
 #stats-container {
     position: absolute;
+    border: 2px solid #a985d3;
     top: 10px;
     left: 10px;
     color: var(--primary-color);
@@ -224,6 +225,7 @@ h1 {
 
 #achievements-container {
     position: absolute;
+    border: 2px solid #a985d3;
     top: 10px;
     right: 10px;
     text-align: left;
@@ -269,6 +271,7 @@ h1 {
     background-color: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     z-index: 1000;
     opacity: 0;
@@ -481,7 +484,7 @@ h1 {
 #strategyDropdown {
     display: none;
     font-family: 'Rubik', sans-serif;
-    background-color: var(--primary-color);
+    background-color: #545662;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -666,3 +669,142 @@ h1 {
     background-color: #324bb7;
     transform: scale(0.9);
 }
+
+@keyframes tilt-shaking {
+    0% { transform: translate(0, 0) rotate(0deg); }
+    25% { transform: translate(5px, 5px) rotate(5deg); }
+    50% { transform: translate(0, 0) rotate(0eg); }
+    75% { transform: translate(-5px, 5px) rotate(-5deg); }
+    100% { transform: translate(0, 0) rotate(0deg); }
+  }
+
+#downloadGame {
+    background: url('github.jpg') no-repeat left center;
+    background-color: black;
+    background-size: contain; /* Adjust this property as needed */
+    color: #fff;
+    border: 2px solid #ffffff;
+    margin: 5px;
+    padding: 10px 15px 10px 40px; /* Adjust the right padding to create space for the image */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#downloadGame:hover {
+    transform: scale(0.9);
+    animation: tilt-shaking 0.25s infinite;
+}
+
+
+#shareX {
+    background: url('x.png') no-repeat left center;
+    background-color: black;
+    background-size: contain; /* Adjust this property as needed */
+    color: #fff;
+    border: 2px solid #ffffff;
+    margin: 5px;
+    padding: 10px 15px 10px 40px; /* Adjust the right padding to create space for the image */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#shareX:hover {
+    transform: scale(0.9);
+}
+
+
+#shareWhatsApp {
+    background: url('whatsapp.png') no-repeat left center;
+    background-size: contain; /* Adjust this property as needed */
+    background-color: #000000;
+    color: #fff;
+    margin: 5px;
+    border: 2px solid #ffffff;
+    padding: 10px 15px 10px 40px; /* Adjust the right padding to create space for the image */
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#shareWhatsApp:hover {
+    transform: scale(0.9);
+}
+
+#settingsContent {
+    background-color: #2f3136; /* Dunklerer Hintergrund */
+    color: #fff; /* Textfarbe */
+    border: 2px solid #a985d3; /* Rahmen */
+    border-radius: 5px; /* Abgerundete Ecken */
+    padding: 20px; /* Innenabstand */
+    max-width: 400px; /* Maximale Breite */
+  }
+  
+  #settingsContent h2 {
+    font-size: 24px; /* Überschriftengröße */
+    margin-bottom: 20px; /* Abstand zum unteren Inhalt */
+    color: #a985d3;
+  }
+  
+  .setting {
+    margin-bottom: 15px; /* Abstand zwischen den Einstellungen */
+  }
+  
+  label {
+    display: block; /* Jedes Label auf einer neuen Zeile */
+  }
+  
+  input[type="range"] {
+    width: 100%; /* Volle Breite für den Schieberegler */
+    background-color: #a985d3; /* Farbe des Schiebereglers */
+    height: 5px; /* Höhe des Schiebereglers */
+    border-radius: 5px; /* Abgerundete Ecken */
+    outline: none; /* Kein Standard-Browser-Stil */
+  }
+  
+  input[type="range"]::-webkit-slider-thumb {
+    width: 15px; /* Breite des Schieberegler-Daumens */
+    height: 15px; /* Höhe des Schieberegler-Daumens */
+    background-color: #fff; /* Hintergrundfarbe des Schieberegler-Daumens */
+    border-radius: 50%; /* Runder Schieberegler-Daumen */
+    border: 2px solid #a985d3; /* Rand des Schieberegler-Daumens */
+    cursor: pointer; /* Zeiger-Cursor */
+  }
+  
+  input[type="range"]:hover::-webkit-slider-thumb {
+    background-color: #a985d3; /* Hintergrundfarbe des Schieberegler-Daumens beim Hover */
+  }
+  
+  button {
+    background-color: #a985d3; /* Primärfarbe für die Schaltfläche */
+    color: #fff; /* Textfarbe */
+    border: none; /* Kein Rahmen */
+    padding: 10px 20px; /* Innenabstand */
+    border-radius: 5px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeiger-Cursor */
+    transition: all 0.2s ease; /* Sanfter Farbübergang */
+  }
+  
+  button:hover {
+    background-color: #7d5aa4; /* Hellerer Farbton beim Hover */
+    transform: scale(0.9);
+  }
+
+  #rainbowModeButton {
+    padding: 10px 15px;
+    font-family: 'Rubik', sans-serif;
+    color: white;
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+  #rainbowModeButton.active {
+    font-family: 'Rubik', sans-serif;
+    color: white;
+}
+
+#rainbowModeButton:hover {
+    transform: scale(0.9);
+  }
