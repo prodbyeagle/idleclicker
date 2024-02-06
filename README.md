@@ -6,9 +6,9 @@ Welcome to the Clicker Game repository! This is a simple web-based clicker game 
 
 ## 🤔 How to Play
 
-1. Download this Zip: [Download](https://github.com/prodbyeagle/ClickerGame/archive/refs/heads/main.zip) and.
-2. Click on the big button to earn points.
-3. Purchase upgrades to increase your points per click and unlock special features.
+1. Download this Installer: [Download](https://drive.google.com/file/d/1Vepud5RQUHYJctLjBxSujqwtSb_NterU/view?usp=sharing) and Run it. (on new updates just install the new installer its just updating the old version)
+3. Click on the big button to earn points.
+4. Purchase upgrades to increase your points per click and unlock special features.
 
 ## 🆙 Upgrades
 
@@ -25,5 +25,3 @@ The game features various upgrades, including:
 ## ⚠️ Contributions
 
 Contributions are welcome! If you have any ideas for new features or improvements, feel free to open an issue or create a pull request.
-
-NEWEST RELEASE: https://github.com/prodbyeagle/ClickerGame/releases/tag/v0.9
