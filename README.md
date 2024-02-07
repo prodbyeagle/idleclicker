@@ -10,7 +10,7 @@ Welcome to the Clicker Game repository! This is a simple web-based clicker game 
    
 - [VirusTotal Scan](https://www.virustotal.com/gui/file/cc73b43efed320b44509850cf09136696c6d0b4cf7a338118f4f146957d335cc/detection)
 
-3. Click on the big button to earn points.
+3. Click on the Click Button to earn points.
 4. Purchase upgrades to increase your points per click and unlock special features.
 
 ## 🆙 Upgrades
