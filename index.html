@@ -61,11 +61,11 @@
       </p>
     <h2>🤖 Auto-Clicker Stats:</h2>
     <p class="tooltip-trigger" data-tooltip-content="📄 Clicks that the Auto Clicker made since the First Start">
-        Total Score: <span id="totalautoClicks">0</span>
+        Total Clicks: <span id="totalautoClicks">0</span>
       </p>
       
     <p class="tooltip-trigger" data-tooltip-content="📄 Total of the Score that the Auto Clicker made">
-        Total Score: <span id="totalautoScoreValue">0</span>
+        Total Coins: <span id="totalautoScoreValue">0</span>
       </p>
     <p class="tooltip-trigger" data-tooltip-content="🪙 Clicks per Minute">
         CPM: <span id="cpsValue">0</span>
@@ -103,6 +103,11 @@
       <label for="achievementsSoundVolume">Achievements Sound</label>
       <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1">
     </div>
+    <div class="setting">
+      <label for="clickSoundVolume">Click Sound (can be annoying)</label>
+      <input type="range" class="volumeSlider" id="clickSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <button id="rainbowModeButton">🌈 Toggle Rainbow Mode</button>
     <button id="closeSettings" onclick="closeSettings()">Close</button>
   </div>
 </div>
@@ -129,8 +134,8 @@
 <audio id="luckyEventSound" src="luckyevent.wav"></audio>
 <audio id="errorSound" src="error.wav"></audio>
 <audio id="notiSound" src="notification.wav"></audio>
-<audio id="ambientSound" src="ambiente.mp3"></audio>
 <audio id="achievementsSound" src="achievement.wav"></audio>
+<audio id="clickSound" src="click.wav"></audio>
 
 <div class="button-container">
 <p class="tooltip-trigger" data-tooltip-content="🖼️ Toggle The Background ON/OFF (Performance)">
@@ -138,9 +143,6 @@
 </p>
 <p class="tooltip-trigger" data-tooltip-content="⚙️ Go to Settings to Change the other Sounds!">
     <button id="ToggleSettingsButton">⚙️ Settings</button>
-</p>
-<p class="tooltip-trigger" data-tooltip-content="🎧 Toggle the Music">
-    <button id="globalMuteButton"></button>
 </p>
 <p class="tooltip-trigger" data-tooltip-content="🔃 Reset your Player!">
     <button id="resetButton">🔃 Reset</button>
@@ -152,8 +154,6 @@
     <button onclick="toggleAutoBuy()" id="toggleAutoBuy">💵 Toggle Auto-Buy</button>
 </p>
 </div>
-
-<button id="rainbowModeButton">🌈 Toggle Rainbow Mode</button>
 
 <button id="shareX" class="img">
   Share X

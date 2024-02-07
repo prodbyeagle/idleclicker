@@ -783,6 +783,7 @@ h1 {
     background-color: #a985d3; /* Primärfarbe für die Schaltfläche */
     color: #fff; /* Textfarbe */
     border: none; /* Kein Rahmen */
+    font-size: 12px;
     padding: 10px 20px; /* Innenabstand */
     border-radius: 5px; /* Abgerundete Ecken */
     cursor: pointer; /* Zeiger-Cursor */
@@ -797,10 +798,13 @@ h1 {
   #rainbowModeButton {
     padding: 10px 15px;
     font-family: 'Rubik', sans-serif;
-    color: white;
-    font-size: 14px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    color: #fff; /* Textfarbe */
+    border: none; /* Kein Rahmen */
+    font-size: 12px;
+    padding: 10px 20px; /* Innenabstand */
+    border-radius: 5px; /* Abgerundete Ecken */
+    cursor: pointer; /* Zeiger-Cursor */
+    transition: all 0.2s ease; /* Sanfter Farbübergang */
 }
 
   #rainbowModeButton.active {

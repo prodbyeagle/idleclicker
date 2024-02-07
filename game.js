@@ -8,7 +8,6 @@ const clickBtn = document.getElementById('clickBtn');
 const scoreElement = document.getElementById('scoreValue');
 const upgradeButtons = document.querySelectorAll('#upgrades button');
 const notiSound = document.getElementById('notiSound');
-const ambientSound = document.getElementById('ambientSound');
 
 // Versuche, den Spielstand aus dem Local Storage abzurufen
 const savedScore = localStorage.getItem('score');
@@ -171,9 +170,6 @@ clickBtn.addEventListener('click', function() {
             clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
         }
 
-        ambientSound.play();
-        ambientSound.volume = 0.1;
-
         score += clickMultiplier;
         totalClicks++; // Erhöhe die Gesamtanzahl der Klicks
         totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
@@ -182,7 +178,7 @@ clickBtn.addEventListener('click', function() {
         saveStatsToLocalStorage();
         saveScoreToLocalStorage();
          
-
+        
         // Anti-Auto Clicker:
         clickBtn.disabled = true;
         setTimeout(() => {
@@ -339,45 +335,6 @@ window.addEventListener('load', function () {
 
 // Settings
 
-// Die Audio-Elemente
-
-// Lese den gespeicherten Zustand aus dem localStorage
-const isMuted = localStorage.getItem('isMuted') === 'true';
-const globalMuteButton = document.getElementById('globalMuteButton');
-
-// Setze den initialen Zustand des Buttons basierend auf localStorage
-ambientSound.muted = isMuted;
-
-// Funktion zur Aktualisierung des Button-Stils und Texts
-function updateButtonStyleAndText() {
-    if (ambientSound.muted) {
-        globalMuteButton.classList.add('inactive');
-        globalMuteButton.classList.remove('active');
-        globalMuteButton.textContent = '🔇';
-    } else {
-        globalMuteButton.classList.add('active');
-        globalMuteButton.classList.remove('inactive');
-        globalMuteButton.textContent = '🔊';
-    }
-}
-
-// Setze den initialen Stil und Text des Buttons
-updateButtonStyleAndText();
-
-// Event-Listener für den global Mute-Button
-globalMuteButton.addEventListener('click', () => {
-    ambientSound.muted = !ambientSound.muted;
-
-    // Aktualisiere den Stil und Text des Buttons
-    updateButtonStyleAndText();
-
-    // Speichere den aktuellen Zustand im localStorage
-    localStorage.setItem('isMuted', ambientSound.muted);
-});
-
-
-//TODO: Settings
-
 
 const settingsOverlay = document.getElementById('settingsOverlay');
 const volumeSliders = document.querySelectorAll('.volumeSlider');
@@ -513,7 +470,7 @@ function startRainbowAnimation() {
         hueValue = (hueValue + 1) % 360; // Ändert den Hue-Wert, um eine Farbrotation zu erzeugen
         document.documentElement.style.setProperty('--primary-color', `hsl(${hueValue}, 100%, 50%)`);
         document.getElementById('clickBtn').style.backgroundColor = `hsl(${hueValue}, 100%, 50%)`;
-    }, 70); // Geschwindigkeit der Farbänderung in Millisekunden
+    }, 30); // Geschwindigkeit der Farbänderung in Millisekunden
 }
 
 function stopRainbowAnimation() {
@@ -590,6 +547,91 @@ document.getElementById('rainbowModeButton').addEventListener('click', toggleRai
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY                             // DEV OVERLAY 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY                             // DEV OVERLAY 
 
+
+
+
+
+
+
+
+ 
 document.addEventListener('DOMContentLoaded', () => {
     loadAchievements();
+});
+
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === '~') {
+        toggleDevOverlay();
+    }
+});
+
+function toggleDevOverlay() {
+    const devOverlay = document.getElementById('devOverlay');
+
+    // Überprüfen Sie, ob die Shift-Taste gedrückt ist
+    const isShiftPressed = event.shiftKey;
+
+    if (devOverlay) {
+        // Überprüfen Sie, ob das Dev Overlay bereits angezeigt wird und die Shift-Taste nicht gedrückt ist
+        if (!devOverlay.classList.contains('show') && !isShiftPressed) {
+            devOverlay.classList.add('show');
+        } else {
+            // Wenn Shift gedrückt ist, das Overlay nicht schließen
+            if (!isShiftPressed) {
+                devOverlay.classList.remove('show');
+            }
+        }
+    }
+}
+
+function give1kscore() {
+    score += 1000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1K to the Score`);
+    toggleDevOverlay();
+}
+function give1mscore() {
+    score += 1000000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1M to the Score`);
+    toggleDevOverlay();
+}
+function give1bscore() {
+    score += 1000000000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1B to the Score`);
+    toggleDevOverlay();
+}
+function give1tscore() {
+    score += 1000000000000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1T to the Score`);
+    toggleDevOverlay();
+}
+function give1qscore() {
+    score += 1000000000000000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 1Q to the Score`);
+    toggleDevOverlay();
+}
+
+function give100qscore() {
+    score += 100000000000000000;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Added 100Q to the Score`);
+    toggleDevOverlay();
+}
+
+function dev_resetscore() {
+    score = 0;
+    updateScore();
+    showUpgradeNotification(`⚙️ DEV: Reseted Score`);
+    toggleDevOverlay();
+}
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === '´') {
+        toggleDevOverlay();
+    }
 });

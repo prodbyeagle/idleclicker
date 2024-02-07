@@ -222,6 +222,31 @@ function startAutoClicker(autoClickerMultiplier) {
             updateScore();
             saveScoreToLocalStorage();
             addAutoClick();
+
+            // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
+            const clickSoundVolume = parseFloat(localStorage.getItem('clickSoundVolume')) || 1;
+            
+            const clickSoundElement = document.getElementById('clickSound');
+            let clickSound;
+            
+            if (clickSoundElement) {
+                clickSound = new Audio(clickSoundElement.src);
+                clickSound.volume = clickSoundVolume;
+                clickSound.currentTime = 0;
+            
+                // Check if user interaction is required
+                const playPromise = clickSound.play();
+            
+                if (playPromise !== undefined) {
+                    playPromise.then(_ => {
+                        // Audio playback started successfully
+                    }).catch(error => {
+                        // Audio playback failed, handle the error
+                        displayError('Audio playback failed:', error);
+                    });
+                }
+            }
+
         } else {
             console.error("Fehler: 'score' oder 'clickMultiplier' ist NaN");
         }
