@@ -231,16 +231,6 @@ function updateScore() {
 }
 updateUpgradeButtons();
 
-
-function resetScore() {
-    score = 0; // Setze den Spielstand auf null
-    updateScore(); // Aktualisiere den Spielstand im DOM
-
-    // Speichere den Spielstand im Local Storage
-    localStorage.setItem('score', 0);
-    saveScoreToLocalStorage(); 
-}
-
 //TODO: Simplify Number
 
 

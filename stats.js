@@ -46,53 +46,77 @@ function saveStatsToLocalStorage() {
 }
 
 function resetStats() {
-        // Erstellen Sie die Bestätigungsnachricht mit aktuellen Statistiken
+    try {
+        // Confirmation message
         const confirmationMessage = `
-            Möchten Sie wirklich alle Statistiken zurücksetzen?
-            (Lade die Seite neu nach dem Reset)
-            (Vielleicht brauchst du Glück?)
+        Do you really want to reset all statistics?
+        (Reload the page after reset)
+        (Maybe you need luck?)
 
-            Aktuelle Statistiken:
-            - Total Clicks: ${simplifyNumber(totalClicks)}
-            - Total Score: ${simplifyNumber(totalScore)}
-            - Current Score: ${simplifyNumber(score)}
-        `;
+        Current Statistics:
+        - Total Clicks: ${simplifyNumber(totalClicks)}
+        - Total Score: ${simplifyNumber(totalScore)}
+        - Current Score: ${simplifyNumber(score)}
+    `;
 
-        // Zeige die Bestätigungsnachricht
+        // Show confirmation dialog
         const isConfirmed = window.confirm(confirmationMessage);
 
-        // Deaktiviere den Auto Clicker, falls aktiv
-        const autoClickerButton = document.getElementById('toggleAutoClicker');
-        if (autoClickerButton.classList.contains('active')) {
-            stopAutoClicker();
-            showUpgradeNotification("❌ Please turn off the Auto Clicker before Reset!");
-            return;
-        }
-
+        // If confirmed
         if (isConfirmed) {
+
+            // Stop auto clicker if active
+            const autoClickerButton = document.getElementById('toggleAutoClicker');
+            if (autoClickerButton.classList.contains('active')) {
+                stopAutoClicker();
+                showUpgradeNotification("❌ Please turn off the Auto Clicker before Reset!");
+                return;
+            }
+
+            // Reset stats
             totalClicks = 0;
             totalScore = 0;
             totalautoScore = 0;
             totalautoClicks = 0;
-    
             document.getElementById('scoreValue').textContent = 0;
     
+            // Reset upgrades
+            for (const upgradeId in upgrades) {
+                if (upgrades.hasOwnProperty(upgradeId)) {
+                    upgrades[upgradeId].level = 0;
+                    upgrades[upgradeId].cost = upgrades[upgradeId].basecost;
+                    upgrades[upgradeId].owned = 0;
+                }
+            }
+
+            // Reset score and achievements
+            score = 0;
+            updateScore();
+            localStorage.setItem('score', 0);
+            saveScoreToLocalStorage(); 
+            achievements.forEach(achievement => {
+                achievement.unlocked = false;
+            });
+            saveAchievements(); 
+            updateAchievements();
+
+            // Save and update stats, upgrades, and achievements
             saveStatsToLocalStorage();
             updateStats();
-            resetScore(); // Hier wird die neue Funktion resetScore() aufgerufen
             saveUpgradesToLocalStorage();
             updateUpgradeButtons();
-            localStorage.setItem('statsReset', 'true');
-            resetUpgrades();
             resetAchievements();
-            showUpgradeNotification("✅ STATISTIKEN ERFOLGREICH ZURÜCKGESETZT");
-    
-            const clickBtn = document.getElementById('clickBtn');
-            if (clickBtn) {
-                clickBtn.click();
-            }
+            showUpgradeNotification("✅ STATS SUCCESSFULLY RESET");
+
+            // Reload the page after 5 seconds
+            setTimeout(() => {
+                location.reload();
+            }, 250);
         }
-    }  
+    } catch (error) {
+        console.error('Error resetting stats:', error);
+    }
+}  
 
 // Fügen Sie einen Event Listener für den Reset-Button hinzu
 const resetButton = document.getElementById('resetButton');
