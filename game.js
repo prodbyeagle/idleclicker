@@ -170,6 +170,32 @@ clickBtn.addEventListener('click', function() {
             clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
         }
 
+        // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
+        const clickButtonSoundVolume = parseFloat(localStorage.getItem('clickButtonSoundVolume')) || 1;
+        
+        const clickButtonSoundElement = document.getElementById('clickButtonSound');
+        let clickButtonSound;
+        
+        if (clickButtonSoundElement) {
+            clickButtonSound = new Audio(clickButtonSoundElement.src);
+            clickButtonSound.volume = clickButtonSoundVolume;
+            clickButtonSound.currentTime = 0;
+        
+            // Check if user interaction is required
+            const playPromise = clickButtonSound.play();
+        
+            if (playPromise !== undefined) {
+                playPromise.then(_ => {
+                    // Audio playback started successfully
+                }).catch(error => {
+                    // Audio playback failed, handle the error
+                    displayError('Audio playback failed:', error);
+                });
+            }
+        }
+
+
+
         score += clickMultiplier;
         totalClicks++; // Erhöhe die Gesamtanzahl der Klicks
         totalScore += clickMultiplier; // Erhöhe den Gesamtpunktestand
@@ -177,6 +203,7 @@ clickBtn.addEventListener('click', function() {
         updateStats();
         saveStatsToLocalStorage();
         saveScoreToLocalStorage();
+        console.log("clicked the clicker button")
          
         
         // Anti-Auto Clicker:

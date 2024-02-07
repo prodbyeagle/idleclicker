@@ -3,42 +3,42 @@
 const achievements = [
     {
         id: 'click_500',
-        name: '☝️ Click Novice',
+        name: '☝️ 500 Clicks',
         description: '📃 Click 500 times',
         target: 500,
         unlocked: false
     },
     {
         id: 'score_100k',
-        name: '📈 100k Clicks',
+        name: '📈 100k Coins',
         description: '📃 Reach a score of 100,000',
         target: 100000,
         unlocked: false
     },
     {
         id: 'click_1000',
-        name: '☝️ Click Master',
+        name: '☝️ 1k Clicks',
         description: '📃 Click 1,000 times',
         target: 1000,
         unlocked: false
     },
     {
         id: 'click_10000',
-        name: '☝️ Click Legend',
+        name: '☝️ 10k Clicks',
         description: '📃 Click 10,000 times',
         target: 10000,
         unlocked: false
     },
     {
         id: 'score_500k',
-        name: '📈 500k Clicks',
+        name: '📈 500k Coins',
         description: '📃 Reach a score of 500,000',
         target: 500000,
         unlocked: false
     },
     {
         id: 'click_5000',
-        name: '☝️ Click Grandmaster',
+        name: '☝️ 5k Clicks',
         description: '📃 Click 5,000 times',
         target: 5000,
         unlocked: false
@@ -138,7 +138,7 @@ const achievements = [
         id: 'score_500q',
         name: '📈 500Q Clicks',
         description: '📃 Reach a score of 500,000,000,000,000,000 million',
-        target: 25000000000000000000,
+        target: 50000000000000000000,
         unlocked: false
     },
     {

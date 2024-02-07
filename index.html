@@ -104,8 +104,16 @@
       <input type="range" class="volumeSlider" id="achievementsSoundVolume" min="0" max="1" step="0.1">
     </div>
     <div class="setting">
-      <label for="clickSoundVolume">Click Sound (can be annoying)</label>
+      <label for="clickSoundVolume">Auto-Click Sound (can be annoying)</label>
       <input type="range" class="volumeSlider" id="clickSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label for="clickButtonSoundVolume">Click Button Sound (can be annoying too...)</label>
+      <input type="range" class="volumeSlider" id="clickButtonSoundVolume" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label for="buySoundVolume">Buy Sound</label>
+      <input type="range" class="volumeSlider" id="buySoundVolume" min="0" max="1" step="0.1">
     </div>
     <button id="rainbowModeButton">🌈 Toggle Rainbow Mode</button>
     <button id="closeSettings" onclick="closeSettings()">Close</button>
@@ -136,6 +144,8 @@
 <audio id="notiSound" src="notification.wav"></audio>
 <audio id="achievementsSound" src="achievement.wav"></audio>
 <audio id="clickSound" src="click.wav"></audio>
+<audio id="clickButtonSound" src="clickbutton.wav"></audio>
+<audio id="buySound" src="buysound.wav"></audio>
 
 <div class="button-container">
 <p class="tooltip-trigger" data-tooltip-content="🖼️ Toggle The Background ON/OFF (Performance)">

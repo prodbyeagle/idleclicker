@@ -71,11 +71,14 @@ function resetStats() {
         }
 
         if (isConfirmed) {
+            score = 0;
             totalClicks = 0;
             totalScore = 0;
             score = 0;
             totalautoScore = 0;
             totalautoClicks = 0;
+            score = 0;
+            score = 0;
 
             autoClickerButton.style.display = 'none';
 

@@ -2,10 +2,10 @@
 
 const upgradesKey = 'savedUpgrades';
 const upgrades = {
-    1: { name: "More Clicks", basecost: 20, cost: 20, level: 0, multiplier: 2, maxLevel: 800, owned: 0},
-    3: { name: "Lucky Clicks", basecost: 500000, cost: 500000, level: 0, luckyClickChance: 1, cooldownReduction: 0, owned: 0, maxLevel: 25},
-    6: { name: "Auto Clicker", basecost: 1000000, cost: 1000000, level: 0, maxLevel: 100, owned: 0},
-    9: { name: "Auto Buy", basecost: 100000000000, cost: 100000000000, level: 0, maxLevel: 1, owned: 0},
+    1: { name: "More Clicks", basecost: 20, cost: 20, level: 0, multiplier: 2, maxLevel: 100, owned: 0},
+    3: { name: "Lucky Clicks", basecost: 250000, cost: 250000, level: 0, luckyClickChance: 1, cooldownReduction: 0, owned: 0, maxLevel: 25},
+    6: { name: "Auto Clicker", basecost: 1500000, cost: 1500000, level: 0, maxLevel: 25, owned: 0},
+    9: { name: "Auto Buy", basecost: 1000000000000, cost: 1000000000000, level: 0, maxLevel: 1, owned: 0},
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -62,9 +62,34 @@ function buyUpgrade(upgradeId) {
     score -= upgrade.cost;
     applyUpgradeEffects(upgrade);
 
+
+    // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
+    const buySoundVolume = parseFloat(localStorage.getItem('buySoundVolume')) || 1;
+
+    const buySoundElement = document.getElementById('buySound');
+    let buySound;
+    
+    if (buySoundElement) {
+        buySound = new Audio(buySoundElement.src);
+        buySound.volume = buySoundVolume;
+        buySound.currentTime = 0;
+    
+        // Check if user interaction is required
+        const playPromise = buySound.play();
+    
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Audio playback started successfully
+            }).catch(error => {
+                // Audio playback failed, handle the error
+                displayError('Audio playback failed:', error);
+            });
+        }
+    }
+
     upgrade.owned++;
     upgrade.level++;
-    upgrade.cost *= 5;
+    upgrade.cost *= 4;
 
     if (upgrade.name === "Auto Clicker" && upgrade.level === 1) {
         enableAutoClicker();
