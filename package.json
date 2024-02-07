@@ -16,7 +16,7 @@
         "nsis",
         "portable"
       ],
-      "icon": "build/icon.ico",
+      "icon": "game/pictures/icon.ico",
       "sign": null
     }
   },
