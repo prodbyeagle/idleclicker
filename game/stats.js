@@ -1,29 +1,28 @@
 // stats.js
 
-// Beispielwerte für die Stats
+// Example values for stats
 let totalClicks = 0;
 let totalScore = 0;
 let totalautoClicks = 0;
 let totalautoScore = 0;
 
-// Funktion zum Aktualisieren der Stats
+// Function to update stats
 function updateStats() {
     document.getElementById("totalClicks").textContent = simplifyNumber(totalClicks);
     document.getElementById("totalScoreValue").textContent = simplifyNumber(totalScore);
     document.getElementById('totalautoClicks').textContent = simplifyNumber(totalautoClicks);
     document.getElementById('totalautoScoreValue').textContent = simplifyNumber(totalautoScore);
-
 }
 
-// Funktion zum Hinzufügen eines Klicks zum Auto-Clicker
+// Function to add a click to the auto-clicker
 function addAutoClick() {
     totalautoClicks++;
-    totalautoScore += clickMultiplier; // Hier kannst du die Score-Logik des Auto-Clickers hinzufügen
+    totalautoScore += clickMultiplier; // You can add the score logic for the auto-clicker here
     updateStats();
-    saveStatsToLocalStorage()
+    saveStatsToLocalStorage();
 }
 
-// Funktion zum Laden der Stats aus dem Local Storage
+// Function to load stats from local storage
 function loadStatsFromLocalStorage() {
     const savedStats = JSON.parse(localStorage.getItem('stats'));
     if (savedStats) {
@@ -35,7 +34,7 @@ function loadStatsFromLocalStorage() {
     return `Total Clicks: ${simplifyNumber(totalClicks)}, Total Score: ${simplifyNumber(totalScore)}, Total Auto Score: ${simplifyNumber(totalautoScore)}, Total Auto Clicks: ${simplifyNumber(totalautoClicks)}`;
 }
 
-// Funktion zum Speichern der Stats im Local Storage
+// Function to save stats to local storage
 function saveStatsToLocalStorage() {
     localStorage.setItem('stats', JSON.stringify({
         totalClicks,

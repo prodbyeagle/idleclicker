@@ -679,7 +679,7 @@ h1 {
   }
 
 #downloadGame {
-    background: url('github.jpg') no-repeat left center;
+    background: url('../game/pictures/github.jpg') no-repeat left center;
     background-color: black;
     background-size: contain; /* Adjust this property as needed */
     color: #fff;
@@ -699,7 +699,7 @@ h1 {
 
 
 #shareX {
-    background: url('x.png') no-repeat left center;
+    background: url('../game/pictures/x.png') no-repeat left center;
     background-color: black;
     background-size: contain; /* Adjust this property as needed */
     color: #fff;
@@ -718,7 +718,7 @@ h1 {
 
 
 #shareWhatsApp {
-    background: url('whatsapp.png') no-repeat left center;
+    background: url('../game/pictures/whatsapp.png') no-repeat left center;
     background-size: contain; /* Adjust this property as needed */
     background-color: #000000;
     color: #fff;

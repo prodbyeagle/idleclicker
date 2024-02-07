@@ -3,7 +3,7 @@
 const upgradesKey = 'savedUpgrades';
 const upgrades = {
     1: { name: "More Clicks", basecost: 20, cost: 20, level: 0, multiplier: 2, maxLevel: 50, owned: 0},
-    3: { name: "Lucky Clicks", basecost: 250000, cost: 250000, level: 0, luckyClickChance: 0.00001, cooldownReduction: 0, owned: 0, maxLevel: 50},
+    3: { name: "Lucky Clicks", basecost: 250000, cost: 250000, level: 0, luckyClickChance: 0.0001, cooldownReduction: 0, owned: 0, maxLevel: 50},
     6: { name: "Auto Clicker", basecost: 1500000, cost: 1500000, level: 0, maxLevel: 50, owned: 0},
     9: { name: "Auto Buy", basecost: 1000000000000, cost: 1000000000000, level: 0, maxLevel: 1, owned: 0},
     10: { name: "Critical Clicks", basecost: 500000000, cost: 500000000, level: 0, critChance: 0.001, critMultiplier: 2, maxLevel: 50, owned: 0 }
@@ -13,7 +13,6 @@ const upgrades = {
 function loadUpgradesFromLocalStorage() {
     const savedUpgrades = JSON.parse(localStorage.getItem(upgradesKey));
     if (savedUpgrades) {
-        // Übertragen Sie die Werte aus dem gespeicherten Objekt auf das aktuelle Upgrades-Objekt
         for (const upgradeId in upgrades) {
             if (upgrades.hasOwnProperty(upgradeId) && savedUpgrades.hasOwnProperty(upgradeId)) {
                 upgrades[upgradeId].level = savedUpgrades[upgradeId].level;
@@ -24,11 +23,8 @@ function loadUpgradesFromLocalStorage() {
     }
 }
 
-// Funktion zum Speichern der Upgrades im Local Storage
 function saveUpgradesToLocalStorage() {
     const savedUpgrades = {};
-
-    // Erstellen Sie ein Objekt mit den Upgrade-Levels, Kosten und weiteren Informationen
     for (const upgradeId in upgrades) {
         if (upgrades.hasOwnProperty(upgradeId)) {
             savedUpgrades[upgradeId] = {
@@ -38,11 +34,9 @@ function saveUpgradesToLocalStorage() {
             };
         }
     }
-
     localStorage.setItem(upgradesKey, JSON.stringify(savedUpgrades));
 }
 
-// Kaufe Upgrade-Funktion
 function buyUpgrade(upgradeId) {
     const upgrade = upgrades[upgradeId];
 
@@ -64,8 +58,6 @@ function buyUpgrade(upgradeId) {
     score -= upgrade.cost;
     applyUpgradeEffects(upgrade);
 
-
-    // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
     const buySoundVolume = parseFloat(localStorage.getItem('buySoundVolume')) || 1;
 
     const buySoundElement = document.getElementById('buySound');
@@ -75,15 +67,12 @@ function buyUpgrade(upgradeId) {
         buySound = new Audio(buySoundElement.src);
         buySound.volume = buySoundVolume;
         buySound.currentTime = 0;
-    
-        // Check if user interaction is required
+        
         const playPromise = buySound.play();
     
         if (playPromise !== undefined) {
             playPromise.then(_ => {
-                // Audio playback started successfully
             }).catch(error => {
-                // Audio playback failed, handle the error
                 displayError('Audio playback failed:', error);
             });
         }

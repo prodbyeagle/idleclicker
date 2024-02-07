@@ -1,8 +1,8 @@
 {
   "name": "clicker",
-  "displayName": "Clicker",
-  "version": "2.1.1",
-  "description": "Clicker Game by prodbyeagle. Made with JS | CSS | HTML",
+  "displayName": "Idle Clicker",
+  "version": "2.1.2",
+  "description": "Idle Clicker made by prodbyeagle.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -23,8 +23,5 @@
   "devDependencies": {
     "electron": "^28.2.1",
     "electron-builder": "^24.9.1"
-  },
-  "dependencies": {
-    "discord-rpc": "^4.0.1"
   }
 }
