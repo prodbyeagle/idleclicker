@@ -21,12 +21,22 @@ The game features various upgrades, including:
 - Lucky Clicks
 - Auto Clicker
 - Auto Upgrade Buy
+- Crit Upgrade
 
 ## ✅ Features
 
 - Fun animations and lucky click events.
 - Rainbow MODE omg crazy!!!?!!?!?!!!!!11!!!!11
 - and other u need to find yourself.
+
+## 🐞 Bugs
+
+- Reset Bugged (Currenty Disabled)
+- you tell me! [Report Here](https://github.com/prodbyeagle/ClickerGame/issues)
+
+## 🧙‍♀️ To-Do
+
+- Prestige System (New Reset System)
 
 ## ⚠️ Contributions
 
