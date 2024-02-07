@@ -37,6 +37,7 @@ The game features various upgrades, including:
 ## 🧙‍♀️ To-Do
 
 - Prestige System (New Reset System)
+- Maybe an Phone Version
 
 ## ⚠️ Contributions
 
