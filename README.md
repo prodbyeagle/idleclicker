@@ -6,7 +6,7 @@ Welcome to the Clicker Game repository! This is a simple web-based clicker game 
 
 ## 🤔 How to Play
 
-1. Download this Installer: [Download](https://drive.google.com/file/d/1Vepud5RQUHYJctLjBxSujqwtSb_NterU/view?usp=sharing) and Run it. (on new updates just install the new installer its just updating the old version)
+1. Download this Installer: [Download](https://drive.google.com/file/d/1_kGSqF2ZzVkMOmMzWBgLsAaATi8Ljjtv/view?usp=sharing) and Run it. (on new updates just install the new installer its just updating the old version)
 2. OR you Play it on the [WEBSITE](https://clicker-chilly.netlify.app/)
    
 - [VirusTotal Scan](https://www.virustotal.com/gui/file/cc73b43efed320b44509850cf09136696c6d0b4cf7a338118f4f146957d335cc/detection)
@@ -21,12 +21,22 @@ The game features various upgrades, including:
 - Lucky Clicks
 - Auto Clicker
 - Auto Upgrade Buy
+- Crit Upgrade
 
 ## ✅ Features
 
 - Fun animations and lucky click events.
 - Rainbow MODE omg crazy!!!?!!?!?!!!!!11!!!!11
 - and other u need to find yourself.
+
+## 🐞 Bugs
+
+- Reset Bugged (Currenty Disabled)
+- you tell me! [Report Here](https://github.com/prodbyeagle/ClickerGame/issues)
+
+## 🧙‍♀️ To-Do
+
+- Prestige System (New Reset System)
 
 ## ⚠️ Contributions
 
