@@ -146,7 +146,7 @@ function handleLuckyClick() {
     const baseLuckyClickValue = 200000; // Basiswert
 
     // Wachstumsfaktor
-    const growthFactor = 50000;
+    const growthFactor = 5;
 
     // Berechne den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
