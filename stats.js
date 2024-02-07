@@ -46,7 +46,6 @@ function saveStatsToLocalStorage() {
 }
 
 function resetStats() {
-    try {
         // Erstellen Sie die Bestätigungsnachricht mit aktuellen Statistiken
         const confirmationMessage = `
             Möchten Sie wirklich alle Statistiken zurücksetzen?
@@ -71,41 +70,29 @@ function resetStats() {
         }
 
         if (isConfirmed) {
-            score = 0;
             totalClicks = 0;
             totalScore = 0;
-            score = 0;
             totalautoScore = 0;
             totalautoClicks = 0;
-            score = 0;
-            score = 0;
-
-            autoClickerButton.style.display = 'none';
-
+    
+            document.getElementById('scoreValue').textContent = 0;
+    
             saveStatsToLocalStorage();
             updateStats();
-            updateScore();
+            resetScore(); // Hier wird die neue Funktion resetScore() aufgerufen
             saveUpgradesToLocalStorage();
             updateUpgradeButtons();
             localStorage.setItem('statsReset', 'true');
             resetUpgrades();
-            resetAchievements()
-            showUpgradeNotification("✅ STATS SUCCESSFULLY RESET");
-            // Simuliere einen Klick auf den Reset-Button
+            resetAchievements();
+            showUpgradeNotification("✅ STATISTIKEN ERFOLGREICH ZURÜCKGESETZT");
+    
             const clickBtn = document.getElementById('clickBtn');
             if (clickBtn) {
                 clickBtn.click();
             }
-
-            // Lade die Seite nach 5 Sekunden neu
-            setTimeout(() => {
-                location.reload();
-            }, 1);
         }
-    } catch (error) {
-        console.error('Fehler beim Zurücksetzen der Stats:', error);
-    }
-}
+    }  
 
 // Fügen Sie einen Event Listener für den Reset-Button hinzu
 const resetButton = document.getElementById('resetButton');

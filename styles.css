@@ -815,3 +815,12 @@ h1 {
 #rainbowModeButton:hover {
     transform: scale(0.9);
   }
+
+.share-container {
+  display: flex;
+  flex-direction: row; /* Ändere die Ausrichtung auf horizontal */
+  justify-content: space-between; /* Platzieren Sie die Elemente gleichmäßig horizontal */
+  align-items: center; /* Zentrieren Sie die Elemente vertikal */
+  margin-top: 20px; /* Fügen Sie bei Bedarf einen oberen Abstand hinzu */
+}
+

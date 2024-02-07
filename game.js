@@ -17,7 +17,8 @@ if (savedScore) {
 }
 
 function saveScoreToLocalStorage() {
-    localStorage.setItem('score', score.toString());
+    const scoreBigInt = BigInt(score);
+    localStorage.setItem('score', scoreBigInt.toString());
 }
 
 
@@ -231,11 +232,25 @@ function updateScore() {
 updateUpgradeButtons();
 
 
+function resetScore() {
+    score = 0; // Setze den Spielstand auf null
+    updateScore(); // Aktualisiere den Spielstand im DOM
+
+    // Speichere den Spielstand im Local Storage
+    localStorage.setItem('score', 0);
+    saveScoreToLocalStorage(); 
+}
+
 //TODO: Simplify Number
 
 
 function simplifyNumber(number) {
-    const suffixes = ["", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc", "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St", "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT", "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT", "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT", "DtT", "TtT", "QtTT", "SxTT", "SpTT", "OcTT"];
+    const suffixes = [
+        "", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc",
+        "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St",
+        "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT",
+        "SpT", "OcT", "INFINITY"
+    ];
     let suffixIndex = 0;
 
     while (number >= 1000 && suffixIndex < suffixes.length - 1) {
@@ -512,7 +527,7 @@ function stopRainbowAnimation() {
 
 document.getElementById('rainbowModeButton').addEventListener('click', toggleRainbowMode);
 
-//TODO: DISCORD RICH PRESENCE
+
 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY             // DEV OVERLAY                   // DEV OVERLAY 
 // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY               // DEV OVERLAY // DEV OVERLAY // DEV OVERLAY             // DEV OVERLAY                   // DEV OVERLAY 

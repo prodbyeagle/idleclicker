@@ -2,11 +2,11 @@
 
 const upgradesKey = 'savedUpgrades';
 const upgrades = {
-    1: { name: "More Clicks", basecost: 20, cost: 20, level: 0, multiplier: 2, maxLevel: 100, owned: 0},
-    3: { name: "Lucky Clicks", basecost: 250000, cost: 250000, level: 0, luckyClickChance: 1, cooldownReduction: 0, owned: 0, maxLevel: 25},
-    6: { name: "Auto Clicker", basecost: 1500000, cost: 1500000, level: 0, maxLevel: 25, owned: 0},
+    1: { name: "More Clicks", basecost: 20, cost: 20, level: 0, multiplier: 2, maxLevel: 50, owned: 0},
+    3: { name: "Lucky Clicks", basecost: 250000, cost: 250000, level: 0, luckyClickChance: 0.00001, cooldownReduction: 0, owned: 0, maxLevel: 50},
+    6: { name: "Auto Clicker", basecost: 1500000, cost: 1500000, level: 0, maxLevel: 50, owned: 0},
     9: { name: "Auto Buy", basecost: 1000000000000, cost: 1000000000000, level: 0, maxLevel: 1, owned: 0},
-    10: { name: "Critical Clicks", basecost: 5000000, cost: 5000000, level: 0, critChance: 0.01, critMultiplier: 2, maxLevel: 10, owned: 0 }
+    10: { name: "Critical Clicks", basecost: 500000000, cost: 500000000, level: 0, critChance: 0.001, critMultiplier: 2, maxLevel: 50, owned: 0 }
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -146,7 +146,7 @@ function handleLuckyClick() {
     const baseLuckyClickValue = 200000; // Basiswert
 
     // Wachstumsfaktor
-    const growthFactor = 5;
+    const growthFactor = 50000;
 
     // Berechne den Zuwachs basierend auf dem Upgrade-Level
     const scaledLuckyClickValue = baseLuckyClickValue * Math.pow(growthFactor, luckyClickUpgrade.level);
@@ -246,6 +246,31 @@ function handleCritClick(level) {
     const critValue = score * 0.1 * level;
     score += critValue;
     updateScore();
+
+    // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
+    const luckySoundVolume = parseFloat(localStorage.getItem('luckyEventSoundVolume')) || 1;
+    
+    const luckySoundElement = document.getElementById('luckyEventSound');
+    let luckySound;
+    
+    if (luckySoundElement) {
+        luckySound = new Audio(luckySoundElement.src);
+        luckySound.volume = luckySoundVolume;
+        luckySound.currentTime = 0;
+    
+        // Check if user interaction is required
+        const playPromise = luckySound.play();
+    
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Audio playback started successfully
+            }).catch(error => {
+                // Audio playback failed, handle the error
+                displayError('Audio playback failed:', error);
+            });
+        }
+    }
+
     showUpgradeNotification(`💥 Critical Click! +${simplifyNumber(critValue)} Clicks`);
 }
 
@@ -361,9 +386,7 @@ function simplifyNumber(number) {
         "", "k", "M", "B", "T", "Q", "Qt", "Sx", "Sp", "Oc",
         "No", "Dc", "Un", "Du", "Tr", "Qu", "Qi", "Se", "St",
         "Ot", "Nv", "Vg", "Ct", "Ut", "Dt", "Tt", "QtT", "SxT",
-        "SpT", "OcT", "NoT", "DcT", "UnT", "DuT", "TrT", "QuT",
-        "QiT", "SeT", "StT", "OtT", "NvT", "VgT", "CtT", "UtT",
-        "DtT", "TtT", "QtTT", "SxTT", "SpTT", "INFINITY"
+        "SpT", "OcT", "INFINITY"
     ];
     let suffixIndex = 0;
 
@@ -418,7 +441,7 @@ function buyAutoUpgrades(strategy) {
 
         updateScore();
         updateUpgradeButtons();
-        showUpgradeNotification(`✅ Automatisch ${selectedUpgrade.name} auf Level ${selectedUpgrade.level} geupgraded`);
+        showUpgradeNotification(`✅ Auto. Upgrade ${selectedUpgrade.name} to ${selectedUpgrade.level}`);
         saveUpgradesToLocalStorage();
     }
 }

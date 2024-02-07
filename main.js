@@ -1,4 +1,5 @@
 const { app, BrowserWindow } = require('electron');
+const path = require('path');
 
 let mainWindow;
 
@@ -14,6 +15,7 @@ function createWindow() {
     webPreferences: {
       nodeIntegration: true,
     },
+    icon: path.join(__dirname, 'icon.ico'),
     autoHideMenuBar: true, // Verstecke die Menüleiste automatisch
   });
   mainWindow.loadFile('index.html');
