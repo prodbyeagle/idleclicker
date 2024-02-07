@@ -170,6 +170,12 @@ clickBtn.addEventListener('click', function() {
             clickMultiplier += moreClicksUpgrade.level * moreClicksUpgrade.multiplier;
         }
 
+        // Überprüfen, ob das "Critical Clicks"-Upgrade vorhanden und auf mindestens Level 1 ist
+        const criticalClicksUpgrade = upgrades[10];
+        if (criticalClicksUpgrade && criticalClicksUpgrade.level >= 1) {
+            applyCritClick(criticalClicksUpgrade.critChance, criticalClicksUpgrade.critMultiplier);
+        }
+
         // Lese die gespeicherten Lautstärke-Werte aus dem localStorage
         const clickButtonSoundVolume = parseFloat(localStorage.getItem('clickButtonSoundVolume')) || 1;
         
@@ -202,16 +208,14 @@ clickBtn.addEventListener('click', function() {
         updateScore();
         updateStats();
         saveStatsToLocalStorage();
-        saveScoreToLocalStorage();
-        console.log("clicked the clicker button")
-         
+        saveScoreToLocalStorage(); 
         
         // Anti-Auto Clicker:
         clickBtn.disabled = true;
         setTimeout(() => {
             clickBtn.disabled = false;
             this.classList.remove('clicked'); // Entferne die 'clicked'-Klasse, um die Verkleinerung rückgängig zu machen
-        }, 70);
+        }, 50);
 
         checkAchievements();
         updateAchievements();

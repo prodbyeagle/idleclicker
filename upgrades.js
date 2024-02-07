@@ -6,6 +6,7 @@ const upgrades = {
     3: { name: "Lucky Clicks", basecost: 250000, cost: 250000, level: 0, luckyClickChance: 1, cooldownReduction: 0, owned: 0, maxLevel: 25},
     6: { name: "Auto Clicker", basecost: 1500000, cost: 1500000, level: 0, maxLevel: 25, owned: 0},
     9: { name: "Auto Buy", basecost: 1000000000000, cost: 1000000000000, level: 0, maxLevel: 1, owned: 0},
+    10: { name: "Critical Clicks", basecost: 5000000, cost: 5000000, level: 0, critChance: 0.01, critMultiplier: 2, maxLevel: 10, owned: 0 }
 };
 
 // Funktion zum Laden der Upgrades aus dem Local Storage
@@ -55,7 +56,8 @@ function buyUpgrade(upgradeId) {
     }
 
     if (score < upgrade.cost) {
-        showUpgradeNotification("❌ Insufficient points.");
+        let remainingPoints = upgrade.cost - score;
+        showUpgradeNotification(`❌ Insufficient points. You need ${simplifyNumber(remainingPoints)} more points.`);
         return;
     }
 
@@ -127,6 +129,7 @@ function applyLuckyClick(chance) {
     if (currentTime - lastLuckyClickTime < calculateCooldown()) {
         return;
     }
+
 
     const randomValue = Math.random();
 
@@ -219,11 +222,31 @@ function applyUpgradeEffects(upgrade) {
         applyLuckyClick(upgrade.luckyClickChance);
     }
 
+    if (upgrade.critChance) {
+        applyCritClick(upgrade.critChance, upgrade.critMultiplier);
+    }
+
     clickMultiplier *= upgrade.multiplier || 1;
 
     if (upgrade.name === "Auto Clicker") {
         startAutoClicker(upgrade.level);
     }
+}
+
+// CRIT
+
+function applyCritClick(chance, multiplier) {
+    const randomValue = Math.random();
+    if (randomValue < chance) {
+        handleCritClick(multiplier);
+    }
+}
+
+function handleCritClick(level) {
+    const critValue = score * 0.1 * level;
+    score += critValue;
+    updateScore();
+    showUpgradeNotification(`💥 Critical Click! +${simplifyNumber(critValue)} Clicks`);
 }
 
 // Auto Clicker
